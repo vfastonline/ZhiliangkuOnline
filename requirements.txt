@@ -1,0 +1,13 @@
+django==2.1.1
+pymongo==3.7.1
+mongoengine==0.15.3
+django-debug-toolbar-mongo==0.1.10
+git+git://github.com/sshwsfc/xadmin.git@django2
+djongo==1.2.30
+djangorestframework==3.8.2
+Pillow==5.2.0
+djangorestframework-jwt==1.11.0
+redis==2.10.6
+django_redis==4.9.0
+django-rest-framework-mongoengine==3.3.1
+requests==2.19.1

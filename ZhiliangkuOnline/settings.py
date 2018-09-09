@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import datetime
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -25,96 +29,188 @@ SECRET_KEY = 'vz3i%_j-f&vw2=1um@ru%!m5s-7z)vw1_pez8_r0mp5doooh21'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+# 设置'邮箱'用户名'手机号'均可登录
+AUTHENTICATION_BACKENDS = (
+	'django.contrib.auth.backends.ModelBackend',
+	'users.backends.CustomBackend',
+	# 'social_core.backends.weibo.WeiboOAuth2',
+	# 'social_core.backends.qq.QQOAuth2',
+	# 'social_core.backends.weixin.WeixinOAuth2',
+)
+
+# 此处重载是为了使我们的UserProfile生效
+AUTH_USER_MODEL = "users.UserProfile"
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'xadmin',
+	'crispy_forms',
+	'apps.users',
+	'rest_framework',
+	'rest_framework.authtoken',
+	"rest_framework_mongoengine",
+
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'ZhiliangkuOnline.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [os.path.join(BASE_DIR, 'templates')],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'ZhiliangkuOnline.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+	'default': {
+		'ENGINE': 'djongo',
+		'NAME': 'zhiliangku',
+		'ENFORCE_SCHEMA': False,
+	}
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# 与drf的jwt相关的设置
+JWT_AUTH = {
+	'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+	'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+}
+
+# drf，权限，认证管理
+REST_FRAMEWORK = {
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticated',
+	),
+	'DEFAULT_AUTHENTICATION_CLASSES': (
+		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+		'rest_framework.authentication.BasicAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
+	),
+}
+
+# 缓存过期时间
+REST_FRAMEWORK_EXTENSIONS = {
+	'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
+}
+
+CACHES = {
+	"default": {
+		"BACKEND": "django_redis.cache.RedisCache",
+		"LOCATION": "redis://127.0.0.1:6379/",
+		"OPTIONS": {
+			"CLIENT_CLASS": "django_redis.client.DefaultClient",
+		}
+	}
+}
+
+# 使用redis管理session
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
+# 手机号码正则表达式
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+# 阿里云短信设置
+APPKEY = '23764268'
+SECRET = "00181054a64e2d9eb69711912d7a372a"
+
+# # mongodb 调试工具
+# DEBUG_TOOLBAR_PANELS = (
+# 	'debug_toolbar_mongo.panel.MongoDebugPanel',
+# )
+# DEBUG_TOOLBAR_MONGO_STACKTRACES = True
+
+# # 日志
+# LOGGING = {
+# 	'version': 1,
+# 	'disable_existing_loggers': False,
+# 	'filters': {
+# 		'require_debug_false': {
+# 			'()': 'django.utils.log.RequireDebugFalse'
+# 		}
+# 	},
+# 	'handlers': {
+# 		'mail_admins': {
+# 			'level': 'ERROR',
+# 			'filters': ['require_debug_false'],
+# 			'class': 'django.utils.log.AdminEmailHandler'
+# 		}
+# 	},
+# 	'loggers': {
+# 		'django.request': {
+# 			'handlers': ['mail_admins'],
+# 			'level': 'ERROR',
+# 			'propagate': True,
+# 		},
+# 	}
+# }
