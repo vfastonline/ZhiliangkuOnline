@@ -11,3 +11,6 @@ django_redis==4.9.0
 django-rest-framework-mongoengine==3.3.1
 requests==2.19.1
 ujson
+social-auth-app-django==2.1.0
+unittest2==1.1.0
+httpretty==0.9.5

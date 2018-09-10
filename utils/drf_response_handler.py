@@ -10,7 +10,7 @@ def custom_exception_handler(exc, context):
 	"""异常'接口响应'结果集
 	:param exc:
 	:param context:
-	:return: { "msg":"Not allowed.", "code":400, "data":null }
+	:return: { "msg":"Not allowed.", "code":400 }
 	"""
 	# Call REST framework's default exception handler first,
 	# to get the standard error response.

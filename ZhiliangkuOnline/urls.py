@@ -44,9 +44,11 @@ urlpatterns = [
 	# router的path路径
 	re_path(r'^', include(router.urls)),
 
-	# jwt的token认证
+	# jwt'用户'token认证
 	path('login/', obtain_jwt_token),  # 登录
 	path('api-token-refresh/', refresh_jwt_token),  # 刷新token
 	path('api-token-verify/', verify_jwt_token),  # 校验token
 
+	# 第三方登录
+	path('', include('social_django.urls', namespace='social'))
 ]

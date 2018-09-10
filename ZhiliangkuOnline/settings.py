@@ -33,11 +33,11 @@ ALLOWED_HOSTS = ['*']
 
 # 自定义认证，设置'邮箱'用户名'手机号'均可登录
 AUTHENTICATION_BACKENDS = (
-	'django.contrib.auth.backends.ModelBackend',
 	'users.backends.CustomBackend',
-	# 'social_core.backends.weibo.WeiboOAuth2',
-	# 'social_core.backends.qq.QQOAuth2',
-	# 'social_core.backends.weixin.WeixinOAuth2',
+	'social_core.backends.weibo.WeiboOAuth2',
+	'social_core.backends.qq.QQOAuth2',
+	'social_core.backends.weixin.WeixinOAuth2',
+	'django.contrib.auth.backends.ModelBackend',
 )
 
 # 此处重载是为了使我们的UserProfile生效
@@ -52,10 +52,13 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	'users',
+
 	'rest_framework',
 	'rest_framework.authtoken',
 	"rest_framework_mongoengine",
+	'social_django',  # 第三方登录
+
+	'users',
 
 ]
 
@@ -82,6 +85,8 @@ TEMPLATES = [
 				'django.template.context_processors.request',
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',
+				'social_django.context_processors.backends',
+				'social_django.context_processors.login_redirect',
 			],
 		},
 	},
@@ -196,6 +201,19 @@ SECRET = "00181054a64e2d9eb69711912d7a372a"
 # 	'debug_toolbar_mongo.panel.MongoDebugPanel',
 # )
 # DEBUG_TOOLBAR_MONGO_STACKTRACES = True
+
+# 第三方认证
+SOCIAL_AUTH_WEIBO_KEY = ''
+SOCIAL_AUTH_TWITTER_SECRET = ''
+
+SOCIAL_AUTH_QQ_KEY = '101447834'
+SOCIAL_AUTH_QQ_SECRET = '7c57f3120ce94f59dc217f25333b086a'
+
+SOCIAL_AUTH_WEIXIN_KEY = 'wx7c9efe7b17c8aef2'
+SOCIAL_AUTH_WEIXIN_SECRET = '4f44d0ecc91e0dd9ef955885d6cfcb4f'
+
+# 第三方登录成功后跳转页面
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
 
 # 日志
 LOGGING = {
