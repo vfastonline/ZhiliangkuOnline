@@ -2,8 +2,9 @@
 from random import choice
 
 from rest_framework import status
+from rest_framework import viewsets
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
-from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSet
 
 from ZhiliangkuOnline.settings import APPKEY, SECRET
 from users.models import VerifyCode
@@ -11,14 +12,13 @@ from users.serializers import SmsSerializer
 from utils.sms import SendSms
 
 
-class SmsCodeViewset(MongoModelViewSet):
+class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	发送短信验证码
 	"""
 	authentication_classes = ()
 	permission_classes = ()
 	serializer_class = SmsSerializer
-	queryset = VerifyCode.objects.all()
 
 	def generate_code(self):
 		"""
