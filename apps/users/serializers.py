@@ -8,7 +8,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_mongoengine import serializers as mongoserializers
 
 from users.models import VerifyCode
-from utils.utils import REGEX_MOBILE
+from utils.tools import REGEX_MOBILE
 
 User = get_user_model()
 

@@ -18,6 +18,7 @@ from django.views.static import serve
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+from django.contrib import admin
 import xadmin
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from users.user_views import *
@@ -32,7 +33,8 @@ router.register(r'code', SmsCodeViewset, base_name="code")
 router.register(r'users', UserViewset, base_name="users")
 
 urlpatterns = [
-	path('xadmin/', xadmin.site.urls),
+	path('admin/', admin.site.urls),
+	# path('xadmin/', xadmin.site.urls),
 
 	# 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
 	re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),

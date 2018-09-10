@@ -58,7 +58,6 @@ class UserProfile(AbstractUser):
 	ICON = "user_icon/defaultUserIcon.png"
 
 	_id = models.ObjectIdField()
-	id = models.CharField(max_length=255, blank=True)
 	name = models.CharField(max_length=30, verbose_name="姓名", blank=True)
 	gender = models.CharField(max_length=6, choices=GENDER_CHOICES, verbose_name="性别", blank=True)
 	birthday = models.DateField(verbose_name="出生年月", blank=True)
@@ -67,13 +66,13 @@ class UserProfile(AbstractUser):
 							 blank=True)
 	institution = models.CharField('所在院校', max_length=255, blank=True)
 	teams = models.ManyToManyField(Team, verbose_name="所在班级")
-	computer_major = models.BooleanField(default=True, verbose_name="是否计算机专业")
-	graduate = models.BooleanField(default=False, verbose_name="是否毕业")
+	computer_major = models.BooleanField(default=True, verbose_name="计算机专业")
+	graduate = models.BooleanField(default=False, verbose_name="毕业")
 	education = models.CharField(max_length=255, verbose_name="学历", blank=True)
 	signature = models.TextField(max_length=255, verbose_name='个性签名', blank=True)
 	mobile = models.CharField(max_length=11, verbose_name="电话", help_text="联系电话", blank=True)
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(auto_now=True)
+	created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+	updated_at = models.DateTimeField(auto_now=True, verbose_name="最近一次更新")
 
 	def __str__(self):
 		return self.username

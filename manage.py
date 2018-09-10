@@ -2,10 +2,9 @@
 import os
 import sys
 
-from utils.utils import monkey_patch_jsonencoder, monkey_patch_json
+from utils.tools import monkey_patch_jsonencoder
 
 monkey_patch_jsonencoder()
-monkey_patch_json()
 
 if __name__ == '__main__':
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ZhiliangkuOnline.settings')
