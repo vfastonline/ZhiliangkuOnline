@@ -30,7 +30,7 @@ class JsonResponse(Response):
 	arbitrary media types.
 	"""
 
-	def __init__(self, data=None, code=None, detail="success", status=None, template_name=None, headers=None,
+	def __init__(self, data='', detail='', status=None, template_name=None, headers=None,
 				 exception=False, content_type=None):
 		"""
 		Alters the init arguments slightly.
@@ -49,7 +49,7 @@ class JsonResponse(Response):
 			raise AssertionError(msg)
 
 		self.data = {
-			"code": code,
+			"code": status,
 			"detail": detail,
 			"data": data
 		}

@@ -31,6 +31,7 @@ from utils.alidayu import AlibabaAliqinFcSmsNumSendRequest
 
 
 class SendSms(object):
+
 	def __init__(self, appkey, secret):
 		self.appkey = appkey
 		self.secret = secret
