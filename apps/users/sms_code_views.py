@@ -16,6 +16,7 @@ class SmsCodeViewset(MongoModelViewSet):
 	发送短信验证码
 	"""
 	serializer_class = SmsSerializer
+	queryset = VerifyCode.objects.all()
 
 	def generate_code(self):
 		"""
