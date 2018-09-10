@@ -3,7 +3,9 @@ import json
 import logging
 import traceback
 
+
 from utils.alidayu import AlibabaAliqinFcSmsNumSendRequest
+from rest_framework import status
 
 """
 异常：
@@ -47,6 +49,7 @@ class SendSms(object):
 		:param sms_param:
 		:return:
 		"""
+
 		req = AlibabaAliqinFcSmsNumSendRequest(self.appkey, self.secret, self.url, self.system_generate_version)
 		req.extend = ""
 		req.sms_type = self.sms_type
@@ -57,12 +60,23 @@ class SendSms(object):
 		logging.getLogger().info(req.sms_param)
 		try:
 			resp = req.getResponse()
+			result={
+				"err":204,
+				"msg":resp["alibaba_aliqin_fc_sms_num_send_response"]["result"]["msg"],
+				"data":"短信发送成功"
+			}
 			logging.getLogger().info(resp)
 			logging.getLogger().info(u'短信发送成功, phone:%s, sms_free_sign_name:%s, sms_template_code:%s 状态%s' % (
 				req.rec_num, req.sms_free_sign_name, req.sms_template_code,
 				resp['alibaba_aliqin_fc_sms_num_send_response']))
-			return True
+
+			return result
 		except:
 			traceback.print_exc()
+			result={
+				"err":500,
+				"msg":"接口不通，请刷新",
+				"data":"短信发送失败"
+			}
 			logging.getLogger().error(traceback.format_exc())
-			return False
+			return result

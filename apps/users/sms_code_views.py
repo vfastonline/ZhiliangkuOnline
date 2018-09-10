@@ -10,7 +10,7 @@ from ZhiliangkuOnline.settings import APPKEY, SECRET
 from users.models import VerifyCode
 from users.serializers import SmsSerializer
 from utils.sms import SendSms
-
+from utils.drf_response_handler import *
 
 class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
 	"""
@@ -38,18 +38,13 @@ class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
 		phone = serializer.validated_data["phone"]
 
 		send_sms = SendSms(APPKEY, SECRET)
-
 		code = self.generate_code()
-
 		sms_status = send_sms.send_sms(phone, {'code': code})
 
 		if not sms_status:
-			return Response({
-				"phone": "短信发送失败"
-			}, status=status.HTTP_400_BAD_REQUEST)
+			return JsonResponse(data=sms_status["data"], detail=sms_status["msg"], status=sms_status["err"])
 		else:
 			code_record = VerifyCode(code=code, phone=phone)
 			code_record.save()
-			return Response({
-				"phone": phone
-			}, status=status.HTTP_201_CREATED)
+
+			return JsonResponse(data=sms_status["data"], detail=sms_status["msg"], status=sms_status["err"])
