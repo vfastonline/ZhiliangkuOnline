@@ -1,16 +1,15 @@
 # encoding: utf-8
 from random import choice
 
-from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
-from rest_framework.response import Response
 
 from ZhiliangkuOnline.settings import APPKEY, SECRET
 from users.models import VerifyCode
 from users.serializers import SmsSerializer
-from utils.sms import SendSms
 from utils.drf_response_handler import *
+from utils.sms import SendSms
+
 
 class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
 	"""
@@ -41,10 +40,8 @@ class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
 		code = self.generate_code()
 		sms_status = send_sms.send_sms(phone, {'code': code})
 
-		if not sms_status:
-			return JsonResponse(data=sms_status["data"], detail=sms_status["msg"], status=sms_status["err"])
-		else:
+		if sms_status.get("code") == 204:
 			code_record = VerifyCode(code=code, phone=phone)
 			code_record.save()
 
-			return JsonResponse(data=sms_status["data"], detail=sms_status["msg"], status=sms_status["err"])
+		return JsonResponse(detail=sms_status.get("detail"), status=sms_status.get("code"))
