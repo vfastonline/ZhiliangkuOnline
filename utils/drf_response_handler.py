@@ -30,9 +30,7 @@ class JsonResponse(Response):
 	arbitrary media types.
 	"""
 
-	def __init__(self, data=None, err=None, msg="success",
-				 status=None, paginator=None,
-				 template_name=None, headers=None,
+	def __init__(self, data=None, code=None, detail="success", status=None, template_name=None, headers=None,
 				 exception=False, content_type=None):
 		"""
 		Alters the init arguments slightly.
@@ -50,10 +48,11 @@ class JsonResponse(Response):
 			)
 			raise AssertionError(msg)
 
-		self.data = {"err": err, "msg": msg, "data": data, "paginator": paginator}
-		if not paginator:
-			del self.data["paginator"]
-		# self.data = ujson.dumps(self.data)
+		self.data = {
+			"code": code,
+			"detail": detail,
+			"data": data
+		}
 		self.template_name = template_name
 		self.exception = exception
 		self.content_type = content_type
