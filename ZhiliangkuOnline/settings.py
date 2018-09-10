@@ -52,8 +52,6 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
-	# 'xadmin',
-	# 'crispy_forms',
 	'users',
 	'rest_framework',
 	'rest_framework.authtoken',
@@ -187,27 +185,27 @@ SECRET = "00181054a64e2d9eb69711912d7a372a"
 # )
 # DEBUG_TOOLBAR_MONGO_STACKTRACES = True
 
-# # 日志
-# LOGGING = {
-# 	'version': 1,
-# 	'disable_existing_loggers': False,
-# 	'filters': {
-# 		'require_debug_false': {
-# 			'()': 'django.utils.log.RequireDebugFalse'
-# 		}
-# 	},
-# 	'handlers': {
-# 		'mail_admins': {
-# 			'level': 'ERROR',
-# 			'filters': ['require_debug_false'],
-# 			'class': 'django.utils.log.AdminEmailHandler'
-# 		}
-# 	},
-# 	'loggers': {
-# 		'django.request': {
-# 			'handlers': ['mail_admins'],
-# 			'level': 'ERROR',
-# 			'propagate': True,
-# 		},
-# 	}
-# }
+# 日志
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'filters': {
+		'require_debug_false': {
+			'()': 'django.utils.log.RequireDebugFalse'
+		}
+	},
+	'handlers': {
+		'mail_admins': {
+			'level': 'ERROR',
+			'filters': ['require_debug_false'],
+			'class': 'django.utils.log.AdminEmailHandler'
+		}
+	},
+	'loggers': {
+		'django.request': {
+			'handlers': ['mail_admins'],
+			'level': 'ERROR',
+			'propagate': True,
+		},
+	}
+}

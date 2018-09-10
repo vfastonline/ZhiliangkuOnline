@@ -19,7 +19,6 @@ def init_user_profile_role(sender, verbosity, **kwargs):
 			print("  - init 用户角色... OK")
 	except:
 		traceback.print_exc()
-		print("  - init 用户角色... Error")
 
 
 class UsersConfig(AppConfig):

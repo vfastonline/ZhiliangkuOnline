@@ -19,7 +19,6 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from django.contrib import admin
-import xadmin
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from users.user_views import *
 from users.sms_code_views import *
