@@ -5,8 +5,6 @@ from django.db.models import Q
 User = get_user_model()
 
 
-# 发送验证码是创建model中一条记录的操作
-
 class CustomBackend(ModelBackend):
 	"""
 	自定义用户验证规则

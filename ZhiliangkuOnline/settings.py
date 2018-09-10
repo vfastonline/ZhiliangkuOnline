@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# 设置'邮箱'用户名'手机号'均可登录
+# 自定义认证，设置'邮箱'用户名'手机号'均可登录
 AUTHENTICATION_BACKENDS = (
 	'django.contrib.auth.backends.ModelBackend',
 	'users.backends.CustomBackend',
@@ -54,7 +54,7 @@ INSTALLED_APPS = [
 	'django.contrib.staticfiles',
 	'xadmin',
 	'crispy_forms',
-	'apps.users',
+	'users',
 	'rest_framework',
 	'rest_framework.authtoken',
 	"rest_framework_mongoengine",
@@ -176,9 +176,6 @@ CACHES = {
 # 使用redis管理session
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
-
-# 手机号码正则表达式
-REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 阿里云短信设置
 APPKEY = '23764268'

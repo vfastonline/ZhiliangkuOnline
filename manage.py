@@ -2,22 +2,10 @@
 import os
 import sys
 
-import json
-from bson import ObjectId
-
-
-class JSONEncoder(json.JSONEncoder):
-	def default(self, o):
-		if isinstance(o, ObjectId):
-			return str(o)
-		return json.JSONEncoder.default(self, o)
-
-
-def monkey_patch_jsonencoder():
-	json.JSONEncoder = JSONEncoder
-
+from utils.utils import monkey_patch_jsonencoder, monkey_patch_json
 
 monkey_patch_jsonencoder()
+monkey_patch_json()
 
 if __name__ == '__main__':
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ZhiliangkuOnline.settings')
