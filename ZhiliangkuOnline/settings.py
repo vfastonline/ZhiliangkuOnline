@@ -146,14 +146,26 @@ JWT_AUTH = {
 
 # drf，配置
 REST_FRAMEWORK = {
+	# 权限
 	'DEFAULT_PERMISSION_CLASSES': (
 		'rest_framework.permissions.IsAuthenticated',
 	),
+
+	# 认证
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 		'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 		'rest_framework.authentication.BasicAuthentication',
 		'rest_framework.authentication.SessionAuthentication',
 	),
+
+	# 接口数据分页
+	'PAGE_SIZE': 10,
+	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+
+	# 接口异常，固定返回结构
+	'EXCEPTION_HANDLER': (
+		'utils.drf_response_handler.custom_exception_handler'
+	)
 }
 
 # # 缓存过期时间
