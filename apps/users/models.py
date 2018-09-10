@@ -3,8 +3,8 @@ from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 from mongoengine import *
 
-from apps.utils.model import *
-from apps.utils.storage import *
+from utils.model import *
+from utils.storage import *
 
 
 class Role(BaseModelMixin):
@@ -36,7 +36,6 @@ class Team(BaseModelMixin):
 	name = models.CharField('名称', max_length=255)
 	# technology = models.ForeignKey('tracks_learning.Technology', verbose_name="技术分类", on_delete=models.CASCADE, blank=True)
 	code = models.CharField(max_length=5, verbose_name="邀请码")
-	add_time = models.DateTimeField(default=datetime.now, verbose_name="邀请码添加时间", help_text="编辑保存触发产生新邀请码")
 
 	def __str__(self):
 		return self.name

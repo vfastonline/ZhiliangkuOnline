@@ -6,7 +6,7 @@ from .models import *
 
 
 class TeamAdmin(object):
-	list_display = ['name', 'code', "add_time"]
+	list_display = ['name', 'code']
 
 
 class RoleAdmin(object):
@@ -21,7 +21,7 @@ class UserProfileAdmin(object):
 
 
 class VerifyCodeAdmin(object):
-	list_display = ['code', 'mobile', "add_time"]
+	list_display = ['code', 'mobile']
 
 
 class BaseSetting(object):
