@@ -39,4 +39,4 @@ class RoleAdmin(admin.ModelAdmin):
 
 @admin.register(VerifyCode)
 class VerifyCodeAdmin(admin.ModelAdmin):
-	list_display = ['code', 'mobile']
+	list_display = ['code', 'phone']

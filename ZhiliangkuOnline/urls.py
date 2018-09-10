@@ -26,7 +26,7 @@ from users.sms_code_views import *
 router = DefaultRouter()
 
 # 配置codes的url
-router.register(r'code', SmsCodeViewset, base_name="code")
+router.register(r'send_sms', SmsCodeViewset, base_name="code")
 
 # 配置users的url
 router.register(r'users', UserViewset, base_name="users")

@@ -87,11 +87,10 @@ class VerifyCode(BaseModelMixin):
 	短信验证码,回填验证码进行验证。可以保存在redis中
 	"""
 	code = models.CharField(max_length=10, verbose_name="验证码")
-	mobile = models.CharField(max_length=11, verbose_name="电话")
-	id_field = "_id"
+	phone = models.CharField(max_length=11, verbose_name="手机号")
 
 	def __str__(self):
-		return self.code
+		return self.phone + ":" + self.code
 
 	class Meta:
 		verbose_name = "短信验证"

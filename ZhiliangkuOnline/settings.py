@@ -144,7 +144,7 @@ JWT_AUTH = {
 	'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
-# drf，权限，认证管理
+# drf，配置
 REST_FRAMEWORK = {
 	'DEFAULT_PERMISSION_CLASSES': (
 		'rest_framework.permissions.IsAuthenticated',

@@ -14,31 +14,31 @@ User = get_user_model()
 
 
 class SmsSerializer(serializers.Serializer):
-	mobile = serializers.CharField(max_length=11)
+	phone = serializers.CharField(max_length=11)
 
-	def validate_mobile(self, mobile):
+	def validate_phone(self, phone):
 		"""
 		验证手机号码(函数名称必须为validate_ + 字段名)
 		"""
-		# 手机是否注册
-		if User.objects.filter(mobile=mobile).count():
-			raise serializers.ValidationError("用户已经存在")
-
 		# 验证手机号码是否合法
-		if not re.match(REGEX_MOBILE, mobile):
+		if not re.match(REGEX_MOBILE, phone):
 			raise serializers.ValidationError("手机号码非法")
+
+		# 手机是否注册
+		if User.objects.filter(mobile=phone).count():
+			raise serializers.ValidationError("用户已经存在")
 
 		# 验证码发送频率
 		one_minute_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
 		# 添加时间大于一分钟以前。也就是距离现在还不足一分钟
-		if VerifyCode.objects.filter(created_at__gt=one_minute_ago, mobile=mobile).count():
+		if VerifyCode.objects.filter(created_at__gt=one_minute_ago, phone=phone).count():
 			raise serializers.ValidationError("距离上一次发送未超过60s")
 
-		return mobile
+		return phone
 
 	class Meta:
 		model = VerifyCode
-		fields = ('code', 'mobile')
+		fields = ('code', 'phone')
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
