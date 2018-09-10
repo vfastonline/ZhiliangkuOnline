@@ -24,7 +24,7 @@ def custom_exception_handler(exc, context):
 
 
 class JsonResponse(Response):
-	"""通用'响应'结果集
+	"""通用'接口响应'结果集
 	An HttpResponse that allows its data to be rendered into
 	arbitrary media types.
 	"""
