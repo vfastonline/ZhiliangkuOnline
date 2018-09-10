@@ -1,5 +1,4 @@
 # encoding: utf-8
-import ujson
 
 from django.utils import six
 from rest_framework.response import Response
@@ -30,8 +29,8 @@ class JsonResponse(Response):
 	arbitrary media types.
 	"""
 
-	def __init__(self, data='', detail='', status=None, template_name=None, headers=None,
-				 exception=False, content_type=None):
+	def __init__(self, data='', detail='', status=None, template_name=None, headers=None, exception=False,
+				 content_type=None):
 		"""
 		Alters the init arguments slightly.
 		For example, drop 'template_name', and instead use 'data'.
