@@ -1,3 +1,4 @@
+# encoding: utf-8
 import ujson
 
 from django.utils import six
@@ -19,9 +20,6 @@ def custom_exception_handler(exc, context):
 	# Now add the HTTP status code to the response.
 	if response is not None:
 		response.data['code'] = response.status_code
-		response.data['message'] = response.data['detail']
-		response.data['data'] = ""
-		del response.data['detail']
 
 	return response
 
