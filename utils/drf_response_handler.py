@@ -8,7 +8,7 @@ from rest_framework.views import exception_handler
 
 
 def custom_exception_handler(exc, context):
-	"""
+	"""异常'接口响应'结果集
 	:param exc:
 	:param context:
 	:return: { "msg":"Not allowed.", "code":400, "data":null }
@@ -25,7 +25,7 @@ def custom_exception_handler(exc, context):
 
 
 class JsonResponse(Response):
-	"""
+	"""通用'响应'结果集
 	An HttpResponse that allows its data to be rendered into
 	arbitrary media types.
 	"""
