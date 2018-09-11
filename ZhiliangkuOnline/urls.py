@@ -22,11 +22,16 @@ from django.contrib import admin
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from users.user_views import *
 from users.sms_code_views import *
+from banner.views import *
 
 router = DefaultRouter()
 
 # 配置codes的url
 router.register(r'send_sms', SmsCodeViewset, base_name="code")
+
+#轮播图
+router.register(r'banner', BannerViewset, base_name="banner")
+
 
 # 配置users的url
 router.register(r'users', UserViewset, base_name="users")
