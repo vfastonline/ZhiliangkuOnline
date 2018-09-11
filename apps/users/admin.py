@@ -1,11 +1,29 @@
+# encoding: utf-8
+
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
+from utils.tools import index_decorator
 from .models import *
 
 User = get_user_model()
+
+
+@admin.register(Role)
+class RoleAdmin(admin.ModelAdmin):
+	list_display = ['index', 'name']
+
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+	list_display = ['name', 'code']
+
+
+@admin.register(VerifyCode)
+class VerifyCodeAdmin(admin.ModelAdmin):
+	list_display = ['code', 'phone']
 
 
 @admin.register(User)
@@ -27,16 +45,8 @@ class CustomUserAdmin(UserAdmin):
 	)
 
 
-@admin.register(Team)
-class TeamAdmin(admin.ModelAdmin):
-	list_display = ['name', 'code']
-
-
-@admin.register(Role)
-class RoleAdmin(admin.ModelAdmin):
-	list_display = ['index', 'name']
-
-
-@admin.register(VerifyCode)
-class VerifyCodeAdmin(admin.ModelAdmin):
-	list_display = ['code', 'phone']
+# 后台页面设置，写在settings.py'INSTALLED_APPS首个的admin.py中
+admin.site.site_header = "智量酷-数据后台管理系统"
+admin.site.site_title = "智量酷"
+admin.site.index = index_decorator(admin.site.index)
+admin.site.app_index = index_decorator(admin.site.app_index)

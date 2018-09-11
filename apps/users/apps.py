@@ -24,6 +24,7 @@ def init_user_profile_role(sender, verbosity, **kwargs):
 class UsersConfig(AppConfig):
 	name = 'users'
 	verbose_name = "用户管理"
+	main_menu_index = 1
 
 	def ready(self):
 		post_migrate.connect(init_user_profile_role, sender=self)

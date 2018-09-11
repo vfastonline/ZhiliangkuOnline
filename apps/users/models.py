@@ -21,7 +21,7 @@ class Role(BaseModelMixin):
 		return self.name
 
 	class Meta:
-		verbose_name = "用户角色"
+		verbose_name = "角色"
 		verbose_name_plural = verbose_name
 
 
