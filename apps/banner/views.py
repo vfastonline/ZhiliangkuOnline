@@ -2,8 +2,10 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import mixins
+from rest_framework import status
 from rest_framework import viewsets
 
+from utils.drf_response_handler import JsonResponse
 from .serializers import *
 
 
@@ -21,3 +23,8 @@ class BannerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 
 	filter_fields = ('category',)
 	ordering = ('index',)
+
+	def list(self, request, *args, **kwargs):
+		queryset = self.filter_queryset(self.get_queryset())
+		serializer = self.get_serializer(queryset, many=True)
+		return JsonResponse(data=serializer.data, code=status.HTTP_200_OK, desc="success")

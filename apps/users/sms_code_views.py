@@ -40,8 +40,11 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 		code = self.generate_code()
 		sms_status = send_sms.send_sms(phone, {'code': code})
 
+		code = sms_status.get("code")
+		status = sms_status.get("code")
+		desc = sms_status.get("detail")
 		if sms_status.get("code") == 204:
 			code_record = VerifyCode(code=code, phone=phone)
 			code_record.save()
 
-		return JsonResponse(detail=sms_status.get("detail"), status=sms_status.get("code"))
+		return JsonResponse(desc=desc, code=code, status=status)
