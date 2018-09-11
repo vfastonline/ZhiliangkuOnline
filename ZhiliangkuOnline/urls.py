@@ -30,7 +30,7 @@ router = DefaultRouter()
 router.register(r'send_sms', SmsCodeViewSet, base_name="code")
 
 # 轮播图
-router.register(r'banner', BannerViewSet, base_name="banner")
+router.register(r'banners', BannerViewSet, base_name="banners")
 
 # 配置users的url
 router.register(r'users', UserViewSet, base_name="users")

@@ -6,8 +6,8 @@ from .models import *
 
 
 class BannerSerializer(serializers.ModelSerializer):
-	_id = serializers.CharField(max_length=24)
+	# _id = serializers.CharField(max_length=24)
 
 	class Meta:
 		model = Banner
-		fields = "__all__"
+		fields = ("index", "image", "desc")
