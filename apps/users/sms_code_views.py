@@ -11,7 +11,7 @@ from utils.drf_response_handler import *
 from utils.sms import SendSms
 
 
-class SmsCodeViewset(CreateModelMixin, viewsets.GenericViewSet):
+class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	发送短信验证码
 	"""

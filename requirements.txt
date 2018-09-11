@@ -14,4 +14,4 @@ ujson
 social-auth-app-django==2.1.0
 unittest2==1.1.0
 httpretty==0.9.5
-django-filter
+django-filter==2.0.0

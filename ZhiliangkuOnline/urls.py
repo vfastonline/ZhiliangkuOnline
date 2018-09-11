@@ -13,28 +13,27 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
-from django.contrib import admin
 from ZhiliangkuOnline.settings import MEDIA_ROOT
-from users.user_views import *
-from users.sms_code_views import *
 from banner.views import *
+from users.sms_code_views import *
+from users.user_views import *
 
 router = DefaultRouter()
 
 # 配置codes的url
-router.register(r'send_sms', SmsCodeViewset, base_name="code")
+router.register(r'send_sms', SmsCodeViewSet, base_name="code")
 
-#轮播图
-router.register(r'banner', BannerViewset, base_name="banner")
-
+# 轮播图
+router.register(r'banner', BannerViewSet, base_name="banner")
 
 # 配置users的url
-router.register(r'users', UserViewset, base_name="users")
+router.register(r'users', UserViewSet, base_name="users")
 
 urlpatterns = [
 	path('admin/', admin.site.urls),

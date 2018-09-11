@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from .serializers import *
 
 
-class BannerViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
+class BannerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	"""
 	轮播图
 	"""

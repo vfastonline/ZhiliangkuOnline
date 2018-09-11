@@ -7,7 +7,7 @@ from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSe
 from users.serializers import *
 
 
-class UserViewset(MongoModelViewSet):
+class UserViewSet(MongoModelViewSet):
 	"""
 	用户
 	"""

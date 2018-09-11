@@ -1,6 +1,5 @@
 # encoding: utf8
 from utils.model import *
-from utils.storage import ImageStorage
 
 
 class Banner(BaseModelMixin):
