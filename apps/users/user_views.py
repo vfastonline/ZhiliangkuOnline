@@ -1,13 +1,14 @@
 # encoding: utf-8
 
+from rest_framework import mixins, viewsets
 from rest_framework import permissions, authentication
+from rest_framework.mixins import CreateModelMixin
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_mongoengine.viewsets import ModelViewSet as MongoModelViewSet
 
 from users.serializers import *
 
 
-class UserViewSet(MongoModelViewSet):
+class UserViewSet(CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 	"""
 	用户
 	"""

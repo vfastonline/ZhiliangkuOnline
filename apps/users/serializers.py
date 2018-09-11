@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from rest_framework_mongoengine import serializers as mongoserializers
 
 from users.models import VerifyCode
 from utils.tools import REGEX_MOBILE
@@ -51,7 +50,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 		fields = ("username", "gender", "birthday", "email", "mobile")
 
 
-class UserRegSerializer(mongoserializers.DocumentSerializer):
+class UserRegSerializer(serializers.Serializer):
 	code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="验证码",
 								 error_messages={
 									 "blank": "请输入验证码",
