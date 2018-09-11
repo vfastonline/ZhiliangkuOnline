@@ -21,19 +21,23 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from banner.views import *
+from user_operation.views import UserResumeViewSet
 from users.sms_code_views import *
 from users.user_views import *
 
 router = DefaultRouter()
 
 # 配置codes的url
-router.register(r'send_sms', SmsCodeViewSet, base_name="code")
+router.register(r'send_sms', SmsCodeViewSet, base_name="send_sms")
 
 # 轮播图
 router.register(r'banners', BannerViewSet, base_name="banners")
 
 # 配置users的url
 router.register(r'users', UserViewSet, base_name="users")
+
+# 用户简历
+router.register(r'user_resume', UserResumeViewSet, base_name="user_resume")
 
 urlpatterns = [
 	path('admin/', admin.site.urls),

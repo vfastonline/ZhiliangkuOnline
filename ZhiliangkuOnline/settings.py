@@ -58,8 +58,9 @@ INSTALLED_APPS = [
 	'social_django',  # 第三方登录
 	'django_filters',
 
-	'users',
 	'banner',
+	'users',
+	'user_operation',
 
 ]
 
