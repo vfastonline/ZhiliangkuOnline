@@ -23,7 +23,6 @@ class Role(BaseModelMixin):
 	class Meta:
 		verbose_name = "用户角色"
 		verbose_name_plural = verbose_name
-		ordering = ["-index"]
 
 
 class Team(BaseModelMixin):

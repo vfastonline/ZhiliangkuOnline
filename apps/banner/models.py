@@ -14,14 +14,14 @@ class Banner(BaseModelMixin):
 
 	name = models.CharField('轮播名称', max_length=50)
 	image = models.ImageField(upload_to='banner', verbose_name="轮播图片")
-	category = models.CharField('类别', max_length=1, choices=CATEGORY)
-	index = models.IntegerField(default=0, verbose_name="轮播顺序")
+	category = models.CharField('类别', max_length=1, choices=CATEGORY, db_index=True)
+	index = models.IntegerField(default=0, verbose_name="轮播顺序", db_index=True)
 	desc = models.TextField(default="", verbose_name="轮播描述", help_text="轮播描述")
 
 	class Meta:
 		verbose_name = '轮播图'
 		verbose_name_plural = verbose_name
+		unique_together = ("category", "index")
 
 	def __str__(self):
 		return self.name
-
