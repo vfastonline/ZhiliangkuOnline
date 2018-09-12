@@ -52,3 +52,60 @@ class CareerObjective(BaseModelMixin):
 	class Meta:
 		verbose_name = "求职意向"
 		verbose_name_plural = verbose_name
+
+
+class WorkExperience(BaseModelMixin):
+	"""工作经历"""
+	user_resume = models.ForeignKey(UserResume, verbose_name="工作经历", on_delete=models.CASCADE, blank=True,
+									related_name="WorkExperiences")
+	company = models.CharField("公司名称", max_length=255, blank=True)
+	position = models.CharField("职位名称", max_length=255, blank=True)
+	start_time = models.DateField("在职起始时间", max_length=255, blank=True)
+	end_time = models.DateField("在职终止时间", max_length=255, blank=True)
+	content = models.TextField("工作内容", blank=True)
+
+	def __str__(self):
+		return self.company
+
+	class Meta:
+		verbose_name = "工作经历"
+		verbose_name_plural = verbose_name
+
+
+class ProjectExperience(BaseModelMixin):
+	"""项目经验"""
+	user_resume = models.ForeignKey(UserResume, verbose_name="项目经验", on_delete=models.CASCADE, blank=True,
+									related_name="ProjectExperiences")
+	name = models.CharField("项目名称", max_length=255, blank=True)
+	role = models.CharField("角色", max_length=255, blank=True)
+	url = models.URLField("项目链接", max_length=255, blank=True)
+	start_time = models.DateField("项目起始时间", max_length=255, blank=True)
+	end_time = models.DateField("项目终止时间", max_length=255, blank=True)
+	description = models.TextField("项目描述", blank=True)
+	performance = models.TextField("项目业绩", blank=True)
+
+	def __str__(self):
+		return self.name
+
+	class Meta:
+		verbose_name = "项目经验"
+		verbose_name_plural = verbose_name
+
+
+class EducationExperience(BaseModelMixin):
+	"""教育经历"""
+	user_resume = models.ForeignKey(UserResume, verbose_name="教育经历", on_delete=models.CASCADE, blank=True,
+									related_name="EducationExperiences")
+	school = models.CharField("学校名称", max_length=255, blank=True)
+	discipline = models.CharField("所学专业", max_length=255, blank=True)
+	education = models.CharField("学历", max_length=255, blank=True)
+	start_time = models.DateField("起始时间", max_length=255, blank=True)
+	end_time = models.DateField("终止时间", max_length=255, blank=True)
+	experience = models.TextField("在校经历", blank=True)
+
+	def __str__(self):
+		return self.school
+
+	class Meta:
+		verbose_name = "教育经历"
+		verbose_name_plural = verbose_name
