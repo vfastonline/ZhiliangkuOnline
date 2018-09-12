@@ -21,7 +21,6 @@ class Banner(BaseModelMixin):
 	class Meta:
 		verbose_name = '轮播图'
 		verbose_name_plural = verbose_name
-		unique_together = ("category", "index")
 
 	def __str__(self):
 		return self.name

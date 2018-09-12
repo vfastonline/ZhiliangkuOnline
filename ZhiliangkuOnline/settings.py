@@ -181,24 +181,25 @@ REST_FRAMEWORK = {
 	)
 }
 
-# # 缓存过期时间
-# REST_FRAMEWORK_EXTENSIONS = {
-# 	'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 15
-# }
-#
-# CACHES = {
-# 	"default": {
-# 		"BACKEND": "django_redis.cache.RedisCache",
-# 		"LOCATION": "redis://127.0.0.1:6379/",
-# 		"OPTIONS": {
-# 			"CLIENT_CLASS": "django_redis.client.DefaultClient",
-# 		}
-# 	}
-# }
-#
-# # 使用redis管理session
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-# SESSION_CACHE_ALIAS = "default"
+# 缓存过期时间
+REST_FRAMEWORK_EXTENSIONS = {
+	'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
+	'DEFAULT_USE_CACHE': 'default',
+}
+
+CACHES = {
+	"default": {
+		"BACKEND": "django_redis.cache.RedisCache",
+		"LOCATION": "redis://127.0.0.1:6379/",
+		"OPTIONS": {
+			"CLIENT_CLASS": "django_redis.client.DefaultClient",
+		}
+	}
+}
+
+# 使用redis管理session
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # 阿里云短信设置
 APPKEY = '23764268'
