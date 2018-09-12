@@ -26,6 +26,9 @@ def monkey_patch_jsonencoder():
 	json.JSONEncoder = JSONEncoder
 
 
+monkey_patch_jsonencoder()
+
+
 # 查找app顺序
 def find_app_index(app_label):
 	app = apps.get_app_config(app_label)
