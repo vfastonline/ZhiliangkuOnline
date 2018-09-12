@@ -24,7 +24,6 @@ from banner.views import *
 from user_operation.routers import *
 from users.routers import *
 from users.sms_code_views import *
-
 from users.user_views import *
 
 urlpatterns = [
