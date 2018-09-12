@@ -24,11 +24,11 @@ from banner.views import *
 from user_operation.routers import *
 from users.routers import *
 from users.sms_code_views import *
+
 from users.user_views import *
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	# path('xadmin/', xadmin.site.urls),
 
 	# 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
 	re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
