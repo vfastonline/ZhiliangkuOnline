@@ -19,6 +19,7 @@ from django.views.static import serve
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from ZhiliangkuOnline.settings import MEDIA_ROOT
+from ZhiliangkuOnline.settings import STATIC_ROOT
 from banner.routers import *
 from banner.views import *
 from user_operation.routers import *
@@ -44,5 +45,7 @@ urlpatterns = [
 	path('api-token-verify/', verify_jwt_token),  # 校验token
 
 	# 第三方登录
-	path('', include('social_django.urls', namespace='social'))
+	path('', include('social_django.urls', namespace='social')),
+
+	re_path('static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
 ]
