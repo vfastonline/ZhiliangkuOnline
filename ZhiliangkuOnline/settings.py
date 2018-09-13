@@ -107,6 +107,10 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'djongo',
 		'NAME': 'zhiliangku',
+		'USER': 'root',
+		'PASSWORD': '111111',
+		'HOST': 'localhost',
+		'PORT': '27017',
 		'ENFORCE_SCHEMA': False,
 	}
 }
