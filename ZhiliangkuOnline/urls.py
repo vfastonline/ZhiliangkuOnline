@@ -18,6 +18,7 @@ from django.urls import path, re_path, include
 from django.views.static import serve
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
+from ZhiliangkuOnline import settings
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from ZhiliangkuOnline.settings import STATIC_ROOT
 from banner.routers import *
@@ -49,3 +50,8 @@ urlpatterns = [
 	path('', include('social_django.urls', namespace='social')),
 
 ]
+
+if settings.DEBUG:
+	import debug_toolbar
+
+	urlpatterns += [path(r'__debug__/', include(debug_toolbar.urls))]

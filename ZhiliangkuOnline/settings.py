@@ -14,6 +14,7 @@ import os
 import sys
 
 import datetime
+import six
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
 	'rest_framework.authtoken',
 	'social_django',  # 第三方登录
 	'django_filters',
+	'debug_toolbar',
 
 	'banner',
 	'users',
@@ -73,6 +75,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ZhiliangkuOnline.urls'
@@ -204,11 +207,51 @@ SESSION_CACHE_ALIAS = "default"
 APPKEY = '23764268'
 SECRET = "00181054a64e2d9eb69711912d7a372a"
 
-# # mongodb 调试工具
-# DEBUG_TOOLBAR_PANELS = (
-# 	'debug_toolbar_mongo.panel.MongoDebugPanel',
-# )
-# DEBUG_TOOLBAR_MONGO_STACKTRACES = True
+# django调试工具，debug_toolbar
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+INTERNAL_IPS = ("127.0.0.1",)
+DEBUG_TOOLBAR_PANELS = [
+	'debug_toolbar.panels.versions.VersionsPanel',
+	'debug_toolbar.panels.timer.TimerPanel',
+	'debug_toolbar.panels.settings.SettingsPanel',
+	'debug_toolbar.panels.headers.HeadersPanel',
+	'debug_toolbar.panels.request.RequestPanel',
+	'debug_toolbar.panels.sql.SQLPanel',
+	'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+	'debug_toolbar.panels.templates.TemplatesPanel',
+	'debug_toolbar.panels.cache.CachePanel',
+	'debug_toolbar.panels.signals.SignalsPanel',
+	'debug_toolbar.panels.logging.LoggingPanel',
+	'debug_toolbar.panels.redirects.RedirectsPanel',
+]
+CONFIG_DEFAULTS = {
+	# Toolbar options
+	# 'DISABLE_PANELS': {'debug_toolbar.panels.redirects.RedirectsPanel'},
+	'INSERT_BEFORE': '</body>',
+	'JQUERY_URL': '//cdn.bootcss.com/jquery/2.1.4/jquery.min.js',
+	'RENDER_PANELS': None,
+	'RESULTS_CACHE_SIZE': 10,
+	'ROOT_TAG_EXTRA_ATTRS': '',
+	'SHOW_COLLAPSED': False,
+	'SHOW_TOOLBAR_CALLBACK': 'debug_toolbar.middleware.show_toolbar',
+	# Panel options
+	'EXTRA_SIGNALS': [],
+	'ENABLE_STACKTRACES': True,
+	'HIDE_IN_STACKTRACES': (
+		'socketserver' if six.PY3 else 'SocketServer',
+		'threading',
+		'wsgiref',
+		'debug_toolbar',
+		'django',
+	),
+	'PROFILER_MAX_DEPTH': 10,
+	'SHOW_TEMPLATE_CONTEXT': True,
+	'SKIP_TEMPLATE_PREFIXES': (
+		'django/forms/widgets/',
+		'admin/widgets/',
+	),
+	'SQL_WARNING_THRESHOLD': 500,  # milliseconds
+}
 
 # 第三方认证
 SOCIAL_AUTH_WEIBO_KEY = ''
