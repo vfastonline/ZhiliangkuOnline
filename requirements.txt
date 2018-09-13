@@ -17,3 +17,4 @@ django-filter==2.0.0
 drf-extensions
 django-cors-headers
 coreapi
+coreapi-cli
