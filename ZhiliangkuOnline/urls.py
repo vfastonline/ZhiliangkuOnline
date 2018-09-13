@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from django.views.static import serve
+from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from ZhiliangkuOnline import settings
@@ -23,7 +24,7 @@ from ZhiliangkuOnline.settings import MEDIA_ROOT
 from ZhiliangkuOnline.settings import STATIC_ROOT
 from banner.routers import *
 from banner.views import *
-from user_operation.routers import *
+from user_resumes.routers import *
 from users.routers import *
 from users.sms_code_views import *
 from users.user_views import *
@@ -48,6 +49,8 @@ urlpatterns = [
 
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
+
+	path(r'docs/', include_docs_urls(title='My API title'))
 
 ]
 

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 
+	'corsheaders',
 	'rest_framework',
 	'rest_framework.authtoken',
 	'social_django',  # 第三方登录
@@ -63,13 +64,14 @@ INSTALLED_APPS = [
 
 	'banner',
 	'users',
-	'user_operation',
+	'user_resumes',
 
 ]
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -186,6 +188,14 @@ REST_FRAMEWORK = {
 		'utils.drf_response_handler.custom_exception_handler'
 	)
 }
+
+# corsheaders
+CORS_ORIGIN_WHITELIST = (
+	# '*'
+	'127.0.0.1:8000',  # 请求的域名
+	'localhost:8000',
+	'localhost',
+)
 
 # 缓存过期时间
 REST_FRAMEWORK_EXTENSIONS = {
