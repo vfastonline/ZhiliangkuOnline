@@ -1,6 +1,10 @@
 mongodb
+curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel62-4.0.2.tgz
+tar -zxvf mongodb-linux-x86_64-rhel62-4.0.2.tgz
+mv mongodb-linux-x86_64-4.0.2/ /usr/local/mongodb
+export PATH=/usr/local/mongodb/bin:$PATH
 
-1：conf
+1：/usr/local/etc/mongod.conf
 
 processManagement:
    fork: true
