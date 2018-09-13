@@ -4,11 +4,11 @@ from rest_framework import filters
 from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
-
-from utils.drf_response_handler import JsonResponse
-from .serializers import *
 from rest_framework_extensions.cache.decorators import cache_response
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
+
+from apps.banner.serializers import *
+from utils.drf_response_handler import JsonResponse
 
 
 class BannerViewSet(CacheResponseMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
