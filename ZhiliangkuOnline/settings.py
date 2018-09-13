@@ -230,7 +230,7 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 CONFIG_DEFAULTS = {
 	# Toolbar options
-	# 'DISABLE_PANELS': {'debug_toolbar.panels.redirects.RedirectsPanel'},
+	'DISABLE_PANELS': {'debug_toolbar.panels.redirects.RedirectsPanel'},
 	'INSERT_BEFORE': '</body>',
 	'JQUERY_URL': '//cdn.bootcss.com/jquery/2.1.4/jquery.min.js',
 	'RENDER_PANELS': None,

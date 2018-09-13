@@ -26,7 +26,7 @@ class BannerViewSet(CacheResponseMixin, mixins.ListModelMixin, viewsets.GenericV
 	filter_fields = ('category',)
 	ordering = ('index',)
 
-	# @cache_response()
+	@cache_response()
 	def list(self, request, *args, **kwargs):
 		queryset = self.filter_queryset(self.get_queryset())
 		serializer = self.get_serializer(queryset, many=True)
