@@ -14,8 +14,11 @@ storage:
   dbPath: /usr/local/var/mongodb
 
 net:
-  #bindIp: 127.0.0.1
+  bindIp: 0.0.0.0
   port: 27017
+
+security:
+   authorization: enabled
 
 2：命令行执行
 echo never >>  /sys/kernel/mm/transparent_hugepage/enabled
