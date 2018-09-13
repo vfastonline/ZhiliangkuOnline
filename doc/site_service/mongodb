@@ -34,6 +34,22 @@ mongod  hard  nofile  64000
 mongod  soft  nproc  32000
 mongod  hard  nproc  32000
 
+4:vim /etc/profile
+ulimit -f unlimited
+ulimit -t unlimited
+ulimit -v unlimited
+ulimit -n 64000
+ulimit -m unlimited
+ulimit -u 64000
+
+source /etc/profile
+
+5:vi /etc/security/limits.conf
+mongod soft nofile 64000
+mongod hard nofile 64000
+mongod soft nproc 32000
+mongod hard nproc 32000
+
 启动
 /usr/local/mongodb/bin/mongod --config /usr/local/etc/mongod.conf
 
@@ -41,3 +57,14 @@ mongod  hard  nproc  32000
 use admin
 db.system.users.find()
 db.createUser({user:"root",pwd:"111111",roles:[{role:["root","userAdminAnyDatabase"], db:"admin"}]})
+
+检查：
+ps aux | grep mongodb
+cat /proc/{mongodb PID}/limits
+
+Max processes             64000                64000                processes
+Max open files            64000                64000                files
+
+ulimit -a
+open files                      (-n) 64000
+max user processes              (-u) 64000
