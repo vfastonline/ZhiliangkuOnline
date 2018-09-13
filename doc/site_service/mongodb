@@ -24,9 +24,16 @@ security:
 echo never >>  /sys/kernel/mm/transparent_hugepage/enabled
 echo never >>  /sys/kernel/mm/transparent_hugepage/defrag
 
+3: vim /etc/security/limits.conf
+mongod  soft  nofile  64000
+mongod  hard  nofile  64000
+mongod  soft  nproc  32000
+mongod  hard  nproc  32000
+
 启动
 /usr/local/mongodb/bin/mongod --config /usr/local/etc/mongod.conf
 
 创建超级用户
 use admin
-db.createUser({user:"root",pwd:"111111",roles:[{role:"userAdminAnyDatabase", db:"admin"}]})
+db.system.users.find()
+db.createUser({user:"root",pwd:"111111",roles:[{role:["root","userAdminAnyDatabase"], db:"admin"}]})
