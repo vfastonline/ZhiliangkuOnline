@@ -110,7 +110,7 @@ DATABASES = {
 		'USER': 'root',
 		'PASSWORD': '111111',
 		'HOST': 'localhost',
-		'PORT': '27017',
+		'PORT': 27017,
 		'ENFORCE_SCHEMA': False,
 	}
 }
