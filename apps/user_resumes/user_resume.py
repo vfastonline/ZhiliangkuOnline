@@ -57,7 +57,6 @@ class UserResumeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets
 	permission_classes = (IsAuthenticated,)
 
 	def get_queryset(self):
-		print(1111)
 		user_resume = UserResume.objects.filter(user=self.request.user)
 		if user_resume.exists():
 			return user_resume
@@ -65,14 +64,12 @@ class UserResumeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets
 		return self.get_queryset()
 
 	def get_serializer_class(self):
-		print(22222)
 		if self.action == "list":
 			return UserResumeSerializer
 		else:
 			return UserResumeUpdateSerializer
 
 	def list(self, request, *args, **kwargs):
-		print(33333)
 		queryset = self.filter_queryset(self.get_queryset())
 		serializer = self.get_serializer(queryset, many=True)
 		return JsonResponse(data=serializer.data, code=status.HTTP_200_OK, desc="success")
