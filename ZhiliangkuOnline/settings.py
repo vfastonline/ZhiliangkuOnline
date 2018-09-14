@@ -163,6 +163,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 JWT_AUTH = {
 	'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 	'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+	'JWT_ALLOW_REFRESH': True,  # 启用JWT，token刷新功能
 }
 
 # drf，配置
@@ -201,6 +202,11 @@ CORS_ORIGIN_WHITELIST = (
 REST_FRAMEWORK_EXTENSIONS = {
 	'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60 * 60,
 	'DEFAULT_USE_CACHE': 'default',
+	'DEFAULT_CACHE_ERRORS': False,
+	'DEFAULT_OBJECT_CACHE_KEY_FUNC':
+		'rest_framework_extensions.utils.default_object_cache_key_func',
+	'DEFAULT_LIST_CACHE_KEY_FUNC':
+		'rest_framework_extensions.utils.default_list_cache_key_func',
 }
 
 CACHES = {
