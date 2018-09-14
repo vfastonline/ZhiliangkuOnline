@@ -8,3 +8,11 @@ class ServiceUnavailable(APIException):
 	"""
 	status_code = 503
 	default_detail = 'Service temporarily unavailable, try again later.'
+
+
+class ResumeCategoryUnavailable(APIException):
+	"""
+	简历类型参数错误
+	"""
+	status_code = 503
+	default_detail = '简历类型参数错误.'

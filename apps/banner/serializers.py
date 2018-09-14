@@ -2,7 +2,7 @@
 
 from rest_framework import serializers
 
-from .models import *
+from banner.models import *
 
 
 class BannerSerializer(serializers.ModelSerializer):
