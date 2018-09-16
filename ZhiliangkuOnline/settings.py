@@ -220,8 +220,8 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
 # 阿里云短信设置
-APPKEY = ''
-SECRET = ""
+APPKEY = '23764268'
+SECRET = "00181054a64e2d9eb69711912d7a372a"
 
 # django调试工具，debug_toolbar
 DEBUG_TOOLBAR_PATCH_SETTINGS = False
