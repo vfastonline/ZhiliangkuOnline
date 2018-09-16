@@ -282,27 +282,107 @@ SOCIAL_AUTH_WEIXIN_SECRET = ''
 # 第三方登录成功后跳转页面
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'
 
+# 创建日志的路径
+LOG_PATH = os.path.join(BASE_DIR, 'log')
+# 如果地址不存在，则会自动创建log文件夹
+if not os.path.isdir(LOG_PATH):
+	os.mkdir(LOG_PATH)
+
 # 日志
 LOGGING = {
+	# version 值只能为1
 	'version': 1,
-	'disable_existing_loggers': False,
+
+	# True 表示禁用loggers
+	'disable_existing_loggers': True,
+
+	# < 格式化 >
+	'formatters': {
+		# 可以设置多种格式，根据需要选择保存的格式
+		'default': {'format': '%(levelname)s %(funcName)s %(module)s %(asctime)s %(message)s'},
+		'simple': {'format': '%(levelname)s %(module)s %(asctime)s %(message)s'},
+		'standard': {
+			'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] [%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'}
+	},
+
 	'filters': {
 		'require_debug_false': {
 			'()': 'django.utils.log.RequireDebugFalse'
 		}
 	},
+
+	# < 处理信息 >
 	'handlers': {
 		'mail_admins': {
 			'level': 'ERROR',
 			'filters': ['require_debug_false'],
-			'class': 'django.utils.log.AdminEmailHandler'
+			'class': 'django.utils.log.AdminEmailHandler',
+			'include_html': True,
+
+		},
+		'default': {
+			'level': 'DEBUG',
+			'class': 'logging.handlers.RotatingFileHandler',
+			'filename': '%s/all.txt' % LOG_PATH,  # 日志输出文件
+			'maxBytes': 1024 * 1024 * 5,  # 文件大小
+			'backupCount': 5,  # 备份份数
+			'formatter': 'standard',  # 使用哪种formatters日志格式
+		},
+		'error': {
+			'level': 'ERROR',
+			'class': 'logging.handlers.RotatingFileHandler',
+			'filename': '%s/error.txt' % LOG_PATH,
+			'maxBytes': 1024 * 1024 * 5,
+			'backupCount': 5,
+			'formatter': 'standard',
+		},
+		'console': {
+			'level': 'DEBUG',
+			'class': 'logging.StreamHandler',
+			'formatter': 'standard'
+		},
+		'request_handler': {
+			'level': 'DEBUG',
+			'class': 'logging.handlers.RotatingFileHandler',
+			'filename': '%s/console.txt' % LOG_PATH,
+			'maxBytes': 1024 * 1024 * 5,
+			'backupCount': 5,
+			'formatter': 'standard',
+		},
+		'scprits_handler': {
+			'level': 'DEBUG',
+			'class': 'logging.handlers.RotatingFileHandler',
+			'filename': '%s/scprits.txt' % LOG_PATH,
+			'maxBytes': 1024 * 1024 * 5,
+			'backupCount': 5,
+			'formatter': 'standard',
 		}
 	},
 	'loggers': {
-		'django.request': {
-			'handlers': ['mail_admins'],
-			'level': 'ERROR',
-			'propagate': True,
+		'django': {
+			'handlers': ['default', 'console'],
+			'level': 'DEBUG',
+			'propagate': False
 		},
+		'django.request': {
+			'handlers': ['request_handler'],
+			'level': 'DEBUG',
+			'propagate': False,
+		},
+		'scripts': {
+			'handlers': ['scprits_handler'],
+			'level': 'INFO',
+			'propagate': False
+		},
+		'sourceDns.webdns.views': {
+			'handlers': ['default', 'error'],
+			'level': 'DEBUG',
+			'propagate': True
+		},
+		'sourceDns.webdns.util': {
+			'handlers': ['error'],
+			'level': 'ERROR',
+			'propagate': True
+		}
 	}
 }
