@@ -64,6 +64,19 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 	修改用户序列化
 	"""
 
+	mobile = serializers.CharField(label="手机号", help_text="手机号")
+
+	def validate_mobile(self, mobile):
+		# 验证手机号码是否合法
+		if not re.match(REGEX_MOBILE, mobile):
+			raise serializers.ValidationError("手机号码非法")
+
+		# 手机是否注册
+		if User.objects.filter(mobile=mobile).count():
+			raise serializers.ValidationError("手机号已经存在")
+
+		return mobile
+
 	class Meta:
 		model = User
 		fields = (
@@ -106,7 +119,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 		#     pass
 
 		# 验证码在数据库中是否存在，用户从前端post过来的值都会放入initial_data里面，排序(最新一条)。
-		verify_records = VerifyCode.objects.filter(phone=self.initial_data["username"]).order_by("-created_at")
+		verify_records = VerifyCode.objects.filter(phone=self.initial_data["mobile"]).order_by("-created_at")
 		if verify_records:
 			# 获取到最新一条
 			last_record = verify_records[0]
@@ -123,7 +136,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 
 	# 不加字段名的验证器作用于所有字段之上。attrs是字段 validate之后返回的总的dict
 	def validate(self, attrs):
-		attrs["username"] = attrs["mobile"]
+		attrs["username"] = attrs["mobile"]  # 用户名为注册手机号
 		del attrs["code"]
 		return attrs
 
