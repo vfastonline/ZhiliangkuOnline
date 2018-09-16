@@ -22,6 +22,8 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 			return UserDetailSerializer
 		elif self.action == "create":
 			return UserRegSerializer
+		elif self.action == "update" or self.action == "partial_update":
+			return UserUpdateSerializer
 
 		return UserRegSerializer
 

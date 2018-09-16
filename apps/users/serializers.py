@@ -49,6 +49,28 @@ class UserDetailSerializer(serializers.ModelSerializer):
 		fields = ("username", "gender", "birthday", "email", "mobile")
 
 
+class RoleSerializer(serializers.ModelSerializer):
+	"""
+	用户角色-序列化
+	"""
+
+	class Meta:
+		model = Role
+		fields = ("index", "name")
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+	"""
+	修改用户序列化
+	"""
+
+	class Meta:
+		model = User
+		fields = (
+			"name", "gender", "birthday", "institution", "computer_major", "graduate", "education", "signature",
+			"mobile",)
+
+
 class UserRegSerializer(serializers.ModelSerializer):
 	code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="验证码",
 								 error_messages={
