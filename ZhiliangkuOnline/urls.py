@@ -54,6 +54,7 @@ urlpatterns = [
 
 ]
 
+# debug模式，开启django调试工具
 if settings.DEBUG:
 	import debug_toolbar
 
