@@ -1,19 +1,25 @@
 # encoding: utf-8
+import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework_extensions.cache.decorators import cache_response
-from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
-from apps.banner.serializers import *
+from banner.serializers import *
 from utils.drf_response_handler import JsonResponse
 
 
-class BannerViewSet(CacheResponseMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+class SchoolFilter(django_filters.FilterSet):
+	class Meta:
+		model = Banner
+		fields = ['category']
+
+
+class BannerViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	"""
-	轮播图
+	list:
+	Return a list of all the existing users.
 	"""
 	authentication_classes = ()
 	permission_classes = ()
@@ -26,7 +32,6 @@ class BannerViewSet(CacheResponseMixin, mixins.ListModelMixin, viewsets.GenericV
 	filter_fields = ('category',)
 	ordering = ('index',)
 
-	@cache_response()
 	def list(self, request, *args, **kwargs):
 		queryset = self.filter_queryset(self.get_queryset())
 		serializer = self.get_serializer(queryset, many=True)
