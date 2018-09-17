@@ -108,3 +108,9 @@ venv.bak/
 0*.py
 media/
 dev_settings.py
+dump.rdb
+
+static/admin
+static/debug_toolbar
+static/rest_framework
+
