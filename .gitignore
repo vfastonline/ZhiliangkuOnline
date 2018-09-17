@@ -115,3 +115,5 @@ static/debug_toolbar
 static/rest_framework
 
 log/
+
+.DS_Store
