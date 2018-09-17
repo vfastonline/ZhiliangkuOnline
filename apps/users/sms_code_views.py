@@ -20,7 +20,8 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 	authentication_classes = ()
 	permission_classes = ()
 	serializer_class = SmsSerializer
-	throttle_classes = (SendSmsRateThrottle,)  # 匿名用户每天最多发10条验证码
+
+	# throttle_classes = (SendSmsRateThrottle,)  # 匿名用户每天最多发10条验证码
 
 	def generate_code(self):
 		"""

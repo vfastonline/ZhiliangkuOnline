@@ -11,4 +11,5 @@ class SendSmsRateThrottle(SimpleRateThrottle):
 	scope = 'send_sms'  # 显示频率的Key,在配置文件里需要有个跟这个同名
 
 	def get_cache_key(self, request, view):
+		print(111)
 		return self.get_ident(request)  # 获取请求IP

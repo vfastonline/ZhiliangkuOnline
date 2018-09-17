@@ -189,13 +189,13 @@ REST_FRAMEWORK = {
 		'utils.drf_response_handler.custom_exception_handler'
 	),
 
-	# 截流
-	'DEFAULT_THROTTLE_CLASSES': (
-		'utils.throttles.SendSmsRateThrottle',
-	),
-	'DEFAULT_THROTTLE_RATES': {
-		'send_sms': '10/day',
-	}
+	# # 截流
+	# 'DEFAULT_THROTTLE_CLASSES': (
+	# 	'utils.throttles.SendSmsRateThrottle',
+	# ),
+	# 'DEFAULT_THROTTLE_RATES': {
+	# 	'send_sms': '10/day',
+	# }
 
 }
 
