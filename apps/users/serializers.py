@@ -12,6 +12,9 @@ User = get_user_model()
 
 
 class SmsSerializer(serializers.Serializer):
+	"""
+	注册，发验证码
+	"""
 	phone = serializers.CharField(max_length=11)
 
 	def validate_phone(self, phone):
@@ -39,19 +42,9 @@ class SmsSerializer(serializers.Serializer):
 		fields = ('code', 'phone')
 
 
-class UserDetailSerializer(serializers.ModelSerializer):
-	"""
-	用户详情序列化
-	"""
-
-	class Meta:
-		model = User
-		fields = ("username", "gender", "birthday", "email", "mobile")
-
-
 class RoleSerializer(serializers.ModelSerializer):
 	"""
-	用户角色-序列化
+	用户角色
 	"""
 
 	class Meta:
@@ -59,9 +52,19 @@ class RoleSerializer(serializers.ModelSerializer):
 		fields = ("index", "name")
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+	"""
+	用户详情
+	"""
+
+	class Meta:
+		model = User
+		fields = ("username", "gender", "birthday", "email", "mobile")
+
+
 class UserUpdateSerializer(serializers.ModelSerializer):
 	"""
-	修改用户序列化
+	修改，用户
 	"""
 
 	mobile = serializers.CharField(label="手机号", help_text="手机号")
@@ -85,6 +88,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 
 
 class UserRegSerializer(serializers.ModelSerializer):
+	"""
+	注册，用户
+	"""
 	code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="验证码",
 								 error_messages={
 									 "blank": "请输入验证码",
