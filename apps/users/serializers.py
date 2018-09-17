@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import VerifyCode, Role
+from users.models import VerifyCode, Role, Team
 from utils.tools import REGEX_MOBILE
 
 User = get_user_model()
@@ -94,6 +94,15 @@ class UserRegSerializer(serializers.ModelSerializer):
 								 },
 								 help_text="验证码")
 
+	invitations = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="班级邀请码",
+										error_messages={
+											"blank": "请输入邀请码",
+											"required": "请输入邀请码",
+											"max_length": "邀请码格式错误",
+											"min_length": "邀请码格式错误"
+										},
+										help_text="班级邀请码")
+
 	mobile = serializers.CharField(label="手机号", help_text="手机号", required=True, allow_blank=False,
 								   validators=[UniqueValidator(queryset=User.objects.all(), message="手机号已经存在")])
 	password = serializers.CharField(
@@ -103,19 +112,30 @@ class UserRegSerializer(serializers.ModelSerializer):
 	# 调用父类的create方法，该方法会返回当前model的实例化对象即user。
 	# 前面是将父类原有的create进行执行，后面是加入自己的逻辑
 	def create(self, validated_data):
+		team = Team.objects.get(code=validated_data["invitations"])
+		del validated_data["invitations"]
 		user = super(UserRegSerializer, self).create(validated_data=validated_data)
 		user.set_password(validated_data["password"])
+		user.team.add(team)
 		user.save()
 		return user
 
+	def validate_invitations(self, invitations):
+		team_records = Team.objects.filter(code=self.initial_data["invitations"])
+		if team_records:
+			# 获取到最新一条
+			last_record = team_records[0]
+
+			# 有效期为1小时。
+			one_hours_ago = datetime.now() - timedelta(hours=1, minutes=0, seconds=0)
+			if one_hours_ago > last_record.created_at:
+				raise serializers.ValidationError("邀请码过期")
+		else:
+			raise serializers.ValidationError("邀请码错误")
+		return invitations
+
 	def validate_code(self, code):
 		# get与filter的区别: get有两种异常，一个是有多个，一个是一个都没有。
-		# try:
-		#     verify_records = VerifyCode.objects.get(mobile=self.initial_data["username"], code=code)
-		# except VerifyCode.DoesNotExist as e:
-		#     pass
-		# except VerifyCode.MultipleObjectsReturned as e:
-		#     pass
 
 		# 验证码在数据库中是否存在，用户从前端post过来的值都会放入initial_data里面，排序(最新一条)。
 		verify_records = VerifyCode.objects.filter(phone=self.initial_data["mobile"]).order_by("-created_at")
@@ -127,8 +147,8 @@ class UserRegSerializer(serializers.ModelSerializer):
 				raise serializers.ValidationError("验证码错误")
 
 			# 有效期为五分钟。
-			five_mintes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
-			if five_mintes_ago > last_record.created_at:
+			five_minutes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
+			if five_minutes_ago > last_record.created_at:
 				raise serializers.ValidationError("验证码过期")
 		else:
 			raise serializers.ValidationError("验证码错误")
@@ -141,4 +161,4 @@ class UserRegSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ("mobile", "code", "password")
+		fields = ("mobile", "code", "password", "invitations")

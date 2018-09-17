@@ -27,9 +27,9 @@ class VerifyCodeAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class CustomUserAdmin(UserAdmin):
-	list_display = ('_id', 'username', 'email', 'name', 'is_staff')
-	filter_horizontal = ('groups', 'user_permissions', 'roles', 'teams',)
+class UserProfileAdmin(UserAdmin):
+	list_display = ('_id', 'username', 'name', 'is_staff')
+	filter_horizontal = ('groups', 'user_permissions', 'role', 'team',)
 	fieldsets = (
 		(None, {'fields': ('username', 'password')}),
 		(_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -39,7 +39,7 @@ class CustomUserAdmin(UserAdmin):
 		("自定义", {
 			'fields':
 				('name', "gender", "birthday",
-				 'roles', 'institution', 'teams', "computer_major",
+				 'role', 'team', 'institution', "computer_major",
 				 "graduate", "education", "signature", 'mobile',)
 		}),
 	)
