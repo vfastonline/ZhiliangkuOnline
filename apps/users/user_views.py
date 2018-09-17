@@ -38,7 +38,7 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 
 	def perform_create(self, serializer):
 		user = serializer.save()
-		UserResume.objects.create(user=user)  # 增加默认简历
+		UserResume.objects.create(user=user)  # 页面注册后，增加默认简历
 		return user
 
 	def create(self, request, *args, **kwargs):
