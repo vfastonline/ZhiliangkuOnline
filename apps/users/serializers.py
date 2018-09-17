@@ -112,7 +112,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 	# 调用父类的create方法，该方法会返回当前model的实例化对象即user。
 	# 前面是将父类原有的create进行执行，后面是加入自己的逻辑
 	def create(self, validated_data):
-		team = Team.objects.get(code=validated_data["invitations"])
+		team = validated_data["invitations"]
 		del validated_data["invitations"]
 		user = super(UserRegSerializer, self).create(validated_data=validated_data)
 		user.set_password(validated_data["password"])
@@ -132,7 +132,7 @@ class UserRegSerializer(serializers.ModelSerializer):
 				raise serializers.ValidationError("邀请码过期")
 		else:
 			raise serializers.ValidationError("邀请码错误")
-		return invitations
+		return last_record
 
 	def validate_code(self, code):
 		# get与filter的区别: get有两种异常，一个是有多个，一个是一个都没有。
