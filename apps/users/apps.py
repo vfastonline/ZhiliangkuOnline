@@ -28,3 +28,4 @@ class UsersConfig(AppConfig):
 
 	def ready(self):
 		post_migrate.connect(init_user_profile_role, sender=self)
+		import users.signals
