@@ -7,6 +7,7 @@ from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handl
 
 from users.serializers import *
 from utils.drf_response_handler import *
+from user_resumes.models import UserResume
 
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
@@ -35,6 +36,11 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 
 		return []
 
+	def perform_create(self, serializer):
+		user = serializer.save()
+		UserResume.objects.create(user=user)  # 增加默认简历
+		return user
+
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data)
 		serializer.is_valid(raise_exception=True)
@@ -51,9 +57,6 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 	# 重写该方法，不管传什么id，都只返回当前用户
 	def get_object(self):
 		return self.request.user
-
-	def perform_create(self, serializer):
-		return serializer.save()
 
 	def retrieve(self, request, *args, **kwargs):
 		instance = self.get_object()
