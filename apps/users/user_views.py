@@ -5,9 +5,9 @@ from rest_framework import permissions, authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 
+from user_resumes.models import UserResume
 from users.serializers import *
 from utils.drf_response_handler import *
-from user_resumes.models import UserResume
 
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
