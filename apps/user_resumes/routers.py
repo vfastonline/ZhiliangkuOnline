@@ -1,7 +1,7 @@
 #!encoding:utf-8
-from user_resumes.user_resume import UserResumeViewSet
-from user_resumes.user_resume_information import UserResumeInformation
 from utils.tools import router
+from .user_resume import UserResumeViewSet
+from .user_resume_information import UserResumeInformation
 
 # 个人简历，查改
 router.register(r'user_resume', UserResumeViewSet, base_name="user_resume")

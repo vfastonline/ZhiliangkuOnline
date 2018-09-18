@@ -6,11 +6,10 @@ from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
 
 from ZhiliangkuOnline.settings import APPKEY, SECRET
-from users.models import VerifyCode
-from users.serializers import SmsSerializer
 from utils.drf_response_handler import *
 from utils.sms import SendSms
-from utils.throttles import SendSmsRateThrottle
+from .models import VerifyCode
+from .serializers import SmsSerializer
 
 
 class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
@@ -20,8 +19,6 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 	authentication_classes = ()
 	permission_classes = ()
 	serializer_class = SmsSerializer
-
-	# throttle_classes = (SendSmsRateThrottle,)  # 匿名用户每天最多发10条验证码
 
 	def generate_code(self):
 		"""

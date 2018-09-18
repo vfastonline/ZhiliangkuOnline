@@ -6,9 +6,9 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from user_resumes.serializers import *
 from utils.drf_response_handler import JsonResponse
 from utils.exceptions import ResumeCategoryUnavailable
+from .serializers import *
 
 
 class UserResumeInformation(mixins.CreateModelMixin,

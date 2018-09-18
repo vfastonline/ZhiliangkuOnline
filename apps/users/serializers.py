@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from users.models import VerifyCode, Role, Team
 from utils.tools import REGEX_MOBILE
+from .models import VerifyCode, Role, Team
 
 User = get_user_model()
 

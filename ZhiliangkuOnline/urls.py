@@ -47,6 +47,9 @@ urlpatterns = [
 	path('api-token-refresh/', refresh_jwt_token),  # 刷新token
 	path('api-token-verify/', verify_jwt_token),  # 校验token
 
+	# 调试登录
+	path('api-auth/', include('rest_framework.urls')),
+
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
 
