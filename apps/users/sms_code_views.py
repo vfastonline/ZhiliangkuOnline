@@ -4,9 +4,9 @@ from random import choice
 from rest_framework import exceptions
 from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
+from rest_framework.response import Response
 
 from ZhiliangkuOnline.settings import APPKEY, SECRET
-from utils.drf_response_handler import *
 from utils.sms import SendSms
 from .models import VerifyCode
 from .serializers import SmsSerializer
@@ -47,7 +47,8 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 			code_record = VerifyCode(code=code, phone=phone)
 			code_record.save()
 
-		return JsonResponse(desc=desc, code=sms_status.get("code"), status=status)
+		data = {"phone": phone, "desc": desc}
+		return Response(data=data, status=status.HTTP_201_CREATED)
 
 	def throttled(self, request, wait):
 		"""

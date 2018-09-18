@@ -184,11 +184,6 @@ REST_FRAMEWORK = {
 	'PAGE_SIZE': 10,
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 
-	# 接口异常，固定返回结构
-	'EXCEPTION_HANDLER': (
-		'utils.drf_response_handler.custom_exception_handler'
-	),
-
 	# # 截流
 	# 'DEFAULT_THROTTLE_CLASSES': (
 	# 	'utils.throttles.SendSmsRateThrottle',
