@@ -53,7 +53,7 @@ urlpatterns = [
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
 
-	path(r'docs/', include_docs_urls(title='My API title'))
+	path(r'docs/', include_docs_urls(title='智联库', public=False))
 
 ]
 

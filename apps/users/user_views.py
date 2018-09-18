@@ -54,13 +54,8 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 		re_dict["name"] = user.name if user.name else user.username
 
 		headers = self.get_success_headers(serializer.data)
-		return JsonResponse(desc="success", code=status.HTTP_201_CREATED, data=re_dict, headers=headers)
+		return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
 
 	# 重写该方法，不管传什么id，都只返回当前用户
 	def get_object(self):
 		return self.request.user
-
-	def retrieve(self, request, *args, **kwargs):
-		instance = self.get_object()
-		serializer = self.get_serializer(instance)
-		return Response(serializer.data)
