@@ -65,6 +65,18 @@ INSTALLED_APPS = [
 	'banner',
 	'users',
 	'user_resumes',
+	'tracks_learning',
+	'assessment',
+	'community',
+	'company_jobs',
+	'exercise',
+	'integral',
+	'live_streaming',
+	'medal',
+	'notification',
+	'record',
+	'wechat_promotion',
+
 
 ]
 

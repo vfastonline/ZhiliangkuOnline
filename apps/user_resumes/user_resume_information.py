@@ -36,8 +36,7 @@ class UserResumeInformation(mixins.CreateModelMixin,
 		return get_model.objects.filter(user_resume__user=self.request.user)
 
 	def get_serializer_class(self):
-		param = self.request.query_params
-		category = param.get("category")  # 简历子数据类型，求职意向等
+		category = self.request.query_params.get("category","")  # 简历子数据类型，求职意向等
 		create_serializer = {
 			"CareerObjectives": CareerObjectiveCreateSerializer,
 			"WorkExperiences": WorkExperienceCreateSerializer,
@@ -64,21 +63,3 @@ class UserResumeInformation(mixins.CreateModelMixin,
 				raise ResumeCategoryUnavailable
 			return serializer
 
-	def create(self, request, *args, **kwargs):
-		serializer = self.get_serializer(data=request.data)
-		serializer.is_valid(raise_exception=True)
-		self.perform_create(serializer)
-		return JsonResponse(data=serializer.data, code=status.HTTP_200_OK, desc="success")
-
-	def destroy(self, request, *args, **kwargs):
-		instance = self.get_object()
-		self.perform_destroy(instance)
-		return JsonResponse(code=status.HTTP_200_OK, desc="success")
-
-	def update(self, request, *args, **kwargs):
-		partial = kwargs.pop('partial', False)
-		instance = self.get_object()
-		serializer = self.get_serializer(instance, data=request.data, partial=partial)
-		serializer.is_valid(raise_exception=True)
-		self.perform_update(serializer)
-		return JsonResponse(data=serializer.data, code=status.HTTP_200_OK, desc="success")

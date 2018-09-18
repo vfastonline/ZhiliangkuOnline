@@ -18,3 +18,4 @@ drf-extensions
 django-cors-headers
 coreapi
 coreapi-cli
+django-colorfield==0.1.15

@@ -7,4 +7,4 @@ from .user_resume_information import UserResumeInformation
 router.register(r'user_resume', UserResumeViewSet, base_name="user_resume")
 
 # 求职意向、工作经历、项目经验、教育经历，增删改
-router.register(r'user_resume_information', UserResumeInformation, base_name="user_resume_information")  #
+router.register(r'user_resume_information', UserResumeInformation, base_name="user_resume_information")

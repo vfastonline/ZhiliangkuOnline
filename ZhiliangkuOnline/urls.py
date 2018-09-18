@@ -26,6 +26,7 @@ from banner.routers import *
 from banner.views import *
 from user_resumes.routers import *
 from users.routers import *
+from tracks_learning.routers import *
 from users.sms_code_views import *
 from users.user_views import *
 
@@ -53,7 +54,7 @@ urlpatterns = [
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
 
-	path(r'docs/', include_docs_urls(title='智量酷', public=False))
+	path(r'docs/', include_docs_urls(title='My API title',public=False))
 
 ]
 
