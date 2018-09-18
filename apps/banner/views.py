@@ -6,7 +6,7 @@ from rest_framework import mixins
 from rest_framework import status
 from rest_framework import viewsets
 
-from banner.serializers import *
+from .serializers import *
 from utils.drf_response_handler import JsonResponse
 
 

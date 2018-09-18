@@ -1,0 +1,4 @@
+增加用户并赋予文件夹权限
+
+adduser ZhiliangkuOnline
+chgrp -R ZhiliangkuOnline /usr/local/ZhiliangkuOnline/

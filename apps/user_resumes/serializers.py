@@ -1,7 +1,7 @@
 # encoding: utf-8
 from rest_framework import serializers
 
-from user_resumes.models import *
+from .models import *
 
 
 class EducationExperienceSerializer(serializers.ModelSerializer):

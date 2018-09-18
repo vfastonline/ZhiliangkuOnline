@@ -2,7 +2,8 @@
 import traceback
 
 from django.apps import AppConfig
-from django.db.models.signals import post_migrate
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_migrate, post_save
 
 
 def init_user_profile_role(sender, verbosity, **kwargs):
@@ -21,6 +22,19 @@ def init_user_profile_role(sender, verbosity, **kwargs):
 		traceback.print_exc()
 
 
+# 注册新用户，入库后
+def user_post_save(sender, instance=None, created=False, **kwargs):
+	from user_resumes.models import UserResume
+	from users.models import Role
+
+	# 是否新建，因为update的时候也会进行post_save
+	if created:
+		# 第三方接口创建用户后，增加默认学生角色，创建默认简历
+		instance.role.add(Role.objects.get(index=0))
+		instance.save()
+		UserResume.objects.create(user=instance)
+
+
 class UsersConfig(AppConfig):
 	name = 'users'
 	verbose_name = "用户管理"
@@ -28,4 +42,5 @@ class UsersConfig(AppConfig):
 
 	def ready(self):
 		post_migrate.connect(init_user_profile_role, sender=self)
-		import users.signals
+		User = get_user_model()
+		post_save.connect(user_post_save, sender=User)
