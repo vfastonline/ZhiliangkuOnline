@@ -1,0 +1,9 @@
+# encoding: utf8
+from __future__ import unicode_literals
+
+from django.apps import AppConfig
+
+
+class NotificationConfig(AppConfig):
+	name = 'apps.notification'
+	verbose_name = "消息中心"
