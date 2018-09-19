@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 	'social_django',  # 第三方登录
 	'django_filters',
 	'debug_toolbar',
+	'rest_framework_swagger',
 
 	'banner',
 	'users',
@@ -309,6 +310,10 @@ if not os.path.isdir(LOG_PATH):
 	os.mkdir(LOG_PATH)
 
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+# 文档页面
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
 
 # # 日志
 # LOGGING = {

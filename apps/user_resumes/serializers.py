@@ -13,7 +13,7 @@ class EducationExperienceSerializer(serializers.ModelSerializer):
 
 
 class EducationExperienceCreateSerializer(serializers.ModelSerializer):
-	user_resume_id = serializers.CharField()
+	user_resume_id = serializers.CharField(label="用户简历_id", max_length=24)
 
 	class Meta:
 		model = EducationExperience
@@ -29,7 +29,7 @@ class ProjectExperienceSerializer(serializers.ModelSerializer):
 
 
 class ProjectExperienceCreateSerializer(serializers.ModelSerializer):
-	user_resume_id = serializers.CharField()
+	user_resume_id = serializers.CharField(label="用户简历_id", max_length=24)
 
 	class Meta:
 		model = ProjectExperience
@@ -45,7 +45,7 @@ class WorkExperienceSerializer(serializers.ModelSerializer):
 
 
 class WorkExperienceCreateSerializer(serializers.ModelSerializer):
-	user_resume_id = serializers.CharField()
+	user_resume_id = serializers.CharField(label="用户简历_id", max_length=24)
 
 	class Meta:
 		model = WorkExperience
@@ -61,7 +61,7 @@ class CareerObjectiveSerializer(serializers.ModelSerializer):
 
 
 class CareerObjectiveCreateSerializer(serializers.ModelSerializer):
-	user_resume_id = serializers.CharField()
+	user_resume_id = serializers.CharField(label="用户简历_id", max_length=24)
 
 	class Meta:
 		model = CareerObjective

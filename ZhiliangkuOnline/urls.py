@@ -18,17 +18,20 @@ from django.urls import path, re_path, include
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
+from rest_framework_swagger.views import get_swagger_view
 
 from ZhiliangkuOnline import settings
 from ZhiliangkuOnline.settings import MEDIA_ROOT
 from ZhiliangkuOnline.settings import STATIC_ROOT
 from banner.routers import *
 from banner.views import *
+from tracks_learning.routers import *
 from user_resumes.routers import *
 from users.routers import *
-from tracks_learning.routers import *
 from users.sms_code_views import *
 from users.user_views import *
+
+schema_view = get_swagger_view(title="智量酷docs")
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -49,12 +52,13 @@ urlpatterns = [
 	path('api-token-verify/', verify_jwt_token),  # 校验token
 
 	# 调试登录
-	path('api-auth/', include('rest_framework.urls')),
+	path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
 
-	path(r'docs/', include_docs_urls(title='My API title',public=False))
+	path(r'docss/', include_docs_urls(title='My API title', public=False)),
+	path(r"docs/", schema_view),
 
 ]
 
