@@ -49,7 +49,14 @@ class UserResumeUpdateSerializer(serializers.ModelSerializer):
 
 class UserResumeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
 	"""
-	用户，简历信息
+	list:
+	获取用户基础简历信息
+
+	update:
+	更新用户基础简历信息，全量更新
+
+	partial_update:
+	更新用户基础简历信息，允许部分字段更新
 	"""
 	authentication_classes = (JSONWebTokenAuthentication,)
 	permission_classes = (IsAuthenticated,)
