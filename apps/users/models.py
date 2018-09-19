@@ -9,13 +9,12 @@ from utils.storage import *
 class Role(BaseModelMixin):
 	"""
 	用户角色
-	一个用户可能有多个角色
 	0：学生
 	1：老师
 	2：HR
 	3：其他
 	"""
-	index = models.IntegerField(verbose_name="唯一标志")
+	index = models.IntegerField(verbose_name="唯一标志", unique=True)
 	name = models.CharField(max_length=30, verbose_name="角色名称")
 
 	def __str__(self):
@@ -32,7 +31,7 @@ class Team(BaseModelMixin):
 	"""
 
 	name = models.CharField('名称', max_length=255)
-	code = models.CharField(max_length=4, verbose_name="邀请码")
+	invitations_code = models.CharField(max_length=4, verbose_name="邀请码", unique=True, db_index=True)
 
 	def __str__(self):
 		return self.name
@@ -40,15 +39,15 @@ class Team(BaseModelMixin):
 	class Meta:
 		verbose_name = "班级"
 		verbose_name_plural = verbose_name
-		unique_together = ("name", "code")
+		unique_together = ("name", "invitations_code")
 
 
 class VerifyCode(BaseModelMixin):
 	"""
-	短信验证码,回填验证码进行验证。可以保存在redis中
+	短信验证码
 	"""
 	code = models.CharField(max_length=4, verbose_name="验证码")
-	phone = models.CharField(max_length=11, verbose_name="手机号")
+	phone = models.CharField(max_length=11, verbose_name="手机号", db_index=True)
 
 	def __str__(self):
 		return self.phone + ":" + self.code
@@ -60,7 +59,7 @@ class VerifyCode(BaseModelMixin):
 
 class UserProfile(AbstractUser):
 	"""
-	用户表，新增字段如下
+	用户表，扩展
 	"""
 
 	GENDER_CHOICES = (
