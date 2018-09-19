@@ -116,4 +116,5 @@ static/rest_framework
 
 log/
 
+node_modules
 .DS_Store
