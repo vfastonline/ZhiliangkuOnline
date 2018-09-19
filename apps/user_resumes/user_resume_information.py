@@ -1,12 +1,10 @@
 #!encoding:utf-8
 
 from rest_framework import mixins
-from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from utils.drf_response_handler import JsonResponse
 from utils.exceptions import ResumeCategoryUnavailable
 from .serializers import *
 
@@ -36,7 +34,7 @@ class UserResumeInformation(mixins.CreateModelMixin,
 		return get_model.objects.filter(user_resume__user=self.request.user)
 
 	def get_serializer_class(self):
-		category = self.request.query_params.get("category","")  # 简历子数据类型，求职意向等
+		category = self.request.query_params.get("category", "")  # 简历子数据类型，求职意向等
 		create_serializer = {
 			"CareerObjectives": CareerObjectiveCreateSerializer,
 			"WorkExperiences": WorkExperienceCreateSerializer,
@@ -62,4 +60,3 @@ class UserResumeInformation(mixins.CreateModelMixin,
 			if not serializer:
 				raise ResumeCategoryUnavailable
 			return serializer
-
