@@ -57,6 +57,7 @@ urlpatterns = [
 	# 第三方登录
 	path('', include('social_django.urls', namespace='social')),
 
+	# api文档
 	path(r'docss/', include_docs_urls(title='My API title', public=False)),
 	path(r"docs/", schema_view),
 
