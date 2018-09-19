@@ -50,7 +50,7 @@ class SendSms(object):
 
 		result = {
 			"code": 500,
-			"detail": "接口不通，请刷新",
+			"detail": "验证码发送失败",
 		}
 
 		req = AlibabaAliqinFcSmsNumSendRequest(self.appkey, self.secret, self.url, self.system_generate_version)

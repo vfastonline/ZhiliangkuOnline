@@ -26,13 +26,13 @@ def init_user_profile_role(sender, verbosity, **kwargs):
 def user_post_save(sender, instance=None, created=False, **kwargs):
 	from user_resumes.models import UserResume
 	from users.models import Role
-
-	# 是否新建，因为update的时候也会进行post_save
-	if created:
-		# 第三方接口创建用户后，增加默认学生角色，创建默认简历
+	if created:  # 第三方接口创建用户
+		# 增加学生角色
 		instance.role.add(Role.objects.get(index=0))
 		instance.save()
-		UserResume.objects.create(user=instance)
+
+		# 增加基础简历
+		UserResume.objects.get_or_create(user=instance)
 
 
 class UsersConfig(AppConfig):
