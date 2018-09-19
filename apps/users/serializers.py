@@ -39,7 +39,7 @@ class SmsSerializer(serializers.Serializer):
 
 	class Meta:
 		model = VerifyCode
-		fields = ('code', 'phone')
+		fields = ('phone',)
 
 
 class RoleSerializer(serializers.ModelSerializer):

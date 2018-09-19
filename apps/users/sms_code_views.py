@@ -2,6 +2,7 @@
 from random import choice
 
 from rest_framework import exceptions
+from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.response import Response
@@ -41,14 +42,14 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 		code = self.generate_code()
 		sms_status = send_sms.send_sms(phone, {'code': code})
 
-		status = sms_status.get("code")
 		desc = sms_status.get("detail")
+		data = {"phone": phone, "desc": desc}
 		if sms_status.get("code") == 204:
 			code_record = VerifyCode(code=code, phone=phone)
 			code_record.save()
-
-		data = {"phone": phone, "desc": desc}
-		return Response(data=data, status=status.HTTP_201_CREATED)
+			return Response(data=data, status=status.HTTP_201_CREATED)
+		else:
+			return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
 	def throttled(self, request, wait):
 		"""
