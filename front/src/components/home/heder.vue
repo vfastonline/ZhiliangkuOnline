@@ -24,6 +24,7 @@
  	height: 50px;
  	margin: 0 auto;
  	background: #eee;
+ 	font-size: 18px;
  }
  .content .list_one {
     float: left;
@@ -60,7 +61,7 @@
 }
 .content .list_tow span {
 	float: right;
-	width: 24px;
+	width: 40px;
 	position: relative;
 	top: 10px;
 	right: 15px;
