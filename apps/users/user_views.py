@@ -5,7 +5,6 @@ from rest_framework import permissions, authentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.serializers import jwt_payload_handler, jwt_encode_handler
 
-from user_resumes.models import UserResume
 from utils.drf_response_handler import *
 from .serializers import *
 
@@ -38,9 +37,6 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
 
 	def perform_create(self, serializer):
 		user = serializer.save()
-
-		# 页面注册成功后，增加默认简历
-		UserResume.objects.create(user=user)
 		return user
 
 	def create(self, request, *args, **kwargs):
