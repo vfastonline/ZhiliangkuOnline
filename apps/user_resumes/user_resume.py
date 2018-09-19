@@ -12,7 +12,7 @@ class UserResumeSerializer(serializers.ModelSerializer):
 	"""
 	用户简历'序列化
 	"""
-	_id = serializers.CharField(max_length=24)
+	_id = serializers.CharField(max_length=24, help_text="简历_id")
 	first_career_objective = serializers.SerializerMethodField()
 	CareerObjectives = CareerObjectiveSerializer(many=True, read_only=True)
 	WorkExperiences = WorkExperienceSerializer(many=True, read_only=True)
@@ -38,13 +38,11 @@ class UserResumeUpdateSerializer(serializers.ModelSerializer):
 	"""
 	用户简历'修改'序列化
 	"""
-	_id = serializers.CharField(max_length=24)
 
 	class Meta:
 		model = UserResume
 		fields = (
-			"_id", "name", "work_years", "education", "in_service_status", "current_company", "current_position",
-			"advantage",)
+			"name", "work_years", "education", "in_service_status", "current_company", "current_position", "advantage",)
 
 
 class UserResumeViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):

@@ -13,16 +13,16 @@ class UserResume(BaseModelMixin):
 	"""
 	ICON = "user_icon/defaultUserIcon.png"
 
-	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
+	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
 	icon = models.ImageField('头像', upload_to="user_resume_icon", storage=ImageStorage(), max_length=256, default=ICON,
-							 blank=True)
-	name = models.CharField(max_length=30, verbose_name="姓名", blank=True)
-	work_years = models.CharField(max_length=50, verbose_name="工作年限", blank=True)
-	education = models.CharField(max_length=50, verbose_name="最高学历", blank=True)
-	in_service_status = models.CharField(max_length=50, verbose_name="在职状态", blank=True)
-	current_company = models.CharField(max_length=255, verbose_name="现任公司", blank=True)
-	current_position = models.CharField(max_length=255, verbose_name="现任职务", blank=True)
-	advantage = models.TextField(verbose_name="我的优势", blank=True)
+							 blank=True, help_text="头像")
+	name = models.CharField(max_length=30, verbose_name="姓名", blank=True, help_text="姓名")
+	work_years = models.CharField(max_length=50, verbose_name="工作年限", blank=True, help_text="工作年限")
+	education = models.CharField(max_length=50, verbose_name="最高学历", blank=True, help_text="最高学历")
+	in_service_status = models.CharField(max_length=50, verbose_name="在职状态", blank=True, help_text="在职状态")
+	current_company = models.CharField(max_length=255, verbose_name="现任公司", blank=True, help_text="现任公司")
+	current_position = models.CharField(max_length=255, verbose_name="现任职务", blank=True, help_text="现任职务")
+	advantage = models.TextField(verbose_name="我的优势", blank=True, help_text="我的优势")
 
 	def __str__(self):
 		return self.user.username
