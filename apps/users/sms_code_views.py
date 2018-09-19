@@ -23,7 +23,7 @@ class SmsCodeSerializer(serializers.Serializer):
 	"""
 	验证码， 序列化
 	"""
-	phone = serializers.CharField(max_length=11)
+	phone = serializers.CharField(max_length=11, help_text="手机号")
 
 	@staticmethod
 	def validate_phone(phone):
