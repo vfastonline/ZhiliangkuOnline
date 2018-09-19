@@ -1,7 +1,10 @@
 # encoding: utf-8
 from random import choice
 
+import re
+from django.contrib.auth import get_user_model
 from rest_framework import exceptions
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.mixins import CreateModelMixin
@@ -10,18 +13,47 @@ from rest_framework.response import Response
 from ZhiliangkuOnline.settings import APPKEY, SECRET
 from utils.sms import SendSms
 from .models import VerifyCode
-from .serializers import SmsSerializer
+
+User = get_user_model()
+from ZhiliangkuOnline.settings import REGEX_MOBILE
+from datetime import datetime, timedelta
+
+
+class SmsCodeSerializer(serializers.Serializer):
+	"""
+	验证码， 序列化
+	"""
+	phone = serializers.CharField(max_length=11)
+
+	@staticmethod
+	def validate_phone(phone):
+		if not re.match(REGEX_MOBILE, phone):
+			raise serializers.ValidationError("手机号码非法")
+
+		if User.objects.filter(mobile=phone).count():
+			raise serializers.ValidationError("用户已经存在")
+
+		one_minute_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
+		if VerifyCode.objects.filter(created_at__gt=one_minute_ago, phone=phone).count():
+			raise serializers.ValidationError("距离上一次发送未超过60s")
+
+		return phone
+
+	class Meta:
+		model = VerifyCode
+		fields = ('phone',)
 
 
 class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 	"""
-	发送短信验证码
+	短信验证码
 	"""
 	authentication_classes = ()
 	permission_classes = ()
-	serializer_class = SmsSerializer
+	serializer_class = SmsCodeSerializer
 
-	def generate_code(self):
+	@staticmethod
+	def generate_code():
 		"""
 		生成四位数字的验证码字符串
 		"""
@@ -37,23 +69,22 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 		serializer.is_valid(raise_exception=True)
 
 		phone = serializer.validated_data["phone"]
+		code = self.generate_code()
 
 		send_sms = SendSms(APPKEY, SECRET)
-		code = self.generate_code()
-		sms_status = send_sms.send_sms(phone, {'code': code})
+		send_sms_result = send_sms.send_sms(phone, {'code': code})
 
-		desc = sms_status.get("detail")
-		data = {"phone": phone, "desc": desc}
-		if sms_status.get("code") == 204:
-			code_record = VerifyCode(code=code, phone=phone)
-			code_record.save()
+		detail = send_sms_result.get("detail")
+		data = {"phone": phone, "detail": detail}
+		if send_sms_result.get("code") == 204:
+			VerifyCode.objects.create(code=code, phone=phone)
 			return Response(data=data, status=status.HTTP_201_CREATED)
 		else:
 			return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
 	def throttled(self, request, wait):
 		"""
-		访问次数被限制时，定制错误信息
+		访问次数被限制,错误信息
 		"""
 
 		class Throttled(exceptions.Throttled):

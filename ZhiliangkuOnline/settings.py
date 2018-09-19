@@ -296,6 +296,8 @@ LOG_PATH = os.path.join(BASE_DIR, 'log')
 if not os.path.isdir(LOG_PATH):
 	os.mkdir(LOG_PATH)
 
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+
 # # 日志
 # LOGGING = {
 # 	# version 值只能为1

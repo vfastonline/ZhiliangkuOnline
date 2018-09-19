@@ -6,8 +6,8 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_migrate, post_save
 
 
-def init_user_profile_role(sender, verbosity, **kwargs):
-	"""初始化-用户角色信息
+def init_role(sender, verbosity, **kwargs):
+	"""初始化-角色信息
 	:param sender:
 	:param kwargs:
 	:return:
@@ -22,16 +22,19 @@ def init_user_profile_role(sender, verbosity, **kwargs):
 		traceback.print_exc()
 
 
-# 注册新用户，入库后
 def user_post_save(sender, instance=None, created=False, **kwargs):
+	"""用户信息保存后，设置学生角色，添加用户基础信息
+	:param sender:
+	:param instance:
+	:param created:
+	:param kwargs:
+	:return:
+	"""
 	from user_resumes.models import UserResume
 	from users.models import Role
-	if created:  # 第三方接口创建用户
-		# 增加学生角色
+	if created:
 		instance.role.add(Role.objects.get(index=0))
 		instance.save()
-
-		# 增加基础简历
 		UserResume.objects.get_or_create(user=instance)
 
 
@@ -41,6 +44,6 @@ class UsersConfig(AppConfig):
 	main_menu_index = 1
 
 	def ready(self):
-		post_migrate.connect(init_user_profile_role, sender=self)
-		User = get_user_model()
-		post_save.connect(user_post_save, sender=User)
+		post_migrate.connect(init_role, sender=self)
+		user = get_user_model()
+		post_save.connect(user_post_save, sender=user)

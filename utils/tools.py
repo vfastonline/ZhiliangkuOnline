@@ -9,9 +9,6 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()  # 定义基础router，其他模块引用后注册接口
 
-# 手机号码'正则表达式
-REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
-
 
 # 重写json解码，适应mongodb，ObjectId
 class JSONEncoder(json.JSONEncoder):
