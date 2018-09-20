@@ -62,6 +62,7 @@ INSTALLED_APPS = [
 	'django_filters',
 	'debug_toolbar',
 	'rest_framework_swagger',
+	'raven.contrib.django.raven_compat',
 
 	'banner',
 	'users',
@@ -77,7 +78,6 @@ INSTALLED_APPS = [
 	'notification',
 	'record',
 	'wechat_promotion',
-
 
 ]
 
@@ -314,6 +314,10 @@ REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 # 文档页面
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
+
+RAVEN_CONFIG = {
+	'dsn': '',
+}
 
 # # 日志
 # LOGGING = {
