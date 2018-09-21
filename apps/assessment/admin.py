@@ -2,19 +2,21 @@
 from django.contrib import admin
 
 from apps.assessment.models import *
-# from zhiliangku.settings import tinymce_js
 
 
 @admin.register(DockerType)
 class DockerTypeAdmin(admin.ModelAdmin):
-	list_display = ( "name", 'image', "port", "introduce")
+	list_display = ("name", 'image', "port")
 	search_fields = ('name', "image")
 
-	# class Media:
-	# 	js = tinymce_js
+
+@admin.register(ContainerPort)
+class ContainerPortAdmin(admin.ModelAdmin):
+	list_display = ("container_id", 'port')
+	search_fields = ('container_id', "port")
 
 
-@admin.register(DockerPort)
-class DockerPortAdmin(admin.ModelAdmin):
-	list_display = ( "container", 'port', 'create', "maturity")
-	search_fields = ('container', "port")
+@admin.register(Assessment)
+class AssessmentAdmin(admin.ModelAdmin):
+	list_display = ("assessment", "docker")
+	search_fields = ('assessment', "docker")

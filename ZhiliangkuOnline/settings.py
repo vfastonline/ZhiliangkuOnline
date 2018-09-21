@@ -68,8 +68,11 @@ INSTALLED_APPS = [
 	'users',
 	'user_resumes',
 	'directory_tree',
+	'project',
+	'video',
+	'assessment',
+
 	# 'tracks_learning',
-	# 'assessment',
 	# 'community',
 	# 'company_jobs',
 	# 'exercise',
