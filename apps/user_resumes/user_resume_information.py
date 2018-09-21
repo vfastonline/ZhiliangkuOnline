@@ -71,3 +71,4 @@ class UserResumeInformation(mixins.CreateModelMixin,
 			if not serializer:
 				raise ResumeCategoryUnavailable
 			return serializer
+		return []
