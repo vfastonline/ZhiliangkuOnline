@@ -11,7 +11,17 @@ from .serializers import *
 
 class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 	"""
-	用户
+	create:
+		注册用户
+
+	read:
+		查询用户详细信息
+
+	update:
+		更新用户信息（全量更新）
+
+	partial_update:
+		更新用户信息（允许只更新部分字段）
 	"""
 	queryset = User.objects.all()
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)

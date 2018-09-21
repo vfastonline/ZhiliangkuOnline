@@ -46,7 +46,8 @@ class SmsCodeSerializer(serializers.Serializer):
 
 class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 	"""
-	短信验证码
+	create:
+		发送短信验证码
 	"""
 	authentication_classes = ()
 	permission_classes = ()

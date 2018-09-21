@@ -61,14 +61,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 								 },
 								 help_text="验证码")
 
-	invitations_code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="邀请码",
+	invitations_code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="班级邀请码",
 											 error_messages={
-												 "blank": "请输入邀请码",
-												 "required": "请输入邀请码",
-												 "max_length": "邀请码格式错误",
-												 "min_length": "邀请码格式错误"
+												 "blank": "请输入班级邀请码",
+												 "required": "请输入班级邀请码",
+												 "max_length": "班级邀请码格式错误",
+												 "min_length": "班级邀请码格式错误"
 											 },
-											 help_text="邀请码")
+											 help_text="班级邀请码")
 
 	password = serializers.CharField(
 		style={'input_type': 'password'}, help_text="密码", label="密码", write_only=True,
@@ -92,9 +92,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 			one_hours_ago = datetime.now() - timedelta(hours=1, minutes=0, seconds=0)
 			if one_hours_ago > team_record.created_at:
-				raise serializers.ValidationError("邀请码过期，有效期1小时")
+				raise serializers.ValidationError("班级邀请码过期，有效期1小时")
 		else:
-			raise serializers.ValidationError("邀请码错误")
+			raise serializers.ValidationError("班级邀请码错误")
 		return team_record
 
 	def validate_code(self, code):
