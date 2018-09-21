@@ -1,7 +1,7 @@
 # encoding: utf-8
 from django.contrib.auth import get_user_model
 
-from apps.users.models import Team
+from ZhiliangkuOnline.apps.users.models import Team
 
 User = get_user_model()
 
