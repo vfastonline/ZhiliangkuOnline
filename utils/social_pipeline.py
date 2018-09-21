@@ -1,11 +1,19 @@
 # encoding: utf-8
+from django.contrib.auth import get_user_model
 
-def save_profile_team(strategy, details, backend, user, response, *args, **kwargs):
-	print(strategy.session_get('key'))
-# profile = user.get_profile()
-# if profile is None:
-# 	profile = Profile(user_id=user.id)
-# profile.gender = response.get('gender')
-# profile.link = response.get('link')
-# profile.timezone = response.get('timezone')
-# profile.save()
+from apps.users.models import Team
+
+User = get_user_model()
+
+
+def save_user_team(strategy, details, backend, user, response, *args, **kwargs):
+	invitations_code = strategy.session_get('invitations_code')
+	print(invitations_code, '===========')
+	if invitations_code:
+		profile = user.get_profile()
+		team = Team.objects.filter(code=invitations_code)
+		if team.exists():
+			if profile is None:
+				profile = User(user_id=user.id)
+			profile.team.add(team[0])
+			profile.save()
