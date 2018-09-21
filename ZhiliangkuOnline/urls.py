@@ -25,6 +25,8 @@ from ZhiliangkuOnline.settings import MEDIA_ROOT
 from ZhiliangkuOnline.settings import STATIC_ROOT
 from banner.routers import *
 from banner.views import *
+from directory_tree.routers import *
+from directory_tree.views import *
 from tracks_learning.routers import *
 from user_resumes.routers import *
 from users.routers import *

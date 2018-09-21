@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 	'banner',
 	'users',
 	'user_resumes',
+	'directory_tree',
 	# 'tracks_learning',
 	# 'assessment',
 	# 'community',

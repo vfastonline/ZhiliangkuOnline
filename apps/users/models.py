@@ -31,7 +31,7 @@ class Team(BaseModelMixin):
 	"""
 
 	name = models.CharField('名称', max_length=255)
-	invitations_code = models.CharField(max_length=4, verbose_name="邀请码", unique=True, db_index=True)
+	invitations_code = models.CharField(max_length=4, verbose_name="邀请码", unique=True, db_index=True, default="")
 
 	def __str__(self):
 		return self.name
