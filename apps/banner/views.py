@@ -10,7 +10,10 @@ from .serializers import *
 class BannerViewSet(CacheResponseMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
-		获取banner信息
+		获取指定类型下banner信息列表
+
+	read:
+		获取指定类型下某个banner信息
 	"""
 	queryset = Banner.objects.all()
 	serializer_class = BannerSerializer
