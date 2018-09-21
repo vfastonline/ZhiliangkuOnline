@@ -10,7 +10,7 @@ def save_user_team(strategy, details, backend, user, response, *args, **kwargs):
 	invitations_code = strategy.session_get('invitations_code')
 	print(invitations_code, '===========')
 	if invitations_code:
-		team = Team.objects.filter(code=invitations_code)
+		team = Team.objects.filter(invitations_code=invitations_code)
 		if team.exists():
 			user.team.add(team[0])
 			user.save()
