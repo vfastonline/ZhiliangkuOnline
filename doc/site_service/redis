@@ -1,5 +1,8 @@
 redis:
 
+安装
+yum install -y redis
+
 1:vim /etc/redis.conf
 daemonize yes
 
@@ -14,5 +17,10 @@ echo never > /sys/kernel/mm/transparent_hugepage/enabled
 4：启动
 /usr/bin/redis-server /etc/redis.conf
 
-4:Can't handle RDB format version 8
+5:Can't handle RDB format version 8
 版本兼容问题，删除/var/lib/redis/dump.rdb，重启redis
+
+6：测试
+/usr/bin/redis-cli
+show *
+quit

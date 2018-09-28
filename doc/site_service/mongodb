@@ -3,6 +3,9 @@ curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel62-4.0.2.tgz
 tar -zxvf mongodb-linux-x86_64-rhel62-4.0.2.tgz
 mv mongodb-linux-x86_64-4.0.2/ /usr/local/mongodb
 export PATH=/usr/local/mongodb/bin:$PATH
+mkdir -p /home/mongodb/data/logs/
+mkdir -p /home/mongodb/data/db/
+touch /home/mongodb/data/logs/mongodb.log
 
 1：/usr/local/etc/mongod.conf
 
@@ -11,11 +14,11 @@ processManagement:
 
 systemLog:
   destination: file
-  path: /usr/local/var/log/mongodb/mongo.log
+  path: /home/mongodb/data/logs/mongodb.log
   logAppend: true
 
 storage:
-  dbPath: /usr/local/var/mongodb
+  dbPath: /home/mongodb/data/db
 
 net:
   bindIp: 0.0.0.0
@@ -44,19 +47,23 @@ ulimit -u 64000
 
 source /etc/profile
 
-5:vi /etc/security/limits.conf
-mongod soft nofile 64000
-mongod hard nofile 64000
-mongod soft nproc 32000
-mongod hard nproc 32000
-
 启动
 /usr/local/mongodb/bin/mongod --config /usr/local/etc/mongod.conf
 
 创建超级用户
 use admin
+db.system.users.remove({user:"root"})
 db.system.users.find()
-db.createUser({user:"root",pwd:"111111",roles:[{role:["root","userAdminAnyDatabase"], db:"admin"}]})
+db.createUser(
+    {
+        user:"root",
+        pwd:"111111",
+        roles:[ {role:"root", db:"admin" }, { role:"userAdminAnyDatabase", db:"admin" } ]
+    }
+)
+quit()
+
+
 
 检查：
 ps aux | grep mongodb

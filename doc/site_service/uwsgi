@@ -1,4 +1,5 @@
 增加用户并赋予文件夹权限
+mkdir /var/log/zhiliangku/
 
 adduser ZhiliangkuOnline
 chgrp -R ZhiliangkuOnline /usr/local/ZhiliangkuOnline/

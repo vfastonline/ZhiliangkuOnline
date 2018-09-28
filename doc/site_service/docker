@@ -1,0 +1,26 @@
+卸载旧版本
+yum remove docker docker-common docker-selinux
+
+依赖包
+yum install -y yum-utils device-mapper-persistent-data
+
+配置稳定仓库
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+安装
+yum install docker-ce
+
+安装指定版本
+yum list docker-ce --showduplicates | sort -r
+
+启动
+systemctl start docker
+
+验证
+docker run hello-world
+
+卸载
+yum remove docker-ce
+
+删除所有图像、容器和卷
+rm -rf /var/lib/docker

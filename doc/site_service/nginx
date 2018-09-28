@@ -1,0 +1,2 @@
+读取配置启动
+/usr/local/openresty/nginx/sbin/nginx -c /usr/local/openresty/nginx/conf/nginx.conf
