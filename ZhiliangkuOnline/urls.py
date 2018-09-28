@@ -60,8 +60,8 @@ urlpatterns = [
 	path('', include('social_django.urls', namespace='social')),
 
 	# api文档
-	path(r'docss/', include_docs_urls(title='My API title', public=False)),
-	path(r"docs/", schema_view),
+	path(r'docs/', include_docs_urls(title='接口文档', public=False)),
+	# path(r"docs/", schema_view),
 
 ]
 
