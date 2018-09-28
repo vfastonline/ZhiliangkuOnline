@@ -86,7 +86,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 		return user
 
 	def validate_invitations_code(self, invitations_code):
-		team_records = Team.objects.filter(code=invitations_code)
+		team_records = Team.objects.filter(invitations_code=invitations_code)
 		if team_records:
 			team_record = team_records[0]
 

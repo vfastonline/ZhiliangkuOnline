@@ -1,5 +1,5 @@
 #!encoding:utf-8
 from utils.tools import router
-from .views import DirectoryTreeViewSet
+from .direction_views import DirectionViewSet
 
-router.register(r'directory-tree', DirectoryTreeViewSet, base_name="directory-tree")
+router.register(r'directions', DirectionViewSet, base_name="directions")

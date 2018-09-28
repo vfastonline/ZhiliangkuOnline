@@ -71,6 +71,7 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 		phone = serializer.validated_data["phone"]
 		code = self.generate_code()
 
+		# 单个手机号当天上限10条短信
 		send_sms = SendSms(APPKEY, SECRET)
 		send_sms_result = send_sms.send_sms(phone, {'code': code})
 

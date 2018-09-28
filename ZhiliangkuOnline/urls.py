@@ -20,18 +20,13 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 from rest_framework_swagger.views import get_swagger_view
 
-from ZhiliangkuOnline import settings
-from ZhiliangkuOnline.settings import MEDIA_ROOT
-from ZhiliangkuOnline.settings import STATIC_ROOT
+from ZhiliangkuOnline.settings import MEDIA_ROOT, STATIC_ROOT, DEBUG
 from banner.routers import *
-from banner.views import *
-from directory_tree.direction_views import *
 from directory_tree.routers import *
+from project.routers import *
 from tracks_learning.routers import *
 from user_resumes.routers import *
 from users.routers import *
-from users.sms_code_views import *
-from users.user_views import *
 
 schema_view = get_swagger_view(title="智量酷docs")
 
@@ -66,7 +61,7 @@ urlpatterns = [
 ]
 
 # debug模式，开启django调试工具
-if settings.DEBUG:
+if DEBUG:
 	import debug_toolbar
 
 	urlpatterns += [path(r'__debug__/', include(debug_toolbar.urls))]

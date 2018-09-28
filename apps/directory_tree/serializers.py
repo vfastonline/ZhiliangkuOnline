@@ -11,7 +11,7 @@ class DirectoryTreeVideoSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = DirectoryTree
-		fields = ["_id", "category_type", "name", "desc"]
+		fields = ["_id", "category", "name"]
 
 
 class DirectoryTreeSectionSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class DirectoryTreeSectionSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = DirectoryTree
-		fields = ["_id", "category_type", "name", "desc", "sub_category"]
+		fields = ["_id", "category", "name", "sub_category"]
 
 
 class DirectoryTreeCourseSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class DirectoryTreeCourseSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = DirectoryTree
-		fields = ["_id", "category_type", "name", "desc", "sub_category"]
+		fields = ["_id", "category", "name", "sub_category"]
 
 
 class DirectoryTreeProjectSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class DirectoryTreeProjectSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = DirectoryTree
-		fields = ["_id", "category_type", "name", "desc", "sub_category"]
+		fields = ["_id", "category", "name", "sub_category"]
 
 
 class DirectoryTreeDirectionSerializer(serializers.ModelSerializer):
@@ -57,12 +57,6 @@ class DirectoryTreeDirectionSerializer(serializers.ModelSerializer):
 	_id = serializers.CharField(max_length=24, read_only=True)
 	sub_category = DirectoryTreeProjectSerializer(many=True, read_only=True)
 
-	# def create(self, validated_data):
-	# 	validated_data['parent_category'] = DirectoryTree.objects.get(pk=validated_data["parent_category"])
-	# 	obj = super(DirectoryTreeProjectSerializer, self).create(validated_data=validated_data)
-	# 	return obj
-
 	class Meta:
 		model = DirectoryTree
-		# fields = ["_id", "category_type", "name", "parent_category", "sub_category"]
-		fields = ["_id", "category_type", "name", "desc", "sub_category"]
+		fields = ["_id", "category", "name", "sub_category"]

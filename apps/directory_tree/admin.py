@@ -6,5 +6,5 @@ from .models import *
 
 @admin.register(DirectoryTree)
 class BannerAdmin(admin.ModelAdmin):
-	list_display = ["_id", "name", "category_type", "parent_category"]
-	list_filter = ["category_type"]
+	list_display = ["_id", "name", "category", "parent"]
+	list_filter = ["category"]
