@@ -1,7 +1,10 @@
 # encoding: utf-8
-from rest_framework import viewsets, mixins
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
+from rest_framework import viewsets
+from rest_framework.mixins import RetrieveModelMixin
 
-from .serializers import *
+User = get_user_model()
 
 
 class UserExistsSerializer(serializers.ModelSerializer):
@@ -10,14 +13,13 @@ class UserExistsSerializer(serializers.ModelSerializer):
 		fields = ("username", "mobile")
 
 
-class UserExistsViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserExistsViewSet(RetrieveModelMixin, viewsets.GenericViewSet):
 	"""
 	read:
 		手机号用户是否存在
-
 	"""
-	queryset = User.objects.all()
 	authentication_classes = ()
 	permission_classes = ()
-	lookup_field = "mobile"
+	queryset = User.objects.all()
 	serializer_class = UserExistsSerializer
+	lookup_field = "mobile"

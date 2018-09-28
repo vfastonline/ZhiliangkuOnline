@@ -1,6 +1,6 @@
 #!encoding:utf-8
 from utils.tools import router
-from .password_recovery import PassWordRetrieveViewSet
+from .password_retrieve import PassWordRetrieveViewSet
 from .sms_code_views import SmsCodeViewSet
 from .user_exists import UserExistsViewSet
 from .user_views import UserViewSet

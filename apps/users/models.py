@@ -83,7 +83,6 @@ class UserProfile(AbstractUser):
 	education = models.CharField(max_length=255, verbose_name="学历", blank=True, help_text="学历")
 	signature = models.TextField(max_length=255, verbose_name='个性签名', blank=True, help_text="个性签名")
 	mobile = models.CharField(max_length=11, verbose_name="电话", help_text="联系电话", blank=True)
-	created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间", help_text="创建时间")
 	updated_at = models.DateTimeField(auto_now=True, verbose_name="最近一次更新", help_text="最近一次更新")
 
 	def __str__(self):

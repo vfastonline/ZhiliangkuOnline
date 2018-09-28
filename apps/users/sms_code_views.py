@@ -3,7 +3,6 @@ from random import choice
 
 import re
 from django.contrib.auth import get_user_model
-from rest_framework import exceptions
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework import viewsets
@@ -82,15 +81,3 @@ class SmsCodeViewSet(CreateModelMixin, viewsets.GenericViewSet):
 			return Response(data=data, status=status.HTTP_201_CREATED)
 		else:
 			return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
-
-	def throttled(self, request, wait):
-		"""
-		访问次数被限制,错误信息
-		"""
-
-		class Throttled(exceptions.Throttled):
-			default_detail = '请求被限制.'
-			extra_detail_singular = '请 {wait} 秒之后再重试.'
-			extra_detail_plural = '请 {wait} 秒之后再重试.'
-
-		raise Throttled(wait)

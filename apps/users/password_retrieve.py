@@ -1,9 +1,14 @@
 # encoding: utf-8
-
-
+import re
+from datetime import datetime, timedelta
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
 from rest_framework import viewsets, mixins
 
-from .serializers import *
+from ZhiliangkuOnline.settings import REGEX_MOBILE
+from .models import VerifyCode
+
+User = get_user_model()
 
 
 class PassWordRetrieveSerializer(serializers.Serializer):
