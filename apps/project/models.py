@@ -11,7 +11,7 @@ class Project(BaseModelMixin):
 	"""
 	project = models.ForeignKey(DirectoryTree, verbose_name='项目', related_name='projects', blank=True, null=True,
 								on_delete=models.SET_NULL, limit_choices_to={'category_type': "project"})
-	image = models.ImageField(upload_to='project', verbose_name="项目封面")
+	image = models.ImageField(upload_to='project', verbose_name="项目封面", blank=True)
 	is_home = models.BooleanField("首页展示", default=False)
 
 	def __str__(self):
