@@ -21,3 +21,4 @@ coreapi-cli
 django-colorfield==0.1.15
 django-rest-swagger
 raven
+lxml

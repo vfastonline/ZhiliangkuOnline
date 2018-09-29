@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'propaganda'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -83,19 +84,22 @@ INSTALLED_APPS = [
 	# 'record',
 	# 'wechat_promotion',
 
+	"questionnaire",
 ]
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
 	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
-	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'ZhiliangkuOnline.urls'
 
@@ -201,13 +205,17 @@ REST_FRAMEWORK = {
 	'PAGE_SIZE': 10,
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
 
-	# # 截流
-	# 'DEFAULT_THROTTLE_CLASSES': (
-	# 	'utils.throttles.SendSmsRateThrottle',
-	# ),
-	# 'DEFAULT_THROTTLE_RATES': {
-	# 	'send_sms': '10/day',
-	# }
+	# 截流
+	'DEFAULT_THROTTLE_CLASSES': (
+		'rest_framework.throttling.AnonRateThrottle',
+		'rest_framework.throttling.UserRateThrottle'
+		# 	'utils.throttles.SendSmsRateThrottle',
+	),
+	'DEFAULT_THROTTLE_RATES': {
+		'anon': '100/day',
+		'user': '1000/day',
+		'send_sms': '10/day',
+	}
 
 }
 
