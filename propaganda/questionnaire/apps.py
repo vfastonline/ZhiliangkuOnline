@@ -53,7 +53,7 @@ def init_iq(sender, verbosity, **kwargs):
 		from .models import IQ
 		from .models import Option
 
-		csv_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "iQ_file.csv")
+		csv_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "IQ_file.csv")
 
 		csv_reader = csv.reader(open(csv_file))
 		for index, row in enumerate(csv_reader):
