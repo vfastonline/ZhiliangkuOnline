@@ -24,8 +24,8 @@ class Medal(BaseModelMixin):
 class UserMedal(BaseModelMixin):
 	"""用户勋章 """
 
-	user = models.ForeignKey(UserProfile, verbose_name="用户", related_name='UserMedal',
-									on_delete=models.CASCADE)
+	user = models.ForeignKey(UserProfile, verbose_name="用户", related_name='UserMedals',
+							 on_delete=models.CASCADE)
 	medal = models.ForeignKey(Medal, verbose_name="获得的勋章", on_delete=models.CASCADE, blank=True)
 
 

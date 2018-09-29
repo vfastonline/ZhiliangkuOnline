@@ -1,9 +1,9 @@
 #!encoding:utf-8
 from __future__ import unicode_literals
 
-from tracks_learning.models import Video
 from users.models import UserProfile
 from utils.model import *
+from video.models import Video
 
 
 class Question(BaseModelMixin):

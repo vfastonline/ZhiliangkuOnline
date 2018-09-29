@@ -2,6 +2,8 @@
 
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from utils.exceptions import ResumeCategoryUnavailable
 from .serializers import *
@@ -22,8 +24,8 @@ class UserResumeInformation(mixins.CreateModelMixin,
 	删除，求职意向，工作经历，项目经验，教育经历
 
 	"""
-	authentication_classes = ()
-	permission_classes = ()
+	authentication_classes = (JSONWebTokenAuthentication,)
+	permission_classes = (IsAuthenticated,)
 
 	def get_resume_category(self):
 		resume_category = self.kwargs.get("category")

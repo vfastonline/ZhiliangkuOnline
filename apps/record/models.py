@@ -3,9 +3,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from tracks_learning.models import Video, Course
 from users.models import UserProfile
 from utils.model import BaseModelMixin
+from video.models import Video
 
 
 class WatchRecord(BaseModelMixin):
