@@ -13,7 +13,7 @@ class Banner(BaseModelMixin):
 	)
 
 	name = models.CharField('轮播名称', max_length=50)
-	image = models.ImageField(upload_to='banner', verbose_name="轮播图片")
+	image = models.ImageField(upload_to='banner', verbose_name="轮播图片", blank=True)
 	category = models.CharField(verbose_name='类别', max_length=1, choices=CATEGORY, db_index=True, help_text="类别")
 	index = models.IntegerField(default=0, verbose_name="轮播顺序", db_index=True)
 	desc = models.TextField(default="", verbose_name="轮播描述", help_text="轮播描述")
