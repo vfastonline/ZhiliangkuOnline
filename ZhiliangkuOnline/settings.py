@@ -182,7 +182,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # 与drf的jwt相关的设置
 JWT_AUTH = {
-	'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+	'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=60 * 60 * 24),
 	'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 	'JWT_ALLOW_REFRESH': True,  # 启用JWT，token刷新功能
 }
