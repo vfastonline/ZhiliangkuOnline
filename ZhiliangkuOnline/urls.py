@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.views.generic import TemplateView
 from django.views.static import serve
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
@@ -58,6 +59,12 @@ urlpatterns = [
 	# api文档
 	path(r'docs/', include_docs_urls(title='接口文档', public=False)),
 	path(r"docss/", schema_view),
+
+	# 调查问卷
+	path('questionnaire/', TemplateView.as_view(template_name='questionnaire.html'), name='questionnaire'),
+
+	# 首页
+	path('index/', TemplateView.as_view(template_name='index.html'), name='index'),
 
 ]
 
