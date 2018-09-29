@@ -57,7 +57,7 @@ urlpatterns = [
 
 	# api文档
 	path(r'docs/', include_docs_urls(title='接口文档', public=False)),
-	# path(r"docs/", schema_view),
+	path(r"docss/", schema_view),
 
 ]
 

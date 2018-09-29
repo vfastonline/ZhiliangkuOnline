@@ -209,12 +209,10 @@ REST_FRAMEWORK = {
 	'DEFAULT_THROTTLE_CLASSES': (
 		'rest_framework.throttling.AnonRateThrottle',
 		'rest_framework.throttling.UserRateThrottle'
-		# 	'utils.throttles.SendSmsRateThrottle',
 	),
 	'DEFAULT_THROTTLE_RATES': {
-		'anon': '100/day',
+		'anon': '1000/day',
 		'user': '1000/day',
-		'send_sms': '10/day',
 	}
 
 }

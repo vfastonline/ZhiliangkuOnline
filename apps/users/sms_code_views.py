@@ -29,9 +29,6 @@ class SmsCodeSerializer(serializers.Serializer):
 		if not re.match(REGEX_MOBILE, phone):
 			raise serializers.ValidationError("手机号码非法")
 
-		if User.objects.filter(mobile=phone).count():
-			raise serializers.ValidationError("用户已经存在")
-
 		one_minute_ago = datetime.now() - timedelta(hours=0, minutes=1, seconds=0)
 		if VerifyCode.objects.filter(created_at__gt=one_minute_ago, phone=phone).count():
 			raise serializers.ValidationError("距离上一次发送未超过60s")

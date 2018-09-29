@@ -15,13 +15,27 @@ def init_eq(sender, verbosity, **kwargs):
 	"""
 	try:
 		from .models import EQ
+		from .models import Option
+
 		csv_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "EQ_file.csv")
 
 		csv_reader = csv.reader(open(csv_file))
 		for index, row in enumerate(csv_reader):
 			if index == 0:
 				continue
-			EQ.objects.get_or_create(title=row[2], option=eval(row[1]))
+
+			add_data = {
+				"title": row[2],
+			}
+
+			options = list()
+			for option in eval(row[1]):
+				options.append(Option(**option))
+			add_data.update({"option": options})
+
+			eq_obj = EQ.objects.filter(title=row[2])
+			if not eq_obj.exists():
+				EQ.objects.create(**add_data)
 
 		if verbosity == 1:
 			print("  - init EQ测试题... OK")
@@ -37,6 +51,8 @@ def init_iq(sender, verbosity, **kwargs):
 	"""
 	try:
 		from .models import IQ
+		from .models import Option
+
 		csv_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "iQ_file.csv")
 
 		csv_reader = csv.reader(open(csv_file))
@@ -46,13 +62,20 @@ def init_iq(sender, verbosity, **kwargs):
 
 			add_data = {
 				"title": row[3],
-				"option": eval(row[2]),
-				"image": "",
 			}
+
 			if row[1]:
 				image = row[1].split("/")[-1]
 				add_data.update({"image": "/".join(["iq_image", image])})
-			IQ.objects.get_or_create(**add_data)
+
+			options = list()
+			for option in eval(row[2]):
+				options.append(Option(**option))
+			add_data.update({"option": options})
+
+			iq_obj = IQ.objects.filter(title=row[3])
+			if not iq_obj.exists():
+				IQ.objects.create(**add_data)
 
 		if verbosity == 1:
 			print("  - init IQ测试题... OK")
