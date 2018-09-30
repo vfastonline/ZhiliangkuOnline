@@ -40,11 +40,8 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 			script=script, option_1=option_1, option_2=option_2,
 			option_3=option_3, option_4=option_4,
 			option_5=option_5, option_6=option_6)
-		print(option_1, type(option_1))
-		print(commond_str)
 		output = os.popen(commond_str, "r")
 		output_str = output.read()
-		print(output_str)
 		output.close()
 		del validated_data["option_1"]
 		del validated_data["option_2"]
