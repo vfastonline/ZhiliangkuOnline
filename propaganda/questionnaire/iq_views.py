@@ -82,7 +82,7 @@ class IQViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateModelMix
 	queryset = IQ.objects.all()
 	serializer_class = IQSerializer
 	pagination_class = IQPagination
-	throttle_classes = (UserRateThrottle, AnonRateThrottle)
+	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
 
 	def get_authenticators(self):
 		if self.request.method == "POST":

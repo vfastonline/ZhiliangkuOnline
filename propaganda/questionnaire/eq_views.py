@@ -36,7 +36,7 @@ class EQViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateModelMix
 	queryset = EQ.objects.all()
 	serializer_class = EQSerializer
 	pagination_class = EQPagination
-	throttle_classes = (UserRateThrottle, AnonRateThrottle)
+	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
 
 	def get_authenticators(self):
 		if self.request.method == "POST":
