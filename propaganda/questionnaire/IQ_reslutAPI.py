@@ -7,7 +7,9 @@
 @time: 2017/9/3 обнГ1:25
 '''
 
-
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 from collections import deque
 from urllib import urlencode
 
