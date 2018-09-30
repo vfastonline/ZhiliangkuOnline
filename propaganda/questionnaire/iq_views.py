@@ -29,12 +29,12 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 
 	def create(self, validated_data):
 		script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "IQ_reslutAPI.py")
-		option_1 = validated_data["option_1"]
-		option_2 = validated_data["option_2"]
-		option_3 = validated_data["option_3"]
-		option_4 = validated_data["option_4"]
-		option_5 = validated_data["option_5"]
-		option_6 = validated_data["option_6"]
+		option_1 = "%s" % validated_data["option_1"]
+		option_2 = "%s" % validated_data["option_2"]
+		option_3 = "%s" % validated_data["option_3"]
+		option_4 = "%s" % validated_data["option_4"]
+		option_5 = "%s" % validated_data["option_5"]
+		option_6 = "%s" % validated_data["option_6"]
 		print(option_1, type(option_1))
 		commond_str = "python2 {script} {option_1} {option_2} {option_3} {option_4} {option_5} {option_6}".format(
 			script=script, option_1=option_1, option_2=option_2,
