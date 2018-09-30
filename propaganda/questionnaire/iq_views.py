@@ -35,6 +35,7 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 			option_5=validated_data["option_5"], option_6=validated_data["option_6"])
 		output = os.popen(commond_str, "r")
 		output_str = output.read()
+		print(output_str)
 		output.close()
 		del validated_data["option_1"]
 		del validated_data["option_2"]
