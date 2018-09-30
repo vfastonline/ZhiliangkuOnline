@@ -7,8 +7,6 @@ from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.throttling import *
-from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import *
@@ -36,10 +34,11 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 		option_5 = validated_data["option_5"]
 		option_6 = validated_data["option_6"]
 
-		commond_str = 'python2 {script} "{option_1}" "{option_2}" "{option_3}" "{option_4}" "{option_5}" "{option_6}"'.format(
+		commond_str = "python2 {script} '{option_1}' '{option_2}' '{option_3}' '{option_4}' '{option_5}' '{option_6}'".format(
 			script=script, option_1=option_1, option_2=option_2,
 			option_3=option_3, option_4=option_4,
 			option_5=option_5, option_6=option_6)
+		print(commond_str)
 		output = os.popen(commond_str, "r")
 		output_str = output.read()
 		output.close()
