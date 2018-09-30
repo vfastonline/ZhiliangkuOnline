@@ -71,7 +71,7 @@ class IQPagination(PageNumberPagination):
 	page_size = 100
 
 
-class IQViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class IQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
 		获取指IQ测试题

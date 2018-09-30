@@ -25,7 +25,7 @@ class EQPagination(PageNumberPagination):
 	page_size = 100
 
 
-class EQViewSet(CacheResponseMixin, mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class EQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
 		获取指EQ测试题
