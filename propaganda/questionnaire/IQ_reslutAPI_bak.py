@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#encoding:gb2312
+# encoding:gb2312
 
 '''
 @author: GOD_miemie
@@ -7,25 +7,11 @@
 @time: 2017/9/3 下午1:25
 '''
 
-
 from collections import deque
 from urllib import urlencode
 
-import argparse
 import requests
 from lxml import etree
-
-parser = argparse.ArgumentParser()
-parser.add_argument("option_1", type=str)
-parser.add_argument("option_2", type=str)
-parser.add_argument("option_3", type=str)
-parser.add_argument("option_4", type=str)
-parser.add_argument("option_5", type=str)
-parser.add_argument("option_6", type=str)
-args = parser.parse_args()
-
-
-
 
 request_urls = deque()
 options_list = deque()
@@ -70,8 +56,6 @@ def IQ_reslut(options):
 
 
 # 设置调用接口以及设定cookie
-
-
 
 
 def options_requset(page_souce):
@@ -123,12 +107,11 @@ def options_requset(page_souce):
 		'hi~ %s %s, your left is %s & your rigth is %s & %s' % (user_name, total_scroe, left, right, comment)
 
 
-
-
 def way_thinking(page_souce):
 	seletor = etree.HTML(page_souce)
 	link = seletor.xpath('''//input[@type='hidden']''')
 	return link
+
 
 def submit_crawl(page_souce):
 	seletor = etree.HTML(page_souce)
@@ -141,15 +124,20 @@ if __name__ == '__main__':
 	option_1 = {'TI1': 'V1', 'TI2': 'V1', 'TI3': 'V1', 'TI4': 'V1', 'TI5': 'V1', 'TI6': 'V1', 'TI7': 'V1', 'TI8': 'V1',
 				'TI9': 'V1', 'TI10': 'V1'}
 	option_2 = {'TI11': 'V1', 'TI12': 'V1', 'TI13': 'V1', 'TI14': 'V1', 'TI15': 'V1', 'TI16': 'V1', 'TI17': 'V1',
-				'TI18': 'V1', 'TI19': 'V1', 'TI20': 'V1'}
+				'TI18': 'V1',
+				'TI19': 'V1', 'TI20': 'V1'}
 	option_3 = {'TI21': 'V1', 'TI22': 'V1', 'TI23': 'V1', 'TI24': 'V1', 'TI25': 'V1', 'TI26': 'V1', 'TI27': 'V1',
-				'TI28': 'V1', 'TI29': 'V1', 'TI30': 'V1'}
+				'TI28': 'V1',
+				'TI29': 'V1', 'TI30': 'V1'}
 	option_4 = {'TI31': 'V1', 'TI32': 'V1', 'TI33': 'V1', 'TI34': 'V1', 'TI35': 'V1', 'TI36': 'V1', 'TI37': 'V1',
-				'TI38': 'V1', 'TI39': 'V1', 'TI40': 'V1'}
+				'TI38': 'V1',
+				'TI39': 'V1', 'TI40': 'V1'}
 	option_5 = {'TI41': 'V1', 'TI42': 'V1', 'TI43': 'V1', 'TI44': 'V1', 'TI45': 'V1', 'TI46': 'V1', 'TI47': 'V1',
-				'TI48': 'V1', 'TI49': 'V1', 'TI50': 'V1'}
+				'TI48': 'V1',
+				'TI49': 'V1', 'TI50': 'V1'}
 	option_6 = {'TI51': 'V1', 'TI52': 'V1', 'TI53': 'V1', 'TI54': 'V1', 'TI55': 'V1', 'TI56': 'V1', 'TI57': 'V1',
-				'TI58': 'V1', 'TI59': 'V1', 'TI60': 'V1'}
+				'TI58': 'V1',
+				'TI59': 'V1', 'TI60': 'V1'}
 
 	year = 16
 	sex = '男'
@@ -166,12 +154,12 @@ if __name__ == '__main__':
 		'cit': cit,
 		'emailto': emailto,
 	}
-	list.append(eval(args.option_1))
-	list.append(eval(args.option_2))
-	list.append(eval(args.option_3))
-	list.append(eval(args.option_4))
-	list.append(eval(args.option_5))
-	list.append(eval(args.option_6))
+	list.append(option_1)
+	list.append(option_2)
+	list.append(option_3)
+	list.append(option_4)
+	list.append(option_5)
+	list.append(option_6)
 	list.append(option_7)
 
 	IQ_reslut(list)

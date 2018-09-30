@@ -17,7 +17,7 @@ class QuestionnaireScore(BaseModelMixin):
 
 	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
 	category = models.CharField(verbose_name='类别', max_length=1, choices=CATEGORY, db_index=True, help_text="类别")
-	value = models.IntegerField(verbose_name='分值', blank=True)
+	value = models.CharField(max_length=255, verbose_name='分值', blank=True)
 
 	def __str__(self):
 		return self.user.username
