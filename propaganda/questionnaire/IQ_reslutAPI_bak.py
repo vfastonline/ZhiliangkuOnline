@@ -103,8 +103,7 @@ def options_requset(page_souce):
 		right = link[2].text
 		comment = link[2].tail
 
-		print
-		'hi~ %s %s, your left is %s & your rigth is %s & %s' % (user_name, total_scroe, left, right, comment)
+		print 'hi~ %s %s, your left is %s & your rigth is %s & %s' % (user_name, total_scroe, left, right, comment)
 
 
 def way_thinking(page_souce):
