@@ -43,8 +43,8 @@
 					<button @click="test" class="entry">提交
 					</button>
 					<!-- 成功提示 -->
-					<el-button :plain="true"></el-button>
-					<el-button :plain="true"></el-button>
+					<el-button :plain="true" v-show="false"></el-button>
+					<el-button :plain="true" v-show="false"></el-button>
 				</el-tab-pane>
 				<el-tab-pane label="逻辑能力">
 					<div v-for="(item,index) in results_iq" :key="index" @click="btn">

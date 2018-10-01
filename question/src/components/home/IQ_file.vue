@@ -2,12 +2,12 @@
 	<div class="contenter">
 		<!-- 是否退出 -->
 		<div class="Logbtn">
-			<el-button @click="dialogFormVisible = true" class="Logbtns">登录</el-button>
-			<span @click="phones">{{phone}}
-			</span>
-			<div class="out" v-show="dele">
-				<span @click="Sign">退出</span>
-				<span @click="cancel">取消</span>
+			<el-button @click="dialogFormVisible = true" class="Logbtns" v-show="log_entry"> <span>登录</span></el-button>
+			<div @mouseenter="phones" @mouseleave="phon">
+				<p>{{phone}}</p>
+				<div class="" v-show="dele">
+					<span @click="Sign" class="entry_span">退出</span>
+				</div>
 			</div>
 		</div>
 		<el-dialog title="登录" :visible.sync="dialogFormVisible" center>
@@ -31,7 +31,7 @@
 			<el-tabs v-model="activeName">
 				<el-tab-pane label="职场素质" name="second">
 					<div v-for="(item,index) in results" :key="index" @click="btn">
-						<el-col :span="24">
+						<el-col :span="24" class="card">
 							<el-card shadow="hover">
 								<p>{{item.title}}</p>
 								<el-radio-group v-model="radio1[index]">
@@ -43,13 +43,13 @@
 					<button @click="test" class="entry">提交
 					</button>
 					<!-- 成功提示 -->
-					<el-button :plain="true"></el-button>
-					<el-button :plain="true"></el-button>
+					<!-- <el-button :plain="true" v-show="display_button"></el-button>
+					<el-button :plain="true" v-show="display_elbutton"></el-button> -->
 				</el-tab-pane>
 				<el-tab-pane label="逻辑能力">
-					<div v-for="(item,index) in results_iq" :key="index" @click="btn">
+					<div v-for="(item,index) in results_iq" :key="index" @click="btn" class="cards">
 						<el-col :span="24">
-							<el-card shadow="hover">
+							<el-card shadow="hover" class="el">
 								<p>{{item.title}}</p>
 								<p><img :src="item.image"></p>
 								<el-radio-group v-model="radio2[index]">
@@ -71,7 +71,29 @@
 	padding: 0;
 	margin: 0;
 }
-
+.entry_span {
+	width: 80px;
+	height: 25px;
+	line-height: 25px;
+	font-size: 18px;
+	text-align: center;
+	display: block;
+	border: 1px solid #409EFF;
+}
+.entry_span:hover {
+	background: #409EFF; 
+	color: #eee;
+}
+.card {
+	padding: 5px;
+}
+.cards {
+	padding: 5px;
+}
+.item {
+	width: 50px;
+	height: 40px;
+}
 .contenter {
 	width: 800px;
 	margin: 0 auto;
@@ -80,11 +102,13 @@
 
 .contenter .Logbtn {
 	width: 70px;
-	height: 30px;
-	font-size: 14px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 17px;
 	position: relative;
 	left: 810px;
-	top: 35px;
+	top: 40px;
 }
 
 .contenter .Logbtn .out {
@@ -106,22 +130,23 @@
 	color: #ffffff;
 }
 
-.contenter .Logbtn .Logbtns {
+.contenter .Logbtn .Logbtns span{
+	display: block;
 	width: 70px;
 	height: 30px;
-	font-size: 14px;
+	line-height:30px;
+	text-align: center;
+	font-size: 15px;
+	padding:0px;
+}
+.el-button {
+	padding: 0px;
 }
 
 
 .el-tabs {
 	width: 800px;
 	height: 20px;
-}
-
-.contenter .Logbtn span {
-	display: block;
-	width: 100px;
-	height: 30px;
 }
 
 .entry,
@@ -141,10 +166,11 @@
 
 .el-button.is-round {
 	position: relative;
-	left: 860px;
+	left: 800px;
 	top: 35px;
-	width: 100px;
+	width: 200px;
 	height: 60px;
+	line-height: 60px;
 }
 
 .el-button.is-round span {
@@ -189,6 +215,10 @@ export default {
 			}
 		};
 		return {
+			log_entry: true,
+			//提示
+			display_button: false,
+			display_elbutton: false,
 			// 存储用户的职场素质分数
 			Fraction: '',
 			// 存储用户的逻辑能力的状态
@@ -266,14 +296,18 @@ export default {
 			localStorage.clear();
 			this.phone = '';
 			this.dele = false;
+			this.log_entry = true;
 		},
 		// 点击是否取消
-		cancel() {
-			this.dele = false;
-		},
+		// cancel() {
+		// 	this.dele = false;
+		// },
 		// 退出
 		phones() {
 			this.dele = true;
+		},
+		phon() {
+			this.dele = false;
 		},
 		// 提示成功消息
 		open6() {
@@ -375,7 +409,7 @@ export default {
 				a1[str1[0]] = str1[1]
 			}
 			var b1 = JSON.stringify(a1)
-			console.log(b1);
+			// console.log(b1);
 			// 第二条数据
 			var a2 = {}
 			for (var i = 0; i < arrys2.length; i++) {
@@ -383,7 +417,7 @@ export default {
 				a2[str2[0]] = str2[1]
 			}
 			var b2 = JSON.stringify(a2)
-			console.log(b2);
+			// console.log(b2);
 			// 第三条数据
 			var a3 = {}
 			for (var i = 0; i < arrys3.length; i++) {
@@ -391,7 +425,7 @@ export default {
 				a3[str3[0]] = str3[1]
 			}
 			var b3 = JSON.stringify(a3)
-			console.log(b3);
+			// console.log(b3);
 			// 第四条
 			var a4 = {}
 			for (var i = 0; i < arrys4.length; i++) {
@@ -399,7 +433,7 @@ export default {
 				a4[str4[0]] = str4[1]
 			}
 			var b4 = JSON.stringify(a4)
-			console.log(b4);
+			// console.log(b4);
 			// 第五条
 			var a5 = {}
 			for (var i = 0; i < arrys5.length; i++) {
@@ -407,18 +441,18 @@ export default {
 				a5[str5[0]] = str5[1]
 			}
 			var b5 = JSON.stringify(a5)
-			console.log(b5);
+			// console.log(b5);
 			var a6 = {}
 			for (var i = 0; i < arrys6.length; i++) {
 				var str6 = arrys6[i].split(':');
 				a6[str6[0]] = str6[1]
 			}
 			var b6 = JSON.stringify(a6)
-			console.log(b6);
+			// console.log(b6);
 
 			var str = localStorage.getItem('token');
 			var token = 'Bearer ' + str;
-			console.log(token);
+			// console.log(token);
 			var self = this;
 			$.ajax({
 				type: "post",
@@ -438,15 +472,15 @@ export default {
 				},
 				dataType: 'json',
 				success: function(data) {
-				  if(data.value !== '' && data.Status !== 201) {
-				  	self.open6();
-				  } else{
-				  	self.open8();
-				  }
-					console.log(data);
+					if (data.value !== '' && data.Status !== 201) {
+						self.open6();
+					} else {
+						self.open8();
+					}
+					// console.log(data);
 				},
 				error: function(data) {
-					console.log(data);
+					// console.log(data);
 				}
 			});
 
@@ -478,6 +512,7 @@ export default {
 						message: '登录成功'
 					});
 					this.dialogFormVisible = false;
+					this.log_entry = false;
 				} else {
 					this.$message({
 						type: 'error',
@@ -530,7 +565,18 @@ export default {
 		}
 	},
 	created() {
-		// 这里是eq向后台请求的数据
+		// 正则保护手机
+		var reg = /^(\d{3})\d{4}(\d{4})$/;
+		// 判断
+		if (localStorage.getItem('usernem')) {
+
+			this.phone = localStorage.getItem('usernem')
+			this.phone = this.phone.replace(reg, "$1****$2");
+			this.log_entry = false;
+		} else {
+			this.log_entry = true;
+		}
+
 		var self = this;
 		self.ajaxSubmit.ajax({
 			url: self.commmonWebConfig.zhiliangkuapi + self.ajaxSubmit.allUrl.login_eq,
