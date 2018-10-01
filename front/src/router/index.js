@@ -13,6 +13,10 @@ import Plo  from '@/components/login/2_login'
 import Plos  from '@/components/login/3_login'
 // 首页头部测试的路由
 import Header from '@/components/home/heder'
+
+// 引入问卷调查
+// import Header from '@/components/question'
+
 Vue.use(Router)
 
 export default new Router({
