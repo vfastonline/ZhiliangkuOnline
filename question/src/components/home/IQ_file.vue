@@ -407,7 +407,6 @@ export default {
 				async: false,
 				dataType: 'json',
 				success: function(data) {
-					self.results = data.results;
 				},
 				error: function(data) {}
 
