@@ -1,18 +1,22 @@
 <template>
 	<div class="contenter">
-		<!-- 是否退出 -->
 		<div class="Logbtn">
-			<el-button @click="dialogFormVisible = true" class="Logbtns" v-show="log_entry"> <span>登录</span></el-button>
-			<div @mouseenter="phones" @mouseleave="phon">
-				<p>{{phone}}</p>
-				<div class="" v-show="dele">
-					<span @click="Sign" class="entry_span">退出</span>
-				</div>
+			<el-button type="text" @click="dialogFormVisible = true" class="Logbtns" v-show="log_entry"> <span>登录</span></el-button>
+			<div>
+				<el-dropdown @command="handleCommand">
+					<span class="el-dropdown-link">
+        {{phone}}<i class="el-icon--right"></i>
+      </span>
+					<el-dropdown-menu slot="dropdown">
+						<el-dropdown-item command="logout">退出</el-dropdown-item>
+					</el-dropdown-menu>
+				</el-dropdown>
+				<hr>
 			</div>
 		</div>
 		<el-dialog title="登录" :visible.sync="dialogFormVisible" center>
 			<!-- 插入测试 -->
-			<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+			<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="">
 				<el-form-item label="手机号" prop="num">
 					<el-input v-model.number="ruleForm2.num"></el-input>
 				</el-form-item>
@@ -40,11 +44,7 @@
 							</el-card>
 						</el-col>
 					</div>
-					<button @click="test" class="entry">提交
-					</button>
-					<!-- 成功提示 -->
-					<!-- <el-button :plain="true" v-show="display_button"></el-button>
-					<el-button :plain="true" v-show="display_elbutton"></el-button> -->
+					<el-button type="primary" @click="test">提交</el-button>
 				</el-tab-pane>
 				<el-tab-pane label="逻辑能力">
 					<div v-for="(item,index) in results_iq" :key="index" @click="btn" class="cards">
@@ -60,128 +60,21 @@
 							</el-card>
 						</el-col>
 					</div>
-					<button @click="test_iq" class="entrys">提交</button>
+					<el-button type="primary" @click="test_iq">提交</el-button>
 				</el-tab-pane>
 			</el-tabs>
 		</div>
 	</div>
 </template>
 <style type="text/css" lang="less" scoped>
-* {
-	padding: 0;
-	margin: 0;
-}
-.entry_span {
-	width: 80px;
-	height: 25px;
-	line-height: 25px;
-	font-size: 18px;
-	text-align: center;
-	display: block;
-	border: 1px solid #409EFF;
-}
-.entry_span:hover {
-	background: #409EFF; 
-	color: #eee;
-}
 .card {
 	padding: 5px;
 }
-.cards {
-	padding: 5px;
-}
-.item {
-	width: 50px;
-	height: 40px;
-}
+
 .contenter {
 	width: 800px;
 	margin: 0 auto;
 	position: relative;
-}
-
-.contenter .Logbtn {
-	width: 70px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	font-size: 17px;
-	position: relative;
-	left: 810px;
-	top: 40px;
-}
-
-.contenter .Logbtn .out {
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	font-size: 15px;
-}
-
-.contenter .Logbtn .out span {
-	width: 40px;
-	height: 40px;
-	text-align: center;
-	border: 1px solid blue;
-}
-
-.contenter .Logbtn .out span:hover {
-	background: #164C83;
-	color: #ffffff;
-}
-
-.contenter .Logbtn .Logbtns span{
-	display: block;
-	width: 70px;
-	height: 30px;
-	line-height:30px;
-	text-align: center;
-	font-size: 15px;
-	padding:0px;
-}
-.el-button {
-	padding: 0px;
-}
-
-
-.el-tabs {
-	width: 800px;
-	height: 20px;
-}
-
-.entry,
-.entrys {
-	display: block;
-	width: 100px;
-	height: 40px;
-	margin: 0;
-	padding: 0;
-	border: 1px solid transparent;
-	outline: none;
-	background: #0461C0;
-	color: #FFF;
-	position: relative;
-	left: 300px;
-}
-
-.el-button.is-round {
-	position: relative;
-	left: 800px;
-	top: 35px;
-	width: 200px;
-	height: 60px;
-	line-height: 60px;
-}
-
-.el-button.is-round span {
-	display: block;
-	width: 100px;
-	height: 60px;
-	text-align: center;
-}
-
-.el-tabs__item {
-	height: 50px;
 }
 
 </style>
@@ -190,7 +83,7 @@ export default {
 	data() {
 		var checkNum = (rule, value, callback) => {
 			if (!value) {
-				return callback(new Error('账号不能为空'));
+				return callback(new Error('手机号必填'));
 			}
 			setTimeout(() => {
 				if (!Number.isInteger(value)) {
@@ -272,8 +165,7 @@ export default {
 				type: [],
 				resource: '',
 				desc: ''
-			},
-			formLabelWidth: '120px'
+			}
 		};
 	},
 	// 监听数据变化
@@ -291,6 +183,37 @@ export default {
 
 	},
 	methods: {
+		login_ok() {
+			this.$notify({
+				title: '成功',
+				message: '登录成功,可以开始答题了.',
+				type: 'success'
+			});
+		},
+		login_fail() {
+			this.$notify.error({
+				title: '失败',
+				message: '请重新登录.'
+
+			});
+		},
+		title_ok() {
+			this.$notify({
+				title: '成功',
+				message: '恭喜,答题成功,稍后通知答题结果',
+				type: 'success'
+			});
+		},
+
+
+
+		handleCommand(command) {
+			this.Sign()
+		},
+
+
+
+
 		// 点击是否退出
 		Sign() {
 			localStorage.clear();
@@ -298,10 +221,6 @@ export default {
 			this.dele = false;
 			this.log_entry = true;
 		},
-		// 点击是否取消
-		// cancel() {
-		// 	this.dele = false;
-		// },
 		// 退出
 		phones() {
 			this.dele = true;
@@ -309,21 +228,12 @@ export default {
 		phon() {
 			this.dele = false;
 		},
-		// 提示成功消息
-		open6() {
-			this.$message({
-				showClose: false,
-				message: '恭喜你提交成功,请稍后再试',
-				type: 'success'
-			});
-
-		},
 		// 错误提示
 		open8() {
-			this.$message({
-				showClose: true,
-				message: '错了哦，答题失败,请稍后',
-				type: 'error'
+			this.$notify({
+				title: '警告',
+				message: '请稍后再试',
+				type: 'warning'
 			});
 		},
 		// 检测用户是否登录过
@@ -367,7 +277,7 @@ export default {
 				dataType: 'json',
 				success: function(data) {
 					if (data.value !== '' && data.Status !== 201) {
-						self.open6();
+						self.title_ok();
 					} else {
 						self.open8();
 					}
@@ -473,7 +383,7 @@ export default {
 				dataType: 'json',
 				success: function(data) {
 					if (data.value !== '' && data.Status !== 201) {
-						self.open6();
+						self.title_ok();
 					} else {
 						self.open8();
 					}
@@ -507,17 +417,11 @@ export default {
 		submitForm(formName) {
 			this.$refs[formName].validate((valid) => {
 				if (valid) {
-					this.$message({
-						type: 'success',
-						message: '登录成功'
-					});
+					this.login_ok();
 					this.dialogFormVisible = false;
 					this.log_entry = false;
 				} else {
-					this.$message({
-						type: 'error',
-						message: '登录失败,请重新输入'
-					});
+					this.login_fail();
 					return false;
 				}
 
