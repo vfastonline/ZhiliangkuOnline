@@ -44,10 +44,22 @@
 							</el-card>
 						</el-col>
 					</div>
-					<el-button type="primary" @click="test">提交</el-button>
+					<el-button type="primary" @click="btns">交卷</el-button>
+					<el-dialog title="请选择你要咨询哪位老师答案" :visible.sync="dialogTableVisibles">
+						<!-- 老师名 -->
+						<div>
+							<label>请选择老师</label>
+							<select v-model="user">
+								<option v-for="msg in user_total" v-bind:value="msg.email">
+									{{msg.name}}{{msg.email}}
+								</option>
+							</select>
+						</div>
+						<el-button type="primary" @click="test">确定</el-button>
+					</el-dialog>
 				</el-tab-pane>
 				<el-tab-pane label="逻辑能力">
-					<div v-for="(item,index) in results_iq" :key="index" @click="btn" class="cards">
+					<div v-for="(item,index) in results_iq" :key="index" class="cards">
 						<el-col :span="24">
 							<el-card shadow="hover" class="el">
 								<p>{{item.title}}</p>
@@ -60,7 +72,20 @@
 							</el-card>
 						</el-col>
 					</div>
-					<el-button type="primary" @click="test_iq">提交</el-button>
+					<!-- 提交的弹框 -->
+					<el-button type="primary" @click="login_btn">交卷</el-button>
+					<el-dialog title="请选择你要咨询哪位老师答案" :visible.sync="dialogTableVisible">
+						<!-- 老师名 -->
+						<div>
+							<label>请选择老师</label>
+							<select v-model="user">
+								<option v-for="msg in user_total" v-bind:value="msg.email">
+									{{msg.name}}{{msg.email}}
+								</option>
+							</select>
+						</div>
+						<el-button type="primary" @click="test_iq">确定</el-button>
+					</el-dialog>
 				</el-tab-pane>
 			</el-tabs>
 		</div>
@@ -108,6 +133,15 @@ export default {
 			}
 		};
 		return {
+			// 弹框
+			dialogTableVisible: false,
+			dialogTableVisibles: false,
+			// 老师
+			user: '',
+			// 邮箱
+			mailbox: '',
+			// 每个老师数据
+			user_total: [],
 			log_entry: true,
 			//提示
 			display_button: false,
@@ -170,6 +204,7 @@ export default {
 	},
 	// 监听数据变化
 	watch: {
+
 		// 监听的是职场素质的数据
 		'radio1': function(val) {
 			this.Fraction = val;
@@ -183,6 +218,40 @@ export default {
 
 	},
 	methods: {
+		btns() {
+			this.dialogTableVisibles = true;
+			this.login_name();
+		},
+		login_btn() {
+			this.dialogTableVisible = true;
+			this.login_name();
+		},
+		login_name() {
+			var self = this;
+			// /获取token
+			var str = localStorage.getItem('token');
+			// token拼接
+			var token = 'Bearer ' + str;
+			$.ajax({
+				type: "get",
+				url: "http://www.zhiliangku.com/consultant/",
+				async: false,
+				data: {},
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", token)
+				},
+				dataType: 'json',
+				success: function(data) {
+					self.user_total = data.results;
+
+
+				},
+				error: function(data) {
+
+				}
+			});
+		},
+		// 发送用户老师接口
 		login_ok() {
 			this.$notify({
 				title: '成功',
@@ -204,16 +273,23 @@ export default {
 				type: 'success'
 			});
 		},
+		login_heade() {
+			this.$notify.error({
+				title: '失败',
+				message: '请选择咨询老师.'
 
+			});
+		},
+		login_heades() {
+			this.$notify.error({
+				title: '失败',
+				message: '请做题.'
 
-
+			});
+		},
 		handleCommand(command) {
 			this.Sign()
 		},
-
-
-
-
 		// 点击是否退出
 		Sign() {
 			localStorage.clear();
@@ -263,34 +339,45 @@ export default {
 			var token = 'Bearer ' + str;
 			// 备份this
 			var self = this;
-			$.ajax({
-				type: "post",
-				url: "http://www.zhiliangku.com/eq/",
-				async: false,
-				data: {
-					category: 'eq',
-					value: result
-				},
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("Authorization", token)
-				},
-				dataType: 'json',
-				success: function(data) {
-					if (data.value !== '' && data.Status !== 201) {
-						self.title_ok();
-					} else {
-						self.open8();
-					}
-				},
-				error: function(data) {}
-			});
+			if (!self.user) {
+				self.login_heade();
+			} else if (!self.Fraction) {
+				self.login_heades();
+			} else {
 
+
+				$.ajax({
+					type: "post",
+					url: "http://www.zhiliangku.com/eq/",
+					async: false,
+					data: {
+						category: 'eq',
+						value: result,
+						consultant_email: self.user
+					},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader("Authorization", token)
+					},
+					dataType: 'json',
+					success: function(data) {
+						if (data.value !== '' && data.Status !== 201) {
+							self.title_ok();
+							self.dialogTableVisibles = false;
+						} else {
+							self.open8();
+						}
+					},
+					error: function(data) {}
+				});
+			}
 
 		},
 		// 提交逻辑能力数据
 		test_iq() {
+			var self = this;
 			// 获取的数据
-			var arr = this.logic;
+			var arr = self.logic;
+
 
 			var arr1 = this.arrmap(arr, 0, 11);
 			var arr2 = this.arrmap(arr, 10, 21);
@@ -364,35 +451,44 @@ export default {
 			var token = 'Bearer ' + str;
 			// console.log(token);
 			var self = this;
-			$.ajax({
-				type: "post",
-				url: "http://www.zhiliangku.com/iq/",
-				async: false,
-				data: {
-					category: 'iq',
-					option_1: b1,
-					option_2: b2,
-					option_3: b3,
-					option_4: b4,
-					option_5: b5,
-					option_6: b6
-				},
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("Authorization", token)
-				},
-				dataType: 'json',
-				success: function(data) {
-					if (data.value !== '' && data.Status !== 201) {
-						self.title_ok();
-					} else {
-						self.open8();
+			if (!self.user) {
+				self.login_heade();
+
+			} else if (!self.logic) {
+				self.login_heades();
+			} else {
+				$.ajax({
+					type: "post",
+					url: "http://www.zhiliangku.com/iq/",
+					async: false,
+					data: {
+						category: 'iq',
+						option_1: b1,
+						option_2: b2,
+						option_3: b3,
+						option_4: b4,
+						option_5: b5,
+						option_6: b6,
+						consultant_email: self.user
+					},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader("Authorization", token)
+					},
+					dataType: 'json',
+					success: function(data) {
+						if (data.value !== '' && data.Status !== 201) {
+							self.title_ok();
+							self.dialogTableVisible = false;
+						} else {
+							self.open8();
+						}
+						// console.log(data);
+					},
+					error: function(data) {
+						// console.log(data);
 					}
-					// console.log(data);
-				},
-				error: function(data) {
-					// console.log(data);
-				}
-			});
+				});
+			}
 
 		},
 		// 发送短信验证码接口
@@ -406,8 +502,7 @@ export default {
 				},
 				async: false,
 				dataType: 'json',
-				success: function(data) {
-				},
+				success: function(data) {},
 				error: function(data) {}
 
 			})
@@ -419,6 +514,8 @@ export default {
 					this.login_ok();
 					this.dialogFormVisible = false;
 					this.log_entry = false;
+
+
 				} else {
 					this.login_fail();
 					return false;
@@ -452,6 +549,7 @@ export default {
 						// 取出并显示用户
 						self.phone = localStorage.getItem('usernem');
 						self.phone = self.phone.replace(reg, "$1****$2");
+
 					}
 
 				},
@@ -494,7 +592,7 @@ export default {
 			},
 			error: function(data) {}
 
-		})
+		});
 		// 这里是iq向后台请求的数据
 		self.ajaxSubmit.ajax({
 			url: self.commmonWebConfig.zhiliangkuapi + self.ajaxSubmit.allUrl.login_iq,
@@ -508,8 +606,8 @@ export default {
 				self.results_iq = data.results;
 			},
 			error: function(data) {}
+		});
 
-		})
 	}
 }
 

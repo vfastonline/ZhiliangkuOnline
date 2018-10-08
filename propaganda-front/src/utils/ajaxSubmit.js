@@ -8,8 +8,9 @@ ajaxSubmit.allUrl = {
   // 登录接口
   "login": "quick-login/",
   // 短信验证码
-  "message": "sms_code/"
-  // 
+  "message": "sms_code/",
+  // 咨询师接口
+  "consultation": "consultant/"
 
 
 }

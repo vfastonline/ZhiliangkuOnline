@@ -27,6 +27,9 @@ new Vue({
 });
 
 Vue.prototype.arrmap = function(arr, i, j) {
+
+
+
 	return arr.map(function(value, index) {
 		var result = value.slice(4, 6);
 		if (result > i && result < j) {
@@ -41,6 +44,8 @@ Vue.prototype.arrmap = function(arr, i, j) {
 
 Vue.prototype.arrmap2 = function(arr) {
 
+
+
 	return arr.map(function(value, index) {
 		if (value) {
 			return value.slice(2, 6) + ':' + value.slice(0, 2);
@@ -51,6 +56,8 @@ Vue.prototype.arrmap2 = function(arr) {
 
 
 Vue.prototype.arrslice = function(arr) {
+
+
 	var b = [];
 	for (var i = 0; i < arr.length; i++) {
 		if (typeof(arr[i]) != 'undefined') {
@@ -60,4 +67,5 @@ Vue.prototype.arrslice = function(arr) {
 
 
 	return b;
+
 }
