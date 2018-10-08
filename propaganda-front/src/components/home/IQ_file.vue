@@ -204,7 +204,7 @@ export default {
 	},
 	// 监听数据变化
 	watch: {
-
+        
 		// 监听的是职场素质的数据
 		'radio1': function(val) {
 			this.Fraction = val;
@@ -212,19 +212,32 @@ export default {
 		// 监听逻辑能力的数据
 		'radio2': function(val) {
 			this.logic = val;
-
-
 		}
 
 	},
 	methods: {
+		
 		btns() {
+			
+			if(!this.phone){
+				this.dialogFormVisible = true;
+			} else if(!this.Fraction){
+               this.login_heades();
+			} else{
 			this.dialogTableVisibles = true;
 			this.login_name();
+			}
 		},
 		login_btn() {
+			if(!this.phone){
+			 this.dialogFormVisible = true;
+			} else if(!this.logic) {
+              this.login_heades();
+			} else {
+			this.btn();
 			this.dialogTableVisible = true;
 			this.login_name();
+			}
 		},
 		login_name() {
 			var self = this;
@@ -344,8 +357,6 @@ export default {
 			} else if (!self.Fraction) {
 				self.login_heades();
 			} else {
-
-
 				$.ajax({
 					type: "post",
 					url: "http://www.zhiliangku.com/eq/",
