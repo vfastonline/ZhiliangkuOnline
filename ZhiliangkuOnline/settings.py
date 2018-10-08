@@ -73,8 +73,7 @@ INSTALLED_APPS = [
 	'video',
 	'assessment',
 
-	# 'tracks_learning',
-	# 'community',
+	'community',
 	# 'company_jobs',
 	# 'exercise',
 	# 'integral',
