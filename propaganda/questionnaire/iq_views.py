@@ -24,6 +24,7 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 	option_5 = serializers.CharField(max_length=255, write_only=True, help_text="41-50题选项")
 	option_6 = serializers.CharField(max_length=255, write_only=True, help_text="51-60题选项")
 	value = serializers.CharField(max_length=255, read_only=True)
+	consultant_email = serializers.EmailField(help_text="咨询师邮箱", required=True)
 
 	def create(self, validated_data):
 		script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "IQ_reslutAPI.py")
