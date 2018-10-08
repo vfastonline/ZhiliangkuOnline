@@ -204,7 +204,7 @@ export default {
 	},
 	// 监听数据变化
 	watch: {
-        
+
 		// 监听的是职场素质的数据
 		'radio1': function(val) {
 			this.Fraction = val;
@@ -216,27 +216,27 @@ export default {
 
 	},
 	methods: {
-		
+
 		btns() {
-			
-			if(!this.phone){
+
+			if (!this.phone) {
 				this.dialogFormVisible = true;
-			} else if(!this.Fraction){
-               this.login_heades();
-			} else{
-			this.dialogTableVisibles = true;
-			this.login_name();
+			} else if (!this.Fraction) {
+				this.login_heades();
+			} else {
+				this.dialogTableVisibles = true;
+				this.login_name();
 			}
 		},
 		login_btn() {
-			if(!this.phone){
-			 this.dialogFormVisible = true;
-			} else if(!this.logic) {
-              this.login_heades();
+			if (!this.phone) {
+				this.dialogFormVisible = true;
+			} else if (!this.logic) {
+				this.login_heades();
 			} else {
-			this.btn();
-			this.dialogTableVisible = true;
-			this.login_name();
+				this.btn();
+				this.dialogTableVisible = true;
+				this.login_name();
 			}
 		},
 		login_name() {
@@ -256,8 +256,6 @@ export default {
 				dataType: 'json',
 				success: function(data) {
 					self.user_total = data.results;
-
-
 				},
 				error: function(data) {
 
@@ -302,6 +300,22 @@ export default {
 		},
 		handleCommand(command) {
 			this.Sign()
+		},
+		// 短信验证失败
+		login_error() {
+			this.$notify.error({
+				title: '失败',
+				message: '验证发送失败'
+
+			});
+		},
+		// 短信验证成功second
+		title_second() {
+			this.$notify({
+				title: '成功',
+				message: '验证码发送成功',
+				type: 'success'
+			});
 		},
 		// 点击是否退出
 		Sign() {
@@ -513,8 +527,17 @@ export default {
 				},
 				async: false,
 				dataType: 'json',
-				success: function(data) {},
-				error: function(data) {}
+				success: function(data) {
+					if(data.Status !=201){
+                       self.title_second();
+					} else {
+                      self.login_error();
+
+					}
+				},
+				error: function(data) {
+					 self.login_error();
+				}
 
 			})
 		},
