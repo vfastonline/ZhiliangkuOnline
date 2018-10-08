@@ -2,7 +2,6 @@
 from django.contrib.auth import get_user_model
 
 from assessment.models import Assessment
-from community.models import Article
 from course.models import Course
 from exercise.models import Question
 from project.models import Project
@@ -34,7 +33,7 @@ class Notes(BaseModelMixin):
 
 	reprint = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, verbose_name="转载自", help_text="笔记源",
 								related_name="reprint")
-	reprint_count = models.PositiveIntegerField(max_length=256, verbose_name="转载", default=0)
+	reprint_count = models.PositiveIntegerField(verbose_name="转载", default=0)
 	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
 	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
@@ -58,36 +57,6 @@ class ReportNotes(BaseReport):
 
 	class Meta:
 		verbose_name = "被举报的用户笔记"
-		verbose_name_plural = verbose_name
-
-
-class ReportArticle(BaseReport):
-	"""
-	被举报的用户文章
-	"""
-	article = models.ForeignKey(Article, verbose_name="文章", on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.user.username
-
-	class Meta:
-		verbose_name = "被举报的用户文章"
-		verbose_name_plural = verbose_name
-
-
-class ArticleComments(BaseModelMixin):
-	"""
-	文章评论
-	"""
-	user = models.ForeignKey(User, verbose_name="评论者", on_delete=models.CASCADE)
-	note = models.ForeignKey(Article, verbose_name="文章", on_delete=models.CASCADE, db_index=True)
-	comment = models.TextField(verbose_name='评论内容', blank=True, help_text="评论内容")
-
-	def __str__(self):
-		return self.user.username
-
-	class Meta:
-		verbose_name = "文章评论"
 		verbose_name_plural = verbose_name
 
 
