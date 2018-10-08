@@ -49,9 +49,8 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 		del validated_data["option_4"]
 		del validated_data["option_5"]
 		del validated_data["option_6"]
+		validated_data["value"] = output_str
 		questionnaire_score = super(IQQuestionnaireScoreSerializer, self).create(validated_data=validated_data)
-		questionnaire_score.value = output_str
-		questionnaire_score.save()
 		return questionnaire_score
 
 	class Meta:
