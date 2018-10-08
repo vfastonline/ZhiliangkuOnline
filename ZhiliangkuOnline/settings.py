@@ -74,7 +74,6 @@ INSTALLED_APPS = [
 	'assessment',
 
 	'community',
-	# 'company_jobs',
 	# 'exercise',
 	# 'integral',
 	# 'live_streaming',

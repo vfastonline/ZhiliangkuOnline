@@ -1,8 +1,35 @@
 #!encoding:utf-8
 from __future__ import unicode_literals
 
+from django.contrib.auth import get_user_model
+
 from users.models import *
 from video.models import Video
+
+User = get_user_model()
+
+
+class Article(BaseModelMixin):
+	"""
+	文章
+	"""
+	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者", help_text="作者")
+	title = models.CharField(max_length=255, verbose_name='标题')
+	content = models.TextField(verbose_name='文章内容')
+
+	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
+	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
+	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)
+
+	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
+	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = "文章"
+		verbose_name_plural = verbose_name
 
 
 class Faq(BaseModelMixin):

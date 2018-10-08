@@ -96,9 +96,9 @@ def question_nairescore_post_save(sender, instance=None, created=False, **kwargs
 	"""
 	if created:
 		subject = "智量酷-问卷调查"
-		message = "手机号：{phone} \n 问卷类型：{category} \n 成绩：{value} ".format(phone=instance.user.mobile,
-																		 category=instance.get_category_display(),
-																		 value=instance.value)
+		message = "手机号：{phone} \n问卷类型：{category} \n成绩：{value} ".format(phone=instance.user.mobile,
+																	   category=instance.get_category_display(),
+																	   value=instance.value)
 		send_mail(subject, message, EMAIL_HOST_USER, [instance.consultant_email, ])
 
 
