@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+
 from django.contrib.auth import get_user_model
 
 from directory_tree.models import DirectoryTree
