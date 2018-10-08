@@ -1,111 +1,133 @@
 # encoding: utf-8
+
 from django.contrib.auth import get_user_model
 
+from directory_tree.models import DirectoryTree
 from utils.model import *
-from utils.storage import *
 
 User = get_user_model()
 
 
-class UserResume(BaseModelMixin):
+class StudentNotes(BaseModelMixin):
+	"""学生笔记"""
+	user = models.ForeignKey(User, verbose_name="学生", on_delete=models.CASCADE)
+	video = models.ForeignKey(DirectoryTree, verbose_name="视频", limit_choices_to={'category': "video"},
+							  on_delete=models.CASCADE)
+	title = models.CharField(max_length=200, verbose_name='标题')
+	notes = models.TextField(verbose_name='笔记内容')
+
+	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
+	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
+	collection = models.PositiveIntegerField(max_length=256, verbose_name="采集", default=0)
+	is_report = models.BooleanField(verbose_name="是否举报", default=False)
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = "学生笔记"
+		verbose_name_plural = verbose_name
+
+
+class Article(BaseModelMixin):
+	"用户文章"
+	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
+	title = models.CharField(max_length=200, verbose_name='标题')
+	skill_label = models.CharField(max_length=10, verbose_name="技能标签")
+	column = models.CharField(max_length=10, verbose_name="栏目")
+	content = models.TextField(verbose_name='文章内容')
+
+	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
+	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
+	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)
+	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
+	is_report = models.BooleanField(verbose_name="是否举报", default=False)
+	is_share = models.BooleanField(verbose_name='是否分享', default=False)
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = "用户文章"
+		verbose_name_plural = verbose_name
+
+
+class Userfollow(BaseModelMixin):
+	"""用户关注 """
+
+	user = models.ManyToManyField(User, verbose_name="用户", related_name='UserProfile',
+								  on_delete=models.CASCADE)
+	user_follow = models.ForeignKey(User, verbose_name="被关注用户", related_name='ToUserProfile',
+									on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.user.username
+
+	class Meta:
+		unique_together = ('user', 'user_follow',)
+		verbose_name = "用户关注"
+		verbose_name_plural = verbose_name
+
+
+class UserProblem(BaseModelMixin):
 	"""
-	用户简历
+	用户问题
 	"""
-	ICON = "user_icon/defaultUserIcon.png"
+	user = models.ForeignKey(User, verbose_name="提问用户", related_name="UserProblems", on_delete=models.CASCADE)
+	title = models.CharField(max_length=200, verbose_name='问题标题')
+	video = models.ForeignKey(DirectoryTree, verbose_name="视频", limit_choices_to={'category': "video"},
+							  on_delete=models.CASCADE)
+	skill_label = models.CharField(max_length=10, verbose_name="技能标签")
 
-	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户")
-	icon = models.ImageField('头像', upload_to="user_resume_icon", storage=ImageStorage(), max_length=256, default=ICON,
-							 blank=True)
-	name = models.CharField(max_length=30, verbose_name="姓名", blank=True)
-	work_years = models.CharField(max_length=50, verbose_name="工作年限", blank=True)
-	education = models.CharField(max_length=50, verbose_name="最高学历", blank=True)
-	in_service_status = models.CharField(max_length=50, verbose_name="在职状态", blank=True)
-	current_company = models.CharField(max_length=255, verbose_name="现任公司", blank=True)
-	current_position = models.CharField(max_length=255, verbose_name="现任职务", blank=True)
-	advantage = models.TextField(verbose_name="我的优势", blank=True)
+	browse_amount = models.PositiveIntegerField('浏览次数', default=0)
+	comment = models.PositiveIntegerField(verbose_name='评论次数', default=0)
+	is_share = models.BooleanField(verbose_name='是否分享', default=False)
 
 	def __str__(self):
-		return self.user.name
+		return self.title
 
 	class Meta:
-		verbose_name = "个人简历"
+		verbose_name = "问题"
 		verbose_name_plural = verbose_name
-		index_together = ["user"]
+		ordering = ["-updated_at"]
 
 
-class CareerObjective(BaseModelMixin):
+class QuestionAnswer(BaseModelMixin):
 	"""
-	求职意向
+	问题-回答
 	"""
-	user_resume = models.ForeignKey(UserResume, verbose_name="求职意向", on_delete=models.CASCADE, blank=True,
-									related_name="CareerObjectives")
-	position = models.CharField(max_length=255, verbose_name="职务", blank=True)
-	way_of_work = models.CharField(max_length=255, verbose_name="工作方式", blank=True)
-	city = models.CharField(max_length=255, verbose_name="城市", blank=True)
-	salary = models.CharField(max_length=255, verbose_name="薪资", blank=True)
-	industry = models.CharField(max_length=255, verbose_name="行业", blank=True)
-	is_first = models.BooleanField(default=False, verbose_name="首要意向", help_text="是否首要求职意向")
+	problem = models.ForeignKey(UserProblem, verbose_name="问答题目", related_name="QuestionAnswers",
+								on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="回答用户", related_name="UserQuestionAnswer",
+							 on_delete=models.CASCADE)
+	answer_content = models.TextField(verbose_name='回答内容')
+
+	approve = models.PositiveIntegerField(verbose_name='支持数', default=0)
+	oppose = models.PositiveIntegerField(verbose_name='反对数', default=0)
+	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
+	is_adopt = models.BooleanField(verbose_name="是否采纳", default=False, )
 
 	def __str__(self):
-		return self.position
+		return self.problem.title
 
 	class Meta:
-		verbose_name = "求职意向"
+		verbose_name = "问题-回答"
 		verbose_name_plural = verbose_name
+		ordering = ["-updated_at"]
 
 
-class WorkExperience(BaseModelMixin):
-	"""工作经历"""
-	user_resume = models.ForeignKey(UserResume, verbose_name="工作经历", on_delete=models.CASCADE, blank=True,
-									related_name="WorkExperiences")
-	company = models.CharField("公司名称", max_length=255, blank=True)
-	position = models.CharField("职位名称", max_length=255, blank=True)
-	start_time = models.DateField("在职起始时间", max_length=255, blank=True)
-	end_time = models.DateField("在职终止时间", max_length=255, blank=True)
-	content = models.TextField("工作内容", blank=True)
+class WishList(BaseModelMixin):
+	"""
+	愿望清单
+	"""
+	user = models.ForeignKey(User, verbose_name="提问用户", related_name="UserProblems", on_delete=models.CASCADE)
+	project = models.ForeignKey(DirectoryTree, verbose_name="项目", limit_choices_to={'category': "project"},
+								on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.company
+		return self.project.name
 
 	class Meta:
-		verbose_name = "工作经历"
+		verbose_name = "愿望清单"
 		verbose_name_plural = verbose_name
-
-
-class ProjectExperience(BaseModelMixin):
-	"""项目经验"""
-	user_resume = models.ForeignKey(UserResume, verbose_name="项目经验", on_delete=models.CASCADE, blank=True,
-									related_name="ProjectExperiences")
-	name = models.CharField("项目名称", max_length=255, blank=True)
-	role = models.CharField("角色", max_length=255, blank=True)
-	url = models.URLField("项目链接", max_length=255, blank=True)
-	start_time = models.DateField("项目起始时间", max_length=255, blank=True)
-	end_time = models.DateField("项目终止时间", max_length=255, blank=True)
-	description = models.TextField("项目描述", blank=True)
-	performance = models.TextField("项目业绩", blank=True)
-
-	def __str__(self):
-		return self.name
-
-	class Meta:
-		verbose_name = "项目经验"
-		verbose_name_plural = verbose_name
-
-
-class EducationExperience(BaseModelMixin):
-	"""教育经历"""
-	user_resume = models.ForeignKey(UserResume, verbose_name="教育经历", on_delete=models.CASCADE, blank=True,
-									related_name="EducationExperiences")
-	school = models.CharField("学校名称", max_length=255, blank=True)
-	discipline = models.CharField("所学专业", max_length=255, blank=True)
-	education = models.CharField("学历", max_length=255, blank=True)
-	start_time = models.DateField("起始时间", max_length=255, blank=True)
-	end_time = models.DateField("终止时间", max_length=255, blank=True)
-	experience = models.TextField("在校经历", blank=True)
-
-	def __str__(self):
-		return self.school
-
-	class Meta:
-		verbose_name = "教育经历"
-		verbose_name_plural = verbose_name
+		ordering = ["-updated_at"]
