@@ -13,11 +13,9 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-	_id = serializers.CharField(max_length=24)
-
 	class Meta:
 		model = User
-		fields = ("_id", "name", "email")
+		fields = ("name", "email")
 
 
 class UserPagination(PageNumberPagination):
