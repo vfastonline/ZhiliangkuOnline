@@ -17,4 +17,4 @@ class QuestionnaireScoreSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = QuestionnaireScore
-		fields = ("user", "category", "value")
+		fields = ("user", "category", "value", "consultant_email")

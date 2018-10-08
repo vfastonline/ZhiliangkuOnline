@@ -4,7 +4,10 @@ import os
 import traceback
 
 from django.apps import AppConfig
-from django.db.models.signals import post_migrate
+from django.core.mail import send_mail
+from django.db.models.signals import post_migrate, post_save
+
+from ZhiliangkuOnline.settings import EMAIL_HOST_USER
 
 
 def init_eq(sender, verbosity, **kwargs):
@@ -83,6 +86,22 @@ def init_iq(sender, verbosity, **kwargs):
 		traceback.print_exc()
 
 
+def question_nairescore_post_save(sender, instance=None, created=False, **kwargs):
+	"""发送用户问卷成绩到咨询师邮箱
+	:param sender:
+	:param instance:
+	:param created:
+	:param kwargs:
+	:return:
+	"""
+	if created:
+		subject = "智量酷-问卷调查"
+		message = "手机号：{phone} 问卷类型：{category} 成绩：{value} ".format(phone=instance.user.mobile,
+																   category=instance.get_category_display(),
+																   value=instance.value)
+		send_mail(subject, message, EMAIL_HOST_USER, [instance.consultant_email, ])
+
+
 class QuestionnaireConfig(AppConfig):
 	name = 'questionnaire'
 	verbose_name = "问卷调查"
@@ -90,3 +109,5 @@ class QuestionnaireConfig(AppConfig):
 	def ready(self):
 		post_migrate.connect(init_iq, sender=self)
 		post_migrate.connect(init_eq, sender=self)
+		from .models import QuestionnaireScore
+		post_save.connect(question_nairescore_post_save, sender=QuestionnaireScore)

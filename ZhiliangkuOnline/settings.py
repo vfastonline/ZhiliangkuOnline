@@ -329,6 +329,15 @@ RAVEN_CONFIG = {
 	'dsn': '',
 }
 
+# 邮箱
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = '18146560703@163.com'
+EMAIL_HOST_PASSWORD = 'xhl1991'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 # # 日志
 # LOGGING = {
 # 	# version 值只能为1

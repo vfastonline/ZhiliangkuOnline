@@ -34,7 +34,6 @@ class EQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Generic
 		录入成绩
 	"""
 	queryset = EQ.objects.all()
-	serializer_class = EQSerializer
 	pagination_class = EQPagination
 	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
 

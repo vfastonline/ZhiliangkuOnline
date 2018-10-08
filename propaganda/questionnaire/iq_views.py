@@ -55,7 +55,7 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = QuestionnaireScore
-		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value")
+		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value", "consultant_email")
 
 
 class IQSerializer(serializers.ModelSerializer):
@@ -79,7 +79,6 @@ class IQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Generic
 		录入成绩
 	"""
 	queryset = IQ.objects.all()
-	serializer_class = IQSerializer
 	pagination_class = IQPagination
 	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
 
