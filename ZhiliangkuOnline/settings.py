@@ -325,6 +325,30 @@ REGEX_MOBILE = "^1[3587]\d{9}$|^147\d{8}$|^176\d{8}$"
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
 
+# 文档页面
+SWAGGER_SETTINGS = {
+	# 'SECURITY_DEFINITIONS': {
+	# 	'basic': {
+	# 		'type': 'basic'
+	# 	}
+	# },
+	'SECURITY_DEFINITIONS': {
+		'api_key': {
+			'type': 'apiKey',
+			'in': 'header',
+			'name': 'Authorization'
+		}
+	},
+	'LOGIN_URL': 'rest_framework:login',
+	'LOGOUT_URL': 'rest_framework:logout',
+	'DOC_EXPANSION': "list",
+	'JSON_EDITOR': True,
+	'OPERATIONS_SORTER': 'method',
+	'SHOW_REQUEST_HEADERS': True,
+	"is_superuser": True,
+	"is_authenticated": True,
+}
+
 RAVEN_CONFIG = {
 	'dsn': '',
 }

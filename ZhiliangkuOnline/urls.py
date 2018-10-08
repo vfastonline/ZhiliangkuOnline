@@ -57,7 +57,7 @@ urlpatterns = [
 
 	# api文档
 	path(r'docs/', include_docs_urls(title='接口文档', public=False)),
-	path(r"docss/", schema_view),
+	# path(r"docss/", schema_view),
 
 	# 调查问卷
 	path('q/', TemplateView.as_view(template_name='questionnaire.html'), name='questionnaire'),
