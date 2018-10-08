@@ -60,7 +60,7 @@ urlpatterns = [
 	path(r"docss/", schema_view),
 
 	# 调查问卷
-	path('questionnaire/', TemplateView.as_view(template_name='questionnaire.html'), name='questionnaire'),
+	path('q/', TemplateView.as_view(template_name='questionnaire.html'), name='questionnaire'),
 
 	# 首页
 	path('index/', TemplateView.as_view(template_name='index.html'), name='index'),
