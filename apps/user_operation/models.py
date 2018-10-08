@@ -1,7 +1,7 @@
 # encoding: utf-8
 from django.contrib.auth import get_user_model
 
-from assessment.models import Assessment
+from assessments.models import Assessment
 from course.models import Course
 from exercise.models import Question
 from project.models import Project

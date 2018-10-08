@@ -2,7 +2,8 @@
 
 from django.contrib import admin
 
-from apps.exercise.models import *
+from exercise.models import *
+from user_operation.models import PracticeRecord
 
 
 @admin.register(Question)
@@ -15,6 +16,6 @@ class AnswerAdmin(admin.ModelAdmin):
 	list_display = ("question", 'option', "content")
 
 
-@admin.register(UserExercise)
+@admin.register(PracticeRecord)
 class UserExerciseAdmin(admin.ModelAdmin):
 	list_display = ("user", 'video', "times", "is_pass")

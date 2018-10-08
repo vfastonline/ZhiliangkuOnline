@@ -5,7 +5,7 @@ import commands
 import datetime
 from django.core.management.base import BaseCommand, CommandError
 
-from apps.assessment.models import DockerPort
+from apps.assessments.models import DockerPort
 
 
 class Command(BaseCommand):

@@ -71,10 +71,10 @@ INSTALLED_APPS = [
 	'directory_tree',
 	'project',
 	'video',
-	'assessment',
-
+	'assessments',
 	'community',
-	# 'exercise',
+	'exercise',
+	
 	# 'integral',
 	# 'live_streaming',
 	# 'medal',

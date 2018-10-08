@@ -14,7 +14,7 @@ class DirectoryTree(BaseModelMixin):
 		("section", "章节"),
 		("video", "视频"),
 		("exercise", "练习"),
-		("assessment", "考核"),
+		("assessments", "考核"),
 	)
 
 	category = models.CharField(choices=CATEGORY_TYPE, verbose_name="类目", help_text="类目", max_length=30, default="")
