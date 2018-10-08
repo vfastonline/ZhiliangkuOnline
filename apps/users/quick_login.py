@@ -1,6 +1,6 @@
 # encoding: utf-8
 import re
-# from datetime import datetime, timedelta
+from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from rest_framework import mixins, viewsets
 from rest_framework import serializers
@@ -41,9 +41,9 @@ class UserQuickLoginSerializer(serializers.ModelSerializer):
 		if verify_records:
 			last_record = verify_records[0]
 
-			# five_minutes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
-			# if five_minutes_ago > last_record.created_at:
-			# 	raise serializers.ValidationError("验证码过期")
+			five_minutes_ago = datetime.now() - timedelta(hours=0, minutes=5, seconds=0)
+			if five_minutes_ago > last_record.created_at:
+				raise serializers.ValidationError("验证码过期")
 
 			if last_record.code != code:
 				raise serializers.ValidationError("验证码错误")

@@ -6,4 +6,4 @@ from follow.models import *
 
 @admin.register(Userfollow)
 class UserMedalAdmin(admin.ModelAdmin):
-	list_display = ('user_id', "user_follow_id",)
+	list_display = ('_id', 'user', "user_follow_id",)

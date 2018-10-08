@@ -14,7 +14,7 @@ def init_role(sender, verbosity, **kwargs):
 	"""
 	try:
 		from .models import Role
-		roles = {0: '学生', 1: "老师", 2: "HR", 3: "其他"}
+		roles = {0: '学生', 1: "老师", 2: "HR", 3: "其他", 4: "咨询师"}
 		[Role.objects.get_or_create(**{"index": index, "name": name}) for index, name in roles.items()]
 		if verbosity == 1:
 			print("  - init 用户角色... OK")

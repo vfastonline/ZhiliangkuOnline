@@ -13,6 +13,7 @@ class Role(BaseModelMixin):
 	1：老师
 	2：HR
 	3：其他
+	4：咨询师
 	"""
 	index = models.IntegerField(verbose_name="唯一标志", unique=True)
 	name = models.CharField(max_length=30, verbose_name="角色名称")

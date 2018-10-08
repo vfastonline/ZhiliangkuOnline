@@ -24,6 +24,7 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 	option_5 = serializers.CharField(max_length=255, write_only=True, help_text="41-50题选项")
 	option_6 = serializers.CharField(max_length=255, write_only=True, help_text="51-60题选项")
 	value = serializers.CharField(max_length=255, read_only=True)
+	consultant_email = serializers.EmailField(help_text="咨询师邮箱", required=True)
 
 	def create(self, validated_data):
 		script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "IQ_reslutAPI.py")
@@ -48,14 +49,13 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 		del validated_data["option_4"]
 		del validated_data["option_5"]
 		del validated_data["option_6"]
+		validated_data["value"] = output_str
 		questionnaire_score = super(IQQuestionnaireScoreSerializer, self).create(validated_data=validated_data)
-		questionnaire_score.value = output_str
-		questionnaire_score.save()
 		return questionnaire_score
 
 	class Meta:
 		model = QuestionnaireScore
-		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value")
+		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value", "consultant_email")
 
 
 class IQSerializer(serializers.ModelSerializer):
@@ -79,7 +79,6 @@ class IQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Generic
 		录入成绩
 	"""
 	queryset = IQ.objects.all()
-	serializer_class = IQSerializer
 	pagination_class = IQPagination
 	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
 

@@ -14,7 +14,9 @@ class QuestionnaireScoreSerializer(serializers.ModelSerializer):
 	user = serializers.HiddenField(
 		default=serializers.CurrentUserDefault()
 	)
+	value = serializers.CharField(max_length=255, required=True, help_text="分值")
+	consultant_email = serializers.EmailField(help_text="咨询师邮箱", required=True)
 
 	class Meta:
 		model = QuestionnaireScore
-		fields = ("user", "category", "value")
+		fields = ("user", "category", "value", "consultant_email")
