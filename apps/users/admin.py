@@ -30,6 +30,8 @@ class VerifyCodeAdmin(admin.ModelAdmin):
 class UserProfileAdmin(UserAdmin):
 	list_display = ('_id', 'username', 'name', 'is_staff')
 	filter_horizontal = ('groups', 'user_permissions', 'role', 'team',)
+	search_fields = ('name', 'mobile')
+	list_filter = ('role', "gender")
 	fieldsets = (
 		(None, {'fields': ('username', 'password')}),
 		(_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
