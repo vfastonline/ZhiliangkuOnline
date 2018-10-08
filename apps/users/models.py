@@ -75,7 +75,7 @@ class UserProfile(AbstractUser):
 	gender = models.CharField(max_length=6, choices=GENDER_CHOICES, verbose_name="性别", blank=True, help_text="性别")
 	birthday = models.DateField(verbose_name="出生年月", blank=True, help_text="出生年月")
 	role = models.ManyToManyField(Role, verbose_name='角色', help_text="角色")
-	team = models.ManyToManyField(Team, verbose_name='班级', help_text="班级")
+	team = models.ManyToManyField(Team, verbose_name='班级', help_text="班级", blank=True)
 	icon = models.ImageField('头像', upload_to="user_icon", storage=ImageStorage(), max_length=256, default=ICON,
 							 blank=True, help_text="头像")
 	institution = models.CharField('所在院校', max_length=255, blank=True, help_text="所在院校")
