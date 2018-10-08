@@ -1,1 +1,1 @@
-default_app_config = 'apps.exercise.apps.ExerciseConfig'
+default_app_config = 'exercise.apps.ExerciseConfig'

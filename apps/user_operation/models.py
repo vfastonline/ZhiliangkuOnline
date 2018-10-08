@@ -32,7 +32,7 @@ class Notes(BaseModelMixin):
 	notes = models.TextField(verbose_name='笔记内容')
 
 	reprint = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, verbose_name="转载自", help_text="笔记源",
-								related_name="reprint")
+								related_name="reprints")
 	reprint_count = models.PositiveIntegerField(verbose_name="转载", default=0)
 	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
 	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
@@ -64,7 +64,7 @@ class Follow(models.Model):
 	"""
 	被关注者
 	"""
-	user = models.ForeignKey(User, verbose_name="用户", related_name='user', on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", related_name='follow_users', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.user.username
@@ -78,7 +78,8 @@ class FollowUser(BaseModelMixin):
 	关注用户
 	"""
 
-	user = models.ForeignKey(User, verbose_name="用户", related_name='user', on_delete=models.CASCADE, db_index=True)
+	user = models.ForeignKey(User, verbose_name="用户", related_name='follow_user_users', on_delete=models.CASCADE,
+							 db_index=True)
 	follow = models.ArrayModelField(
 		model_container=Follow,
 	)
@@ -95,7 +96,7 @@ class WishList(BaseModelMixin):
 	"""
 	愿望清单
 	"""
-	user = models.ForeignKey(User, verbose_name="用户", related_name="user", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", related_name="wish_list_users", on_delete=models.CASCADE)
 	project = models.ForeignKey(Project, verbose_name="项目", on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -110,7 +111,8 @@ class ParticipateProject(BaseModelMixin):
 	"""
 	用户参与项目
 	"""
-	user = models.ForeignKey(User, verbose_name="用户", related_name="user", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", related_name="participate_project_users",
+							 on_delete=models.CASCADE)
 	project = models.ForeignKey(Project, verbose_name="项目", on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -142,7 +144,7 @@ class LearnCourse(BaseModelMixin):
 	"""
 	用户学习课程
 	"""
-	user = models.ForeignKey(User, verbose_name="用户", related_name="user", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", related_name="learn_course_users", on_delete=models.CASCADE)
 	course = models.ForeignKey(Course, verbose_name="课程", on_delete=models.CASCADE)
 
 	def __str__(self):
@@ -157,7 +159,7 @@ class VideoWatchRecord(BaseModelMixin):
 	"""
 	视频观看记录
 	"""
-	user = models.ForeignKey(User, verbose_name="用户", related_name="user", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", related_name="video_watch_record_users", on_delete=models.CASCADE)
 	video = models.ForeignKey(Video, verbose_name="视频", on_delete=models.CASCADE)
 	moment = models.IntegerField('观看时刻', default=0, help_text="秒")
 	duration = models.IntegerField('累计观看时长', default=0, help_text="累计观看时长，秒")
@@ -192,9 +194,10 @@ class AssessmentRecord(BaseModelMixin):
 	"""
 	用户考核记录
 	"""
-	user = models.ForeignKey(User, verbose_name='用户', related_name='UnlockVideoCustomUser', blank=True,
+	user = models.ForeignKey(User, verbose_name='用户', related_name='assessment_record_users', blank=True,
 							 on_delete=models.CASCADE, db_index=True)
-	assessment = models.ForeignKey(Assessment, verbose_name="考核", related_name='assessments', on_delete=models.CASCADE)
+	assessment = models.ForeignKey(Assessment, verbose_name="考核", related_name='assessment_record_assessments',
+								   on_delete=models.CASCADE)
 	is_pass = models.BooleanField("是否通过", default=False, help_text="是否通过")
 	times = models.PositiveIntegerField("考核次数", default=0)
 
@@ -219,7 +222,8 @@ class GoldRecord(BaseModelMixin):
 	"""
 	用户获得金币记录
 	"""
-	user = models.ForeignKey(User, verbose_name='用户', related_name='gold_records', blank=True, on_delete=models.CASCADE,
+	user = models.ForeignKey(User, verbose_name='用户', related_name='gold_record_users', blank=True,
+							 on_delete=models.CASCADE,
 							 db_index=True)
 	get_way = models.ArrayModelField(
 		model_container=GoldGetWay,
@@ -243,7 +247,7 @@ class ProjectLearnRate(BaseModelMixin):
 		("2", "优秀"),
 		("3", "学霸"),
 	)
-	user = models.ForeignKey(User, verbose_name='用户', related_name='project_appraisal', blank=True,
+	user = models.ForeignKey(User, verbose_name='用户', related_name='project_learn_rate_users', blank=True,
 							 on_delete=models.CASCADE,
 							 db_index=True)
 	project = models.ForeignKey(Project, verbose_name="项目", on_delete=models.CASCADE)
@@ -261,7 +265,7 @@ class ProjectAppraisal(BaseModelMixin):
 	"""
 	用户对项目评定
 	"""
-	user = models.ForeignKey(User, verbose_name='用户', related_name='project_appraisal', blank=True,
+	user = models.ForeignKey(User, verbose_name='用户', related_name='project_appraisal_users', blank=True,
 							 on_delete=models.CASCADE,
 							 db_index=True)
 	project = models.ForeignKey(Project, verbose_name="项目", on_delete=models.CASCADE)

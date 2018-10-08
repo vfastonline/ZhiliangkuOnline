@@ -75,7 +75,7 @@ class Faq(BaseModelMixin):
 	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
 
 	reprint = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, verbose_name="转载自", help_text="问题源",
-								related_name="reprint")
+								related_name="sub_reprint")
 	reprint_count = models.PositiveIntegerField(verbose_name="转载", default=0)
 
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")

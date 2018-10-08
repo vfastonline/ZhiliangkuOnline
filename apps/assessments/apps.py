@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class AssessmentConfig(AppConfig):
-	name = 'apps.assessments'
+	name = 'assessments'
 	verbose_name = "考核"

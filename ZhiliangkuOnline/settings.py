@@ -67,13 +67,15 @@ INSTALLED_APPS = [
 
 	'banner',
 	'users',
+	'user_operation',
 	'user_resumes',
 	'directory_tree',
 	'project',
 	'video',
-	# 'assessments',
-	# 'community',
-	# 'exercise',
+	'assessments',
+	'community',
+	'exercise',
+	'course',
 
 	# 'integral',
 	# 'live_streaming',
@@ -317,7 +319,7 @@ LOG_PATH = os.path.join(BASE_DIR, 'log')
 if not os.path.isdir(LOG_PATH):
 	os.mkdir(LOG_PATH)
 
-REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
+REGEX_MOBILE = "^1[3587]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 文档页面
 LOGIN_URL = 'rest_framework:login'

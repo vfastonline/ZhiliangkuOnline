@@ -1,1 +1,1 @@
-default_app_config = 'apps.assessments.apps.AssessmentConfig'
+default_app_config = 'assessments.apps.AssessmentConfig'
