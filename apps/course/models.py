@@ -1,4 +1,7 @@
+#!encoding:utf-8
+
 from directory_tree.models import DirectoryTree
+from project.models import Project
 from utils.model import *
 from utils.model import BaseModelMixin
 
@@ -25,6 +28,8 @@ class Course(BaseModelMixin):
 	"""
 	course = models.ForeignKey(DirectoryTree, verbose_name='课程', related_name='courses', blank=True, null=True,
 							   on_delete=models.SET_NULL, limit_choices_to={'category_type': "course"})
+
+	project = models.ForeignKey(Project, verbose_name='归属项目', related_name='courses', on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.course.name
