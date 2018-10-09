@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.contrib.auth import get_user_model
 
-from user_operation.models import BaseReport
 from users.models import *
 from video.models import Video
 
@@ -66,20 +65,6 @@ class Faq(BaseModelMixin):
 
 	class Meta:
 		verbose_name = "问题"
-		verbose_name_plural = verbose_name
-
-
-class ReportFaq(BaseReport):
-	"""
-	被举报的问题
-	"""
-	faq = models.ForeignKey(Faq, verbose_name="用户提问", on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.user.username
-
-	class Meta:
-		verbose_name = "被举报的问题"
 		verbose_name_plural = verbose_name
 
 

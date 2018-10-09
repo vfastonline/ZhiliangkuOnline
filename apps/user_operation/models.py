@@ -25,7 +25,7 @@ class Report(BaseModelMixin):
 
 	user = models.ForeignKey(User, verbose_name="举报者", on_delete=models.CASCADE, help_text="举报者")
 	reason = models.TextField(verbose_name='理由', blank=True, help_text="举报理由")
-	source = models.CharField(max_length=24, verbose_name="举报对象_id", on_delete=models.CASCADE, help_text="举报对象_id")
+	source = models.CharField(max_length=24, verbose_name="举报对象_id", help_text="举报对象_id")
 	types = models.CharField(max_length=1, choices=TYPES)
 
 	def __str__(self):

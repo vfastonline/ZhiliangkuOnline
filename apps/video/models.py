@@ -11,7 +11,7 @@ class Video(BaseModelMixin):
 	"""
 	视频
 	"""
-	video = models.ForeignKey(DirectoryTree, verbose_name='视频', related_name='videos', blank=True,
+	video = models.ForeignKey(DirectoryTree, verbose_name='视频', related_name='videos', blank=True, null=True,
 							  on_delete=models.SET_NULL, limit_choices_to={'category_type': "video"})
 	vid = models.CharField("vid", max_length=255, blank=True)
 	datas = models.TextField("保利威视视频信息", blank=True)
