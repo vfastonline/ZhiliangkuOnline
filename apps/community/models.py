@@ -33,20 +33,6 @@ class Article(BaseModelMixin):
 		verbose_name_plural = verbose_name
 
 
-class ReportArticle(BaseReport):
-	"""
-	被举报的用户文章
-	"""
-	article = models.ForeignKey(Article, verbose_name="文章", on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.user.username
-
-	class Meta:
-		verbose_name = "被举报的用户文章"
-		verbose_name_plural = verbose_name
-
-
 class ArticleComments(BaseModelMixin):
 	"""
 	文章评论
@@ -83,27 +69,9 @@ class Faq(BaseModelMixin):
 		verbose_name_plural = verbose_name
 
 
-class FaqAnswer(BaseModelMixin):
-	"""
-	问题-回答
-	"""
-	faq = models.ForeignKey(Faq, verbose_name="问题", related_name="faq_answers", on_delete=models.CASCADE)
-	user = models.ForeignKey(User, verbose_name="回答用户", related_name="faq_answer_user",
-							 on_delete=models.CASCADE)
-	answer = models.TextField(verbose_name='回答')
-	is_optimal = models.BooleanField("最佳答案", default=False)
-
-	def __str__(self):
-		return self.faq.problem
-
-	class Meta:
-		verbose_name = "问题-回答"
-		verbose_name_plural = verbose_name
-
-
 class ReportFaq(BaseReport):
 	"""
-	被举报的用户提问
+	被举报的问题
 	"""
 	faq = models.ForeignKey(Faq, verbose_name="用户提问", on_delete=models.CASCADE)
 
@@ -111,5 +79,25 @@ class ReportFaq(BaseReport):
 		return self.user.username
 
 	class Meta:
-		verbose_name = "被举报的用户提问"
+		verbose_name = "被举报的问题"
+		verbose_name_plural = verbose_name
+
+
+class FaqAnswer(BaseModelMixin):
+	"""
+	问题-回答
+	"""
+	faq = models.ForeignKey(Faq, verbose_name="问题", related_name="faq_answers", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="回答用户", related_name="faq_answer_user", on_delete=models.CASCADE)
+	answer = models.TextField(verbose_name='回答')
+	approve = models.PositiveIntegerField(verbose_name='赞', default=0)
+	oppose = models.PositiveIntegerField(verbose_name='踩', default=0)
+	is_optimal = models.BooleanField("最佳答案", default=False)
+	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
+
+	def __str__(self):
+		return self.faq.problem
+
+	class Meta:
+		verbose_name = "问题-回答"
 		verbose_name_plural = verbose_name

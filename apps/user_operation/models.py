@@ -11,15 +11,29 @@ from video.models import Video
 User = get_user_model()
 
 
-class BaseReport(BaseModelMixin):
+class Report(BaseModelMixin):
 	"""
-	举报基础信息
+	举报
 	"""
-	user = models.ForeignKey(User, verbose_name="举报者", on_delete=models.CASCADE)
+
+	TYPES = (
+		("1", "问题"),
+		("2", "问题-回答"),
+		("3", "笔记"),
+		("4", "文章"),
+	)
+
+	user = models.ForeignKey(User, verbose_name="举报者", on_delete=models.CASCADE, help_text="举报者")
 	reason = models.TextField(verbose_name='理由', blank=True, help_text="举报理由")
+	source = models.CharField(max_length=24, verbose_name="举报对象_id", on_delete=models.CASCADE, help_text="举报对象_id")
+	types = models.CharField(max_length=1, choices=TYPES)
+
+	def __str__(self):
+		return self.user.username
 
 	class Meta:
-		abstract = True
+		verbose_name = "举报"
+		verbose_name_plural = verbose_name
 
 
 class Notes(BaseModelMixin):
@@ -43,20 +57,6 @@ class Notes(BaseModelMixin):
 
 	class Meta:
 		verbose_name = "学生笔记"
-		verbose_name_plural = verbose_name
-
-
-class ReportNotes(BaseReport):
-	"""
-	被举报的用户笔记
-	"""
-	note = models.ForeignKey(Notes, verbose_name="笔记", on_delete=models.CASCADE)
-
-	def __str__(self):
-		return self.user.username
-
-	class Meta:
-		verbose_name = "被举报的用户笔记"
 		verbose_name_plural = verbose_name
 
 

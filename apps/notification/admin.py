@@ -11,4 +11,4 @@ class NotificationAdmin(admin.ModelAdmin):
 
 @admin.register(UserNotificationsCount)
 class UserNotificationsCountAdmin(admin.ModelAdmin):
-	list_display = ('user', "unread_count")
+	list_display = ('user', "unread")
