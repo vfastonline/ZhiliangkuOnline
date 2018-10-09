@@ -63,6 +63,7 @@
 						<el-col :span="24">
 							<el-card shadow="hover" class="el">
 								<p>{{item.title}}</p>
+								<input type="" name="" v-if="item.title.indexOf('38')!=-1" placeholder="请输入你的答案" v-model="answer">
 								<p><img :src="item.image"></p>
 								<el-radio-group v-model="radio2[index]">
 									<el-radio :label="key.value + key.titleno" v-for="(key, index) in item.option" :key="index">
@@ -133,6 +134,8 @@ export default {
 			}
 		};
 		return {
+			// 38题答案
+			answer:'',
 			// 弹框
 			dialogTableVisible: false,
 			dialogTableVisibles: false,
@@ -417,13 +420,14 @@ export default {
 			var arry4 = this.arrmap2(arr4)
 			var arry5 = this.arrmap2(arr5)
 			var arry6 = this.arrmap2(arr6)
-
+        
 			var arrys1 = this.arrslice(arry1);
 			var arrys2 = this.arrslice(arry2);
 			var arrys3 = this.arrslice(arry3);
 			var arrys4 = this.arrslice(arry4);
 			var arrys5 = this.arrslice(arry5);
 			var arrys6 = this.arrslice(arry6);
+
 			// 第一条数据
 			var a1 = {}
 			for (var i = 0; i < arrys1.length; i++) {
@@ -446,14 +450,18 @@ export default {
 				var str3 = arrys3[i].split(':');
 				a3[str3[0]] = str3[1]
 			}
+
 			var b3 = JSON.stringify(a3)
-			// console.log(b3);
+
+			
 			// 第四条
 			var a4 = {}
 			for (var i = 0; i < arrys4.length; i++) {
 				var str4 = arrys4[i].split(':');
 				a4[str4[0]] = str4[1]
 			}
+			// 添加用户输入的答案
+			 a4.TI38=this.answer;
 			var b4 = JSON.stringify(a4)
 			// console.log(b4);
 			// 第五条
@@ -600,7 +608,7 @@ export default {
 		}
 	},
 	created() {
-		// 正则保护手机
+        // 正则保护手机
 		var reg = /^(\d{3})\d{4}(\d{4})$/;
 		// 判断
 		if (localStorage.getItem('usernem')) {
