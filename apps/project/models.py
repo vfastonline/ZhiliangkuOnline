@@ -12,12 +12,12 @@ class Project(BaseModelMixin):
 	project = models.ForeignKey(DirectoryTree, verbose_name='项目', related_name='projects', blank=True, null=True,
 								on_delete=models.SET_NULL, limit_choices_to={'category_type': "project"})
 	image = models.ImageField(upload_to='project', verbose_name="项目封面", blank=True)
-	is_home = models.BooleanField("首页展示", default=False)
+	hot = models.BooleanField(verbose_name="热度推荐", default=False, help_text="是够首页显示为热度推荐")
+	new = models.BooleanField(verbose_name="新品推荐", default=False, help_text="是够首页显示为新品推荐")
 
 	def __str__(self):
 		return self.project.name
 
 	class Meta:
-		db_table = 'Project'
 		verbose_name = "项目"
-		verbose_name_plural = "项目"
+		verbose_name_plural = verbose_name

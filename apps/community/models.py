@@ -23,6 +23,8 @@ class Article(BaseModelMixin):
 
 	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
+	release = models.BooleanField(verbose_name="是否发布", default=True, help_text="文章是否加入草稿箱")
+	hot = models.BooleanField(verbose_name="热门文章", default=False, help_text="是够首页显示为热门")
 
 	def __str__(self):
 		return self.title
@@ -59,6 +61,7 @@ class Faq(BaseModelMixin):
 	comment_number = models.PositiveIntegerField(verbose_name='评论数', default=0)
 	answer_number = models.PositiveIntegerField(verbose_name="回答数", default=0)
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
+	hot = models.BooleanField(verbose_name="热门问题", default=False, help_text="是够首页显示为热门问题")
 
 	def __str__(self):
 		return self.problem

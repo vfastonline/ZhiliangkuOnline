@@ -41,7 +41,7 @@ class Notes(BaseModelMixin):
 	用户笔记
 	"""
 	user = models.ForeignKey(User, verbose_name="用户", on_delete=models.CASCADE)
-	video = models.ForeignKey(Video, verbose_name="视频", on_delete=models.CASCADE)
+	video = models.ForeignKey(Video, verbose_name="视频", on_delete=models.CASCADE, related_name="notes_videos")
 	title = models.CharField(max_length=200, verbose_name='标题')
 	notes = models.TextField(verbose_name='笔记内容')
 
@@ -278,3 +278,4 @@ class ProjectAppraisal(BaseModelMixin):
 	class Meta:
 		verbose_name = "项目评定"
 		verbose_name_plural = verbose_name
+
