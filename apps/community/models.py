@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib.auth import get_user_model
 
+from directory_tree.models import DirectoryTree
+from technology.models import Technology
 from users.models import *
 from video.models import Video
 
@@ -16,6 +18,9 @@ class Article(BaseModelMixin):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者", help_text="作者")
 	title = models.CharField(max_length=255, verbose_name='标题')
 	content = models.TextField(verbose_name='文章内容')
+	technology = models.ForeignKey(Technology, verbose_name="技术标签", on_delete=models.CASCADE)
+	direction = models.ForeignKey(DirectoryTree, verbose_name="方向", on_delete=models.CASCADE,
+								  limit_choices_to={'CATEGORY_TYPE': "direction"})
 
 	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
 	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)
@@ -57,6 +62,8 @@ class Faq(BaseModelMixin):
 	video = models.ForeignKey(Video, verbose_name="视频", related_name="faqs", on_delete=models.CASCADE, blank=True)
 	user = models.ForeignKey(User, verbose_name="提问用户", related_name="faq_users", on_delete=models.CASCADE)
 	problem = models.TextField(verbose_name='问题', blank=True)
+	technology = models.ForeignKey(Technology, verbose_name="技术标签", on_delete=models.CASCADE)
+
 	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)
 	comment_number = models.PositiveIntegerField(verbose_name='评论数', default=0)
 	answer_number = models.PositiveIntegerField(verbose_name="回答数", default=0)
