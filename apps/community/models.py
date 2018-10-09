@@ -68,20 +68,15 @@ class Faq(BaseModelMixin):
 	问题
 	"""
 	video = models.ForeignKey(Video, verbose_name="视频", related_name="faqs", on_delete=models.CASCADE, blank=True)
-	user = models.ForeignKey(User, verbose_name="提问用户", related_name="UserFaq", on_delete=models.CASCADE)
-	title = models.CharField(max_length=200, verbose_name='问题标题', blank=True)
-
+	user = models.ForeignKey(User, verbose_name="提问用户", related_name="faq_users", on_delete=models.CASCADE)
+	problem = models.TextField(verbose_name='问题', blank=True)
 	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)
-	comment = models.PositiveIntegerField(verbose_name='评论数', default=0)
-
-	reprint = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, verbose_name="转载自", help_text="问题源",
-								related_name="sub_reprint")
-	reprint_count = models.PositiveIntegerField(verbose_name="转载", default=0)
-
+	comment_number = models.PositiveIntegerField(verbose_name='评论数', default=0)
+	answer_number = models.PositiveIntegerField(verbose_name="回答数", default=0)
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
 
 	def __str__(self):
-		return self.title
+		return self.problem
 
 	class Meta:
 		verbose_name = "问题"
@@ -99,7 +94,7 @@ class FaqAnswer(BaseModelMixin):
 	is_optimal = models.BooleanField("最佳答案", default=False)
 
 	def __str__(self):
-		return self.faq.title
+		return self.faq.problem
 
 	class Meta:
 		verbose_name = "问题-回答"

@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class NotificationConfig(AppConfig):
-	name = 'apps.notification'
+	name = 'notification'
 	verbose_name = "消息中心"

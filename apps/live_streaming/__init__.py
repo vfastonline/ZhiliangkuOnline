@@ -1,1 +1,1 @@
-default_app_config = 'apps.live_streaming.apps.LiveStreamingConfig'
+default_app_config = 'live_streaming.apps.LiveStreamingConfig'

@@ -1,1 +1,1 @@
-default_app_config = 'apps.medal.apps.MedalConfig'
+default_app_config = 'medal.apps.MedalConfig'

@@ -1,7 +1,7 @@
 #!encoding:utf-8
 from django.contrib import admin
 
-from apps.live_streaming.models import Live
+from live_streaming.models import Live
 
 
 @admin.register(Live)

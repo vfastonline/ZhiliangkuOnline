@@ -1,9 +1,11 @@
 #!encoding:utf-8
 from __future__ import unicode_literals
 
-from django.db import models
+from django.contrib.auth import get_user_model
+from djongo import models
 
-from users.models import UserProfile
+User = get_user_model()
+
 from utils.model import BaseModelMixin
 
 
@@ -16,14 +18,14 @@ class Notification(BaseModelMixin):
 	- `have_read`: 消息是否已读
 	"""
 
-	user = models.ForeignKey(UserProfile, verbose_name="用户", related_name='NotificationCustomUser', db_index=True,
+	user = models.ForeignKey(User, verbose_name="用户", related_name='NotificationCustomUser', db_index=True,
 							 on_delete=models.CASCADE)
 	title = models.CharField('标题', max_length=255, default="", db_index=True)
 	content = models.TextField('内容', max_length=255, default="")
 	have_read = models.BooleanField("已读", default=False)
 
 	def __str__(self):
-		return '<Notification %s: %s>' % (self.user.id, self.title)
+		return '<Notification %s: %s>' % (self.user.username, self.title)
 
 	class Meta:
 		verbose_name = "消息通知"
@@ -36,11 +38,11 @@ class UserNotificationsCount(BaseModelMixin):
 	- `have_read`: 消息未读个数
 	"""
 
-	user = models.ForeignKey(UserProfile, verbose_name="用户", db_index=True, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, verbose_name="用户", db_index=True, on_delete=models.CASCADE)
 	unread_count = models.IntegerField("未读消息数", default=0)
 
 	def __str__(self):
-		return '<UserNotificationsCount %s: %s>' % (self.user.id, self.unread_count)
+		return '<UserNotificationsCount %s: %s>' % (self.user.username, self.unread_count)
 
 	class Meta:
 		verbose_name = "用户未读消息"

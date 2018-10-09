@@ -1,13 +1,18 @@
 #!encoding:utf-8
 from __future__ import unicode_literals
 
-from django.db import models
 from django.core.validators import MinValueValidator
+from djongo import models
+
 from utils.model import BaseModelMixin
 from .storage import *
 
+
 class WechatBrowse(BaseModelMixin):
-	"""微信推广-浏览-点赞-统计"""
+	"""
+	微信推广-浏览-点赞-统计
+	"""
+
 	name = models.CharField('姓名', max_length=255, help_text="学生姓名", blank=True)
 	pinyin = models.CharField('姓名拼音', max_length=255, help_text="学生姓名的字母全拼", blank=True)
 	remark = models.CharField('评语', max_length=255, blank=True, help_text="每页评语索引用逗号(英文)分隔，例：1A,2B,3C")
@@ -30,6 +35,9 @@ class WechatBrowse(BaseModelMixin):
 
 
 class WechatBackground(BaseModelMixin):
+	"""
+	背景图
+	"""
 	sequence = models.PositiveIntegerField('顺序', default=1, validators=[MinValueValidator(1)])
 	image = models.ImageField('背景图', upload_to="wechat/background", storage=ImageStorage())
 
@@ -40,6 +48,9 @@ class WechatBackground(BaseModelMixin):
 
 
 class WechatRemark(BaseModelMixin):
+	"""
+	评语
+	"""
 	name = models.CharField('评语标识', max_length=255)
 	remark = models.TextField('评语', max_length=255)
 	english = models.TextField('评语英文', max_length=255, blank=True)
@@ -54,6 +65,9 @@ class WechatRemark(BaseModelMixin):
 
 
 class WechatMusic(BaseModelMixin):
+	"""
+	背景音乐
+	"""
 	TYPES = (
 		("1", "学生评语"),
 		("2", "世界杯"),

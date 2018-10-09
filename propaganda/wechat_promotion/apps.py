@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class WechatPromotionConfig(AppConfig):
-	name = 'apps.wechat_promotion'
-	verbose_name = "职业路径"
+	name = 'wechat_promotion'
+	verbose_name = "微信推广"

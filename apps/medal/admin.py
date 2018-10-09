@@ -1,15 +1,14 @@
 #!encoding:utf-8
 from django.contrib import admin
 
-from apps.medal.models import *
+from medal.models import *
 
 
 @admin.register(Medal)
 class MedalAdmin(admin.ModelAdmin):
-	list_display = ('name', "pathwel", "only")
-
+	list_display = ('name', "image", "only")
 
 
 @admin.register(UserMedal)
 class UserMedalAdmin(admin.ModelAdmin):
-	list_display = ('user', "medal", )
+	list_display = ('user', "medal",)

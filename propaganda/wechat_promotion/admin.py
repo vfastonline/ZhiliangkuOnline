@@ -1,5 +1,6 @@
 from django.contrib import admin
-from apps.wechat_promotion.models import *
+
+from wechat_promotion.models import *
 
 
 @admin.register(WechatBrowse)

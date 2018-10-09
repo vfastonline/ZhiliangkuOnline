@@ -65,25 +65,23 @@ INSTALLED_APPS = [
 	'rest_framework_swagger',
 	'raven.contrib.django.raven_compat',
 
-	'banner',
-	'users',
-	'user_operation',
-	'user_resumes',
-	'directory_tree',
-	'project',
-	'video',
-	'assessments',
-	'community',
-	'exercise',
-	'course',
+	'banner',  # 轮播
+	'users',  # 用户
+	'user_operation',  # 用户的操作
+	'user_resumes',  # 用户简历
+	'directory_tree',  # 项目结构树
+	'project',  # 项目
+	"course",  # 课程
+	'video',  # 视频
+	"exercise",  # 练习
+	'assessments',  # 考核
+	'community',  # 社区
+	'live_streaming',  # 直播
+	'medal',  # 勋章
+	'notification',  # 消息管理
 
-	# 'integral',
-	# 'live_streaming',
-	# 'medal',
-	# 'notification',
-	# 'record',
-	# 'wechat_promotion',
-
+	# 企业宣传
+	'wechat_promotion',
 	"questionnaire",
 ]
 

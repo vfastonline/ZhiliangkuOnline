@@ -1,4 +1,7 @@
-from django.db import models
+#!encoding:utf-8
+from __future__ import unicode_literals
+
+from djongo import models
 
 from directory_tree.models import DirectoryTree
 from utils.model import BaseModelMixin

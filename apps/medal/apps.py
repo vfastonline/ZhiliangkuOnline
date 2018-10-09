@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class MedalConfig(AppConfig):
-	name = 'apps.medal'
-	verbose_name = "用户管理"
+	name = 'medal'
+	verbose_name = "勋章"

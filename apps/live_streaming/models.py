@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from colorfield.fields import ColorField
-from django.db import models
+from djongo import models
 
 from utils.model import BaseModelMixin
 
@@ -26,7 +26,7 @@ class Live(BaseModelMixin):
 	pathwel = models.ImageField('直播图片', upload_to='live/%Y%m%d', )
 	status = models.CharField('状态', max_length=5, choices=STATUS, default='end')  # 频道的直播状态，字符串，值包括：live end
 	data = models.TextField("创建直播接口返回值", blank=True)
-	desc = models.TextField('简介', max_length=1000, default='', blank=True,)
+	desc = models.TextField('简介', max_length=1000, default='', blank=True, )
 
 	def __str__(self):
 		return self.name
