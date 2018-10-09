@@ -319,7 +319,7 @@ LOG_PATH = os.path.join(BASE_DIR, 'log')
 if not os.path.isdir(LOG_PATH):
 	os.mkdir(LOG_PATH)
 
-REGEX_MOBILE = "^1[3587]\d{9}$|^147\d{8}$|^176\d{8}$"
+REGEX_MOBILE = "^1[345789]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # 文档页面
 LOGIN_URL = 'rest_framework:login'
