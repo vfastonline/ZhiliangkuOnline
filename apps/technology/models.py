@@ -1,8 +1,10 @@
 #!encoding:utf-8
 from djongo import models
 
+from utils.model import BaseModelMixin
 
-class Technology(models.Model):
+
+class Technology(BaseModelMixin):
 	"""
 	技术标签
 	"""

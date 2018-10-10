@@ -5,60 +5,60 @@ from .models import *
 
 
 @admin.register(PracticeRecord)
-class UserExerciseAdmin(admin.ModelAdmin):
+class PracticeRecordAdmin(admin.ModelAdmin):
 	list_display = ("user", 'video', "times", "is_pass")
 
 
 @admin.register(Notes)
-class UserExerciseAdmin(admin.ModelAdmin):
+class NotesAdmin(admin.ModelAdmin):
 	list_display = ("user", 'video', "title", "approve", "oppose")
 
 
 @admin.register(FollowUser)
-class UserExerciseAdmin(admin.ModelAdmin):
+class FollowUserAdmin(admin.ModelAdmin):
 	list_display = ("user", "follow")
 
 
 @admin.register(WishList)
-class UserExerciseAdmin(admin.ModelAdmin):
+class WishListAdmin(admin.ModelAdmin):
 	list_display = ("user", "project")
 
 
 @admin.register(ParticipateProject)
-class UserExerciseAdmin(admin.ModelAdmin):
+class UParticipateProjectAdmin(admin.ModelAdmin):
 	list_display = ("user", "project")
 
 
 @admin.register(LearnCourse)
-class UserExerciseAdmin(admin.ModelAdmin):
+class LearnCourseAdmin(admin.ModelAdmin):
 	list_display = ("user", "course")
 
 
 @admin.register(VideoWatchRecord)
-class UserExerciseAdmin(admin.ModelAdmin):
+class VideoWatchRecordAdmin(admin.ModelAdmin):
 	list_display = ("user", "video", "moment", "duration", "complete")
 
 
 @admin.register(FavVideo)
-class UserExerciseAdmin(admin.ModelAdmin):
+class FavVideoAdmin(admin.ModelAdmin):
 	list_display = ("user", "video")
 
 
 @admin.register(AssessmentRecord)
-class UserExerciseAdmin(admin.ModelAdmin):
+class AssessmentRecordAdmin(admin.ModelAdmin):
 	list_display = ("user", "assessment", "is_pass", "times")
 
 
 @admin.register(GoldRecord)
-class UserExerciseAdmin(admin.ModelAdmin):
+class GoldRecordAdmin(admin.ModelAdmin):
 	list_display = ("user", "get_way", "total")
 
 
 @admin.register(ProjectLearnRate)
-class UserExerciseAdmin(admin.ModelAdmin):
+class ProjectLearnRateAdmin(admin.ModelAdmin):
 	list_display = ("user", "project", "rate")
 
 
 @admin.register(ProjectAppraisal)
-class UserExerciseAdmin(admin.ModelAdmin):
+class ProjectAppraisalAdmin(admin.ModelAdmin):
 	list_display = ("user", "project", "star", "desc")

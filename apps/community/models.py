@@ -20,7 +20,7 @@ class Article(BaseModelMixin):
 	content = models.TextField(verbose_name='文章内容')
 	technology = models.ForeignKey(Technology, verbose_name="技术标签", on_delete=models.CASCADE)
 	direction = models.ForeignKey(DirectoryTree, verbose_name="方向", on_delete=models.CASCADE,
-								  limit_choices_to={'CATEGORY_TYPE': "direction"})
+								  limit_choices_to={'category': "direction"})
 
 	approve = models.PositiveIntegerField(verbose_name='支持', default=0)
 	oppose = models.PositiveIntegerField(verbose_name='反对', default=0)

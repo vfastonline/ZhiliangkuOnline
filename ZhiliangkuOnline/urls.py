@@ -26,6 +26,7 @@ from banner.routers import *
 from directory_tree.routers import *
 from project.routers import *
 from questionnaire.routers import *
+from user_operation.routers import *
 from user_resumes.routers import *
 from users.routers import *
 
