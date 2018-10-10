@@ -1,0 +1,9 @@
+.el-card {
+  margin-top: 10px;
+}
+
+.content {
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
+}

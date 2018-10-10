@@ -2,29 +2,27 @@
 	<div class="contenter">
 		<div class="Logbtn">
 			<el-button type="text" @click="dialogFormVisible = true" class="Logbtns" v-show="log_entry"> <span>登录</span></el-button>
-			<div>
-				<el-dropdown @command="handleCommand">
-					<span class="el-dropdown-link">
-        {{phone}}<i class="el-icon--right"></i>
-      </span>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item command="logout">退出</el-dropdown-item>
-					</el-dropdown-menu>
-				</el-dropdown>
+			<div v-show="hedding">
+				<span class="username">欢迎您 , {{phone}}&nbsp;&nbsp;</span>
+				<el-button @click="Sign" type="text" class="username">注销</el-button>
 				<hr>
 			</div>
 		</div>
 		<el-dialog title="登录" :visible.sync="dialogFormVisible" center>
 			<!-- 插入测试 -->
-			<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="">
-				<el-form-item label="手机号" prop="num">
-					<el-input v-model.number="ruleForm2.num"></el-input>
-				</el-form-item>
-				<el-form-item label="验证码" prop="code">
-					<el-input type="tel" v-model="ruleForm2.code" auto-complete="off"></el-input>
-					<el-button type="primary" @click="second">发送验证码</el-button>
-				</el-form-item>
-			</el-form>
+			<div class="box">
+				<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px">
+					<el-form-item label="手机号" prop="num">
+						<el-input v-model.number="ruleForm2.num" class="inps" :disabled="disabled"></el-input>
+					</el-form-item>
+					<el-form-item label="验证码" prop="code">
+						<el-input type="tel" v-model="ruleForm2.code" auto-complete="off" class="inp"></el-input>
+						<el-button type="primary" @click="second" :disabled="disabled">
+							{{num}}
+						</el-button>
+					</el-form-item>
+				</el-form>
+			</div>
 			<!-- 插入测试 -->
 			<div slot="footer" class="dialog-footer">
 				<el-button @click="dialogFormVisible = false; resetForm('ruleForm2')">取 消</el-button>
@@ -45,17 +43,21 @@
 						</el-col>
 					</div>
 					<el-button type="primary" @click="btns">交卷</el-button>
-					<el-dialog title="请选择你要咨询哪位老师答案" :visible.sync="dialogTableVisibles">
-						<!-- 老师名 -->
-						<div>
-							<label>请选择老师</label>
-							<select v-model="user">
-								<option v-for="msg in user_total" v-bind:value="msg.email">
-									{{msg.name}}{{msg.email}}
-								</option>
-							</select>
+					<el-dialog title="选择老师帮你解析答案" :visible.sync="dialogTableVisibles">
+						<el-form :model="form">
+							<el-form-item label="老师" :label-width="formLabelWidth">
+								<el-select v-model="form.user" placeholder="请选择老师">
+									<el-option v-for="user in users" v-bind:value="user.name">
+										{{user.name}}
+									</el-option>
+								</el-select>
+							</el-form-item>
+						</el-form>
+						<!-- <el-button type="primary" @click="test">确定</el-button> -->
+						<div slot="footer" class="dialog-footer">
+							<el-button @click="dialogFormVisible = false">取 消</el-button>
+							<el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
 						</div>
-						<el-button type="primary" @click="test">确定</el-button>
 					</el-dialog>
 				</el-tab-pane>
 				<el-tab-pane label="逻辑能力">
@@ -80,7 +82,7 @@
 						<div>
 							<label>请选择老师</label>
 							<select v-model="user">
-								<option v-for="msg in user_total" v-bind:value="msg.email">
+								<option v-for="msg in users" v-bind:value="msg.email">
 									{{msg.name}}{{msg.email}}
 								</option>
 							</select>
@@ -93,14 +95,26 @@
 	</div>
 </template>
 <style type="text/css" lang="less" scoped>
-.card {
-	padding: 5px;
+.el-card {
+	margin-top: 10px;
 }
 
 .contenter {
 	width: 800px;
 	margin: 0 auto;
 	position: relative;
+}
+
+.username {
+	font-size: 16px;
+}
+
+.inp {
+	width: 150px;
+}
+
+.inps {
+	width: 265px;
 }
 
 </style>
@@ -133,18 +147,44 @@ export default {
 				callback();
 			}
 		};
-		return {
+		return { 
+			formLabelWidth: '120px',
+			options: [{
+				value: '选项1',
+				label: '黄金糕'
+			}, {
+				value: '选项2',
+				label: '双皮奶'
+			}, {
+				value: '选项3',
+				label: '蚵仔煎'
+			}, {
+				value: '选项4',
+				label: '龙须面'
+			}, {
+				value: '选项5',
+				label: '北京烤鸭'
+			}],
+			value4: '',
+
+			time: 0,
+			disabled: false,
+			num: '获取验证码',
+			  // 按钮里显示的内容
+			totalTime: 60,
+			   //记录具体倒计时时间
+			hedding: true,
 			// 38题答案
-			answer:'',
+			answer: '',
 			// 弹框
 			dialogTableVisible: false,
 			dialogTableVisibles: false,
 			// 老师
-			user: '',
+			form: { users: '' },
 			// 邮箱
 			mailbox: '',
 			// 每个老师数据
-			user_total: [],
+			users: [],
 			log_entry: true,
 			//提示
 			display_button: false,
@@ -220,6 +260,21 @@ export default {
 	},
 	methods: {
 
+		/*开启倒计时方法*/
+		timer() {
+			if (this.time > 0) {
+				this.time--;
+				this.num = '重新获取' + '(' + this.time + 's' + ')';
+				setTimeout(this.timer, 1000);
+			} else {
+				this.time = 60;
+				this.num = "获取验证码";
+				this.disabled = false;
+				this.ruleForm2.num = '';
+
+			}
+		},
+
 		btns() {
 
 			if (!this.phone) {
@@ -258,7 +313,7 @@ export default {
 				},
 				dataType: 'json',
 				success: function(data) {
-					self.user_total = data.results;
+					self.form.users = data.results;
 				},
 				error: function(data) {
 
@@ -301,17 +356,6 @@ export default {
 
 			});
 		},
-		handleCommand(command) {
-			this.Sign()
-		},
-		// 短信验证失败
-		login_error() {
-			this.$notify.error({
-				title: '失败',
-				message: '验证发送失败'
-
-			});
-		},
 		// 短信验证成功second
 		title_second() {
 			this.$notify({
@@ -320,19 +364,19 @@ export default {
 				type: 'success'
 			});
 		},
+		// 短信验证码失败
+		login_error() {
+			this.$notify({
+				title: '错误',
+				message: '验证码发送失败,请输入正确的手机号码'
+			});
+		},
 		// 点击是否退出
 		Sign() {
 			localStorage.clear();
 			this.phone = '';
-			this.dele = false;
 			this.log_entry = true;
-		},
-		// 退出
-		phones() {
-			this.dele = true;
-		},
-		phon() {
-			this.dele = false;
+			this.hedding = false;
 		},
 		// 错误提示
 		open8() {
@@ -420,7 +464,7 @@ export default {
 			var arry4 = this.arrmap2(arr4)
 			var arry5 = this.arrmap2(arr5)
 			var arry6 = this.arrmap2(arr6)
-        
+
 			var arrys1 = this.arrslice(arry1);
 			var arrys2 = this.arrslice(arry2);
 			var arrys3 = this.arrslice(arry3);
@@ -453,7 +497,7 @@ export default {
 
 			var b3 = JSON.stringify(a3)
 
-			
+
 			// 第四条
 			var a4 = {}
 			for (var i = 0; i < arrys4.length; i++) {
@@ -461,7 +505,7 @@ export default {
 				a4[str4[0]] = str4[1]
 			}
 			// 添加用户输入的答案
-			 a4.TI38=this.answer;
+			a4.TI38 = this.answer;
 			var b4 = JSON.stringify(a4)
 			// console.log(b4);
 			// 第五条
@@ -525,7 +569,7 @@ export default {
 
 		},
 		// 发送短信验证码接口
-		second() {
+		second_msg() {
 			var self = this;
 			self.ajaxSubmit.ajax({
 				url: self.commmonWebConfig.zhiliangkuapi + self.ajaxSubmit.allUrl.message,
@@ -536,18 +580,31 @@ export default {
 				async: false,
 				dataType: 'json',
 				success: function(data) {
-					if(data.Status !=201){
-                       self.title_second();
+					if (data.Status != 201) {
+						self.title_second();
 					} else {
-                      self.login_error();
+						self.login_error();
 
 					}
 				},
 				error: function(data) {
-					 self.login_error();
+					self.login_error();
 				}
 
 			})
+		},
+		// 发送短信验证码接口
+		second() {
+			var myreg = /^[1][0,1,2,3,4,5,7,8,9][0-9]{9}$/;
+			var self = this;
+			if (self.ruleForm2.num && myreg.test(self.ruleForm2.num)) {
+				self.time = 60;
+				self.disabled = true;
+				self.timer();
+				self.second_msg();
+			} else {
+				self.login_error();
+			}
 		},
 		// 提示用户登录信息
 		submitForm(formName) {
@@ -556,7 +613,7 @@ export default {
 					this.login_ok();
 					this.dialogFormVisible = false;
 					this.log_entry = false;
-
+					this.hedding = true;
 
 				} else {
 					this.login_fail();
@@ -608,7 +665,7 @@ export default {
 		}
 	},
 	created() {
-        // 正则保护手机
+		// 正则保护手机
 		var reg = /^(\d{3})\d{4}(\d{4})$/;
 		// 判断
 		if (localStorage.getItem('usernem')) {
@@ -616,8 +673,10 @@ export default {
 			this.phone = localStorage.getItem('usernem')
 			this.phone = this.phone.replace(reg, "$1****$2");
 			this.log_entry = false;
+			this.hedding = true;
 		} else {
 			this.log_entry = true;
+			this.hedding = false;
 		}
 
 		var self = this;
