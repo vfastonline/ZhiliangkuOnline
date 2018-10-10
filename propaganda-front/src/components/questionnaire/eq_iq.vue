@@ -31,11 +31,10 @@
           </el-col>
         </div>
         <!-- 提交的弹框 -->
-        <el-button type="primary" @click="handOver">交卷</el-button>
+        <el-button type="primary" @click="handOver_iq">交卷</el-button>
 
       </el-tab-pane>
     </el-tabs>
-
     <el-dialog title="选择老师帮你解析答案" :visible.sync="teacherDialog">
       <el-form :model="teacher_form">
         <el-form-item label="老师" :label-width="formLabelWidth">
@@ -48,7 +47,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="teacherDialog = false">取消</el-button>
-        <el-button type="primary" @click="test_eq">确定</el-button>
+        <el-button type="primary" @click="test_eq();test_iq()">确定</el-button>
       </div>
     </el-dialog>
 
@@ -165,6 +164,17 @@
         if (!this.phone) {
           this.isShow = true;
         } else if (!this.eqFraction) {
+          this.notAnswerNotify();
+        } else {
+          this.teacherDialog = true;
+          this.getConsultant();
+        }
+      },
+      handOver_iq() {
+        this.phone = localStorage.getItem('name');
+        if (!this.phone) {
+          this.isShow = true;
+        } else if (!this.iqLogic) {
           this.notAnswerNotify();
         } else {
           this.teacherDialog = true;
