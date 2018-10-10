@@ -17,6 +17,7 @@
 
 <script>
   import login from './login.vue'
+  import bus from '../../bus';
 
   export default {
     name: "user_info",
@@ -31,6 +32,8 @@
         this.loginBtn = false;
         this.username = true
       }
+
+      bus.$on('login-success', this.handle_username);
     },
     data() {
       return {
@@ -41,7 +44,19 @@
       }
     },
     methods: {
+      handle_username(data) {
+        if (data) {
+          this.loginBtn = false
+        }
+        if (!this.loginBtn) {
+          this.username = true;
+          this.phone = data
+        }
+      },
       showPhone(phone) {
+        console.log(phone);
+        console.log(this.loginBtn);
+        console.log(this.loginBtn);
         this.loginBtn = false;
         this.phone = phone;
         this.username = true
@@ -58,6 +73,7 @@
         this.phone = '';
         this.loginBtn = true;
         this.username = false;
+        bus.$emit('logout-success', true);
       },
     }
   }

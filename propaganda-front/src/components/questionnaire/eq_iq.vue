@@ -12,7 +12,7 @@
             </el-card>
           </el-col>
         </div>
-        <el-button type="primary" @click="handOver">交卷</el-button>
+        <el-button type="primary" @click="handOverNew('eq')">交卷</el-button>
       </el-tab-pane>
 
       <el-tab-pane label="逻辑能力">
@@ -31,7 +31,7 @@
           </el-col>
         </div>
         <!-- 提交的弹框 -->
-        <el-button type="primary" @click="handOver_iq">交卷</el-button>
+        <el-button type="primary" @click="handOverNew('iq')">交卷</el-button>
 
       </el-tab-pane>
     </el-tabs>
@@ -57,6 +57,7 @@
 
 <script>
   import login from './login.vue'
+  import bus from '../../bus';
 
   export default {
     name: "eq_iq",
@@ -159,27 +160,19 @@
         });
       },
 
-      handOver() {
+      handOverNew(types) {
         this.phone = localStorage.getItem('name');
         if (!this.phone) {
           this.isShow = true;
-        } else if (!this.eqFraction) {
-          this.notAnswerNotify();
-        } else {
-          this.teacherDialog = true;
-          this.getConsultant();
+          return
         }
-      },
-      handOver_iq() {
-        this.phone = localStorage.getItem('name');
-        if (!this.phone) {
-          this.isShow = true;
-        } else if (!this.iqLogic) {
+        if (types == "eq" && !this.eqFraction || types == "iq" && !this.iqLogic) {
           this.notAnswerNotify();
-        } else {
-          this.teacherDialog = true;
-          this.getConsultant();
+          return
         }
+
+        this.teacherDialog = true;
+        this.getConsultant();
       },
       submit_eq() {
         if (this.Fraction) {
@@ -230,12 +223,12 @@
       // 提交职场素质数据
       test_eq() {
         if (this.eqFraction) {
-          var arr = this.eqFraction.map(function(item) {
+          var arr = this.eqFraction.map(function (item) {
             return +item;
           })
         }
         if (arr) {
-          var result = arr.reduce(function(result, value, index) {
+          var result = arr.reduce(function (result, value, index) {
             return result + value;
           });
         }
@@ -256,11 +249,11 @@
               value: result,
               consultant_email: self.teacher_form.users
             },
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
               xhr.setRequestHeader("Authorization", token)
             },
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
               if (data.value !== '' && data.Status !== 201) {
                 self.AnswerOkNotify();
                 self.teacherDialog = false;
@@ -268,7 +261,8 @@
                 self.warningNotify();
               }
             },
-            error: function(data) {}
+            error: function (data) {
+            }
           });
         }
       },
@@ -372,6 +366,9 @@
         }
 
       },
+      handle_isShow(data) {
+        this.isShow = false
+      }
     },
 
     // 监听数据变化
@@ -385,6 +382,7 @@
     },
 
     created() {
+      bus.$on('logout-success', this.handle_isShow);
       var self = this;
       self.ajaxSubmit.ajax({
         url: self.commmonWebConfig.zhiliangkuapi + self.ajaxSubmit.allUrl.login_eq,

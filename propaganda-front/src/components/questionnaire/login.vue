@@ -19,6 +19,8 @@
 </template>
 
 <script>
+  import bus from '../../bus';
+
   export default {
     name: "login",
     props: ['invitor'],
@@ -188,7 +190,7 @@
                   if (self.phone) {
                     self.phone = self.phone.replace(reg, "$1****$2");
                   }
-                  self.$emit("listenLogin", self.phone)
+                  bus.$emit('login-success', self.phone);
                 }
               },
               error: function (data) {
