@@ -2,64 +2,28 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import './styles/common.scss'
 import router from './router'
+import store from './store/store';
+//全局加载resource拦截器
+import './axios/';
+import Axios from 'axios';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
-import './styles/common.scss'
-import _ajaxSubmit from './utils/ajaxSubmit'
-import _commmonWebConfig from './utils/config'
 
-Vue.prototype.commmonWebConfig = _commmonWebConfig;
-Vue.prototype.ajaxSubmit = _ajaxSubmit;
+Vue.prototype.$http = Axios;
+
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
+//创建全局实例
 new Vue({
   el: '#app',
   router,
+  store,
   components: {App},
   template: '<App/>'
 });
 
-Vue.prototype.arrmap = function (arr, i, j) {
-
-
-  return arr.map(function (value, index) {
-    var result = value.slice(4, 6);
-    if (result > i && result < j) {
-      return value;
-    }
-
-  });
-
-};
-
-
-Vue.prototype.arrmap2 = function (arr) {
-
-
-  return arr.map(function (value, index) {
-    if (value) {
-      return value.slice(2, 6) + ':' + value.slice(0, 2);
-    }
-  })
-
-};
-
-
-Vue.prototype.arrslice = function (arr) {
-
-
-  var b = [];
-  for (var i = 0; i < arr.length; i++) {
-    if (typeof(arr[i]) != 'undefined') {
-      b.push(arr[i]);
-    }
-  }
-
-
-  return b;
-
-};
