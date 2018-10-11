@@ -12,7 +12,7 @@
             </el-card>
           </el-col>
         </div>
-        <el-button type="primary" @click="handOver('eq')" v-model="submitType">交卷</el-button>
+        <el-button type="primary" @click="handOver('eq')">交卷</el-button>
       </el-tab-pane>
 
       <el-tab-pane label="逻辑能力">
@@ -31,7 +31,7 @@
           </el-col>
         </div>
         <!-- 提交的弹框 -->
-        <el-button type="primary" @click="handOver('iq')" v-model="submitType">交卷</el-button>
+        <el-button type="primary" @click="handOver('iq')">交卷</el-button>
 
       </el-tab-pane>
     </el-tabs>
@@ -48,7 +48,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="teacherDialog = false">取消</el-button>
-        <el-button type="primary" @click="submitEq();submitIq()">确定</el-button>
+        <el-button type="primary" @click="submission">确定</el-button>
       </div>
     </el-dialog>
 
@@ -164,11 +164,16 @@
         this.teacherDialog = true;
         this.getConsultant();
       },
+      submission(){
+
+        if(this.submitType=='eq'){
+          this.submitEq();
+        } else if(this.submitType=='iq'){
+          this.submitIq();
+        }
+      },
       // 提交职场素质数据
       submitEq() {
-        if (!this.submitType === "eq") {
-          return
-        }
         if (this.eqFraction) {
           var arr = this.eqFraction.map(function (item) {
             return +item;
@@ -202,9 +207,6 @@
         }
       },
       submitIq() {
-        if (!this.submitType === "iq") {
-          return
-        }
         var self = this;
         var arr = self.iqLogic;
         var arr1 = arrs.arrMap(arr, 0, 11);
