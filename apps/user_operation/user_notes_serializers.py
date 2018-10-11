@@ -40,7 +40,7 @@ class NotesCreateSerializers(serializers.ModelSerializer):
 		default=serializers.CurrentUserDefault()
 	)
 	video = serializers.CharField(min_length=24, max_length=24, required=True, write_only=True)
-	title = serializers.CharField(required=True)
+	title = serializers.CharField(required=True, max_length=255)
 	notes = serializers.CharField(required=True)
 
 	def create(self, validated_data):
