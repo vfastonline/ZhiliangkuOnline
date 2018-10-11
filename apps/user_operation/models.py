@@ -42,7 +42,7 @@ class Notes(BaseModelMixin):
 	"""
 	user = models.ForeignKey(User, verbose_name="用户", on_delete=models.CASCADE)
 	video = models.ForeignKey(Video, verbose_name="视频", on_delete=models.CASCADE, related_name="notes_videos")
-	title = models.CharField(max_length=200, verbose_name='标题')
+	title = models.CharField(max_length=255, verbose_name='标题')
 	notes = models.TextField(verbose_name='笔记内容')
 
 	reprint = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, verbose_name="转载自", help_text="笔记源",

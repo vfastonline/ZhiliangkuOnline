@@ -39,11 +39,9 @@ class NotesCreateSerializers(serializers.ModelSerializer):
 	user = serializers.HiddenField(
 		default=serializers.CurrentUserDefault()
 	)
-	video = serializers.CharField(max_length=24, required=True)
-
-	class Meta:
-		model = Notes
-		fields = ("title", "notes", "video", "user")
+	video = serializers.CharField(min_length=24, max_length=24, required=True, write_only=True)
+	title = serializers.CharField(required=True)
+	notes = serializers.CharField(required=True)
 
 	def create(self, validated_data):
 		note = super(NotesCreateSerializers, self).create(validated_data=validated_data)
@@ -51,7 +49,11 @@ class NotesCreateSerializers(serializers.ModelSerializer):
 
 	def validate_video(self, video):
 		videos = Video.objects.filter(pk=video)
-		video = ""
-		if videos:
-			video = videos[0]
+		if not videos.exists():
+			raise serializers.ValidationError("视频不存在")
+		video = videos[0]
 		return video
+
+	class Meta:
+		model = Notes
+		fields = ("title", "notes", "video", "user")
