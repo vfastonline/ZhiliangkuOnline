@@ -278,4 +278,3 @@ class ProjectAppraisal(BaseModelMixin):
 	class Meta:
 		verbose_name = "项目评定"
 		verbose_name_plural = verbose_name
-

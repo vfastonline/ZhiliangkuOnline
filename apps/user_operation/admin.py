@@ -11,7 +11,7 @@ class PracticeRecordAdmin(admin.ModelAdmin):
 
 @admin.register(Notes)
 class NotesAdmin(admin.ModelAdmin):
-	list_display = ("user", 'video', "title", "approve", "oppose")
+	list_display = ("user", 'video', "title", "approve", "oppose", "reprint_count", "is_show")
 
 
 @admin.register(FollowUser)
@@ -62,3 +62,8 @@ class ProjectLearnRateAdmin(admin.ModelAdmin):
 @admin.register(ProjectAppraisal)
 class ProjectAppraisalAdmin(admin.ModelAdmin):
 	list_display = ("user", "project", "star", "desc")
+
+
+@admin.register(Report)
+class ReportAdmin(admin.ModelAdmin):
+	list_display = ("user", "reason", "source", "types")

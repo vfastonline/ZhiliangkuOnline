@@ -1,13 +1,14 @@
 # encoding: utf-8
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import authentication
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from user_operation.user_notes_serializers import *
 
 
-class UserNotesViewSet(viewsets.ModelViewSet, viewsets.GenericViewSet):
+class NotesViewSet(viewsets.ModelViewSet):
 	"""
 	list:
 		获取用户笔记
@@ -23,9 +24,10 @@ class UserNotesViewSet(viewsets.ModelViewSet, viewsets.GenericViewSet):
 	"""
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
 	permission_classes = (IsAuthenticated,)
+	queryset = Notes.objects.all()
 
-	def get_queryset(self):
-		return Notes.objects.filter(user__username=self.request.user)
+	filter_backends = (DjangoFilterBackend,)
+	filter_fields = ("user_id",)
 
 	def get_serializer_class(self):
 		if self.action == "create":
@@ -34,3 +36,14 @@ class UserNotesViewSet(viewsets.ModelViewSet, viewsets.GenericViewSet):
 			return NotesListSerializers
 		else:
 			return NotesSerializers
+
+
+class SpecifyNotesViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+	"""
+	read:
+		查看用户笔记
+	"""
+	authentication_classes = ()
+	permission_classes = ()
+	queryset = Notes.objects.all()
+	serializer_class = NotesListSerializers

@@ -13,8 +13,10 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(ArticleComments)
 class ArticleCommentsAdmin(admin.ModelAdmin):
-	list_display = ("user", 'note', "comment")
+	list_display = ("user", 'article', "comment")
 
+	def user(self, obj):
+		return obj.user.username
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):

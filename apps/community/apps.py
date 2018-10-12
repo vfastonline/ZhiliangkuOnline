@@ -5,5 +5,5 @@ from django.apps import AppConfig
 
 
 class CommunityConfig(AppConfig):
-    name = 'apps.community'
+    name = 'community'
     verbose_name = "社区问答"

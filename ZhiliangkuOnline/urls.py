@@ -23,6 +23,7 @@ from rest_framework_swagger.views import get_swagger_view
 
 from ZhiliangkuOnline.settings import MEDIA_ROOT, STATIC_ROOT, DEBUG
 from banner.routers import *
+from community.routers import *
 from directory_tree.routers import *
 from project.routers import *
 from questionnaire.routers import *
