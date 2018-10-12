@@ -29,10 +29,10 @@ var router = new Router({
         },
 
       ]
-    }
+    },
+    {path: '/', redirect: '/app/questionnaire'}
   ]
 });
 
 
-//抛出路由
 export default router;
