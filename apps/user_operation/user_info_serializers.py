@@ -9,7 +9,7 @@ from users.models import UserProfile
 class FollowUserSerializers(serializers.ModelSerializer):
 	class Meta:
 		model = FollowUser
-		fields = ("follow",)
+		fields = ("follows",)
 
 
 class MedalSerializers(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class UserProfileSerializers(serializers.ModelSerializer):
 
 	def get_to_follow_user(self, obj):
 		to_follow = []
-		for follow in FollowUser.objects.values("user__username", "follow"):
-			if str(follow["follow"][0]) == obj.username:
+		for follow in FollowUser.objects.values("user__username", "follows"):
+			if str(follow["follows"][0]) == obj.username:
 				to_follow.append(follow["user__username"])
 		return to_follow

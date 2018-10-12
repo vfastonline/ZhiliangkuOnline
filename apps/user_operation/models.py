@@ -62,7 +62,7 @@ class Notes(BaseModelMixin):
 
 class Follow(models.Model):
 	"""
-	被关注者
+	被关注用户
 	"""
 	user = models.ForeignKey(User, verbose_name="用户", related_name='follow_users', on_delete=models.CASCADE)
 
@@ -80,8 +80,9 @@ class FollowUser(BaseModelMixin):
 
 	user = models.ForeignKey(User, verbose_name="用户", related_name='follow_user_users', on_delete=models.CASCADE,
 							 db_index=True)
-	follow = models.ArrayModelField(
+	follows = models.ArrayModelField(
 		model_container=Follow,
+		verbose_name="被关注用户",
 	)
 
 	def __str__(self):

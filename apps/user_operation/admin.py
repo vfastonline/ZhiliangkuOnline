@@ -16,7 +16,7 @@ class NotesAdmin(admin.ModelAdmin):
 
 @admin.register(FollowUser)
 class FollowUserAdmin(admin.ModelAdmin):
-	list_display = ("user", "follow")
+	list_display = ("user", "follows")
 
 
 @admin.register(WishList)
