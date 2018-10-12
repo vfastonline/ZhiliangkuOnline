@@ -98,7 +98,7 @@
       showlLoginDialog() {
         var is_login = this.$store.getters.userInfo.token;
         if (!is_login) {
-          this.$store.dispatch('setloginDialogStatus', true);
+          this.$store.dispatch('setLoginDialogStatus', true);
         }
       },
 
@@ -152,7 +152,7 @@
         this.submitType = types;
         var is_login = this.$store.getters.userInfo.token;
         if (!is_login) {
-          this.$store.dispatch('setloginDialogStatus', true);
+          this.$store.dispatch('setLoginDialogStatus', true);
           return
         }
         if (types == "eq" && !this.eqFraction || types == "iq" && !this.iqLogic) {

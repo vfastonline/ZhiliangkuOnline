@@ -10,4 +10,4 @@ export const setNav = makeAction(types.SET_NAV);
 // export const getPermit = makeAction(types.GET_PERMIT);
 // export const getNavInfo = makeAction(types.GET_NAV);
 
-export const setloginDialogStatus = makeAction(types.SET_LOGINDIALOGOPEN);
+export const setLoginDialogStatus = makeAction(types.SET_LOGINDIALOGOPEN);

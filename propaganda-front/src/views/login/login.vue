@@ -93,7 +93,7 @@
     methods: {
       hidenLoginDialog() {
         this.$refs["loginForm"].resetFields();
-        this.$store.dispatch('setloginDialogStatus', false)
+        this.$store.dispatch('setLoginDialogStatus', false)
       },
 
       sendCodeErrorNotify() {

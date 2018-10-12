@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-button type="text" @click="showlLoginDialog" v-if="!userInfo.name">
+    <el-button type="text" @click="showLoginDialog" v-if="!username">
       <span>登录</span>
     </el-button>
 
-    <div v-if="userInfo.name">
-      <span class="username">欢迎您 , {{userInfo.name}}&nbsp;&nbsp;</span>
+    <div v-if="username">
+      <span class="username">欢迎您 , {{username}}&nbsp;&nbsp;</span>
       <el-button @click="loginOut" type="text" class="username">退出</el-button>
       <hr>
     </div>
@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
   import login from '../login/login.vue'
   import cookie from '../../static/js/cookie';
 
@@ -24,20 +23,20 @@
     components: {
       login: login
     },
+    computed: {
+      username: function () {
+        var reg = /^(\d{3})\d{4}(\d{4})$/;
+        return this.$store.state.userInfo.name.replace(reg, "$1****$2");
+      }
+    },
     created() {
     },
     data() {
       return {}
     },
-
-    computed: {
-      ...mapGetters({
-        userInfo: 'userInfo'
-      })
-    },
     methods: {
-      showlLoginDialog() {
-        this.$store.dispatch('setloginDialogStatus', true);
+      showLoginDialog() {
+        this.$store.dispatch('setLoginDialogStatus', true);
       },
       loginOut() {
         cookie.delCookie('token');
