@@ -93,7 +93,7 @@
     methods: {
       hidenLoginDialog() {
         this.$refs["loginForm"].resetFields();
-        this.$store.dispatch('setloginDialogOpen', false)
+        this.$store.dispatch('setloginDialogStatus', false)
       },
 
       sendCodeErrorNotify() {
@@ -178,15 +178,15 @@
             })
               .catch(function (error) {
                 if ("non_field_errors" in error) {
-                  console.log(error.non_field_errors[0])
+                  // console.log(error.non_field_errors[0])
                   // that.error = error.non_field_errors[0];
                 }
                 if ("mobile" in error) {
-                  console.log(error.mobile[0])
+                  // console.log(error.mobile[0])
                   // that.userNameError = error.mobile[0];
                 }
                 if ("code" in error) {
-                  console.log(error.code[0])
+                  // console.log(error.code[0])
                   // that.parseWordError = error.code[0];
                 }
               });

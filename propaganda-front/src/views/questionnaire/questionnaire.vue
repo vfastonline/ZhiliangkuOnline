@@ -48,7 +48,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="teacherDialog = false">取消</el-button>
-        <el-button type="primary" @click="submission">确定</el-button>
+        <el-button type="primary" @click="submitTestPaper">确定</el-button>
       </div>
     </el-dialog>
 
@@ -98,7 +98,7 @@
       showlLoginDialog() {
         var is_login = this.$store.getters.userInfo.token;
         if (!is_login) {
-          this.$store.dispatch('setloginDialogOpen', true);
+          this.$store.dispatch('setloginDialogStatus', true);
         }
       },
 
@@ -150,10 +150,9 @@
 
       handOver(types) {
         this.submitType = types;
-        console.log(this.submitType)
         var is_login = this.$store.getters.userInfo.token;
         if (!is_login) {
-          this.$store.dispatch('setloginDialogOpen', true);
+          this.$store.dispatch('setloginDialogStatus', true);
           return
         }
         if (types == "eq" && !this.eqFraction || types == "iq" && !this.iqLogic) {
@@ -164,14 +163,15 @@
         this.teacherDialog = true;
         this.getConsultant();
       },
-      submission(){
 
-        if(this.submitType=='eq'){
+      submitTestPaper() {
+        if (this.submitType == 'eq') {
           this.submitEq();
-        } else if(this.submitType=='iq'){
+        } else if (this.submitType == 'iq') {
           this.submitIq();
         }
       },
+
       // 提交职场素质数据
       submitEq() {
         if (this.eqFraction) {

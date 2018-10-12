@@ -12,7 +12,6 @@ export default {
       name: cookie.getCookie('name'),
       token: cookie.getCookie('token')
     };
-    console.log(state.userInfo);
   },
 
   [types.SET_LOGINDIALOGOPEN](state, data) {

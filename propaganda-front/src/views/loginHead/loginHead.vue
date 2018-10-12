@@ -37,7 +37,7 @@
     },
     methods: {
       showlLoginDialog() {
-        this.$store.dispatch('setloginDialogOpen', true);
+        this.$store.dispatch('setloginDialogStatus', true);
       },
       loginOut() {
         cookie.delCookie('token');
