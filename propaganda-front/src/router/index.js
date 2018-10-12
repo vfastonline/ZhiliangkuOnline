@@ -30,7 +30,10 @@ var router = new Router({
 
       ]
     },
-    {path: '/', redirect: '/app/questionnaire'}
+    {
+      path: '/',
+      redirect: '/app/questionnaire'
+    }
   ]
 });
 
