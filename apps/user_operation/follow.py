@@ -1,7 +1,7 @@
 #!encoding:utf-8
-
 from rest_framework import serializers, authentication
 from rest_framework import viewsets, mixins
+from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
@@ -9,6 +9,14 @@ from user_operation.models import *
 from utils.permissions import IsOwnerOrReadOnly
 
 User = get_user_model()
+
+
+class FollowSelfException(APIException):
+	"""
+	用户关注自己提示信息
+	"""
+	status_code = 403
+	default_detail = '不能关注自己.'
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -37,6 +45,9 @@ class FollowUserSerializers(serializers.Serializer):
 	def create(self, validated_data):
 		user = validated_data["user"]
 		follows_user = validated_data["follows_user"]
+
+		if user == follows_user:
+			raise FollowSelfException
 
 		follow_users = FollowUser.objects.filter(user=user)
 		if not follow_users.exists():
