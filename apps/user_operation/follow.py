@@ -32,9 +32,11 @@ class FollowUserSerializers(serializers.Serializer):
 	user = serializers.HiddenField(
 		default=serializers.CurrentUserDefault()
 	)
-	follows_user = serializers.PrimaryKeyRelatedField(label="关注用户_id", required=True,
-													  queryset=User.objects.all(),
-													  write_only=True, help_text="关注用户_id")
+	follows_user = serializers.PrimaryKeyRelatedField(
+		label="关注用户_id", required=True,
+		queryset=User.objects.all(),
+		write_only=True,
+		help_text="关注用户_id")
 	follows = serializers.SerializerMethodField(read_only=True)
 
 	def get_follows(self, follow_user_obj):
@@ -66,11 +68,13 @@ class FollowUserSerializers(serializers.Serializer):
 
 	def update(self, instance, validated_data):
 		follow_user_id = validated_data["follows_user"].pk
-		update_result = FollowUser.objects.mongo_update(
+		"""
+		pymongo，删除array内容返回信息，{'n': 1, 'nModified': 0, 'ok': 1.0, 'updatedExisting': True}
+		"""
+		FollowUser.objects.mongo_update(
 			{"_id": instance.pk},
 			{"$pull": {"follows": {"user_id": follow_user_id}}}
 		)
-		# update_result = {'n': 1, 'nModified': 0, 'ok': 1.0, 'updatedExisting': True}
 		instance = FollowUser.objects.get(pk=instance.pk)
 		return instance
 
