@@ -84,6 +84,7 @@ class FollowUser(BaseModelMixin):
 		model_container=Follow,
 		verbose_name="被关注用户",
 	)
+	objects = models.DjongoManager()
 
 	def __str__(self):
 		return self.user.username
