@@ -130,7 +130,7 @@ class PracticeRecord(BaseModelMixin):
 	用户练习记录
 	"""
 	user = models.ForeignKey(User, verbose_name='用户', on_delete=models.CASCADE)
-	video = models.ForeignKey(Question, verbose_name='练习题', on_delete=models.CASCADE)
+	question = models.ForeignKey(Question, verbose_name='练习题', on_delete=models.CASCADE)
 	times = models.PositiveIntegerField("练习次数", default=0)
 	is_pass = models.BooleanField("是否通过", default=False)
 

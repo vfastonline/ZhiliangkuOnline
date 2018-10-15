@@ -14,8 +14,9 @@ class Video(BaseModelMixin):
 	video = models.ForeignKey(DirectoryTree, verbose_name='视频', related_name='videos', blank=True, null=True,
 							  on_delete=models.SET_NULL, limit_choices_to={'category': "video"})
 	notes = models.TextField('讲师笔记', blank=True)
-	vid = models.CharField("vid", max_length=255, blank=True)
-	datas = models.TextField("保利威视视频信息", blank=True)
+	duration = models.PositiveIntegerField('总时长', default=0, blank=True, help_text="单位：秒")
+	vid = models.CharField("vid", max_length=255, blank=True, help_text="保利威视提供")
+	data = models.TextField("保利威视视频信息", blank=True, help_text="保利威视提供")
 
 	class Meta:
 		verbose_name = "视频"

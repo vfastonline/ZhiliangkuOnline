@@ -6,7 +6,7 @@ from .models import *
 
 @admin.register(PracticeRecord)
 class PracticeRecordAdmin(admin.ModelAdmin):
-	list_display = ("user", 'video', "times", "is_pass")
+	list_display = ("user", 'question', "times", "is_pass")
 
 
 @admin.register(Notes)

@@ -3,6 +3,6 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(Technology)
-class TechnologyAdmin(admin.ModelAdmin):
+@admin.register(TechnicalLabel)
+class TechnicalLabelAdmin(admin.ModelAdmin):
 	list_display = ["_id", "name", ]

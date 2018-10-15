@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth import get_user_model
 
 from directory_tree.models import DirectoryTree
-from technology.models import Technology
+from technical_label.models import TechnicalLabel
 from users.models import *
 from video.models import Video
 
@@ -18,7 +18,10 @@ class Article(BaseModelMixin):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者", help_text="作者")
 	title = models.CharField(max_length=255, verbose_name='标题')
 	content = models.TextField(verbose_name='文章内容')
-	technology = models.ForeignKey(Technology, verbose_name="技术标签", on_delete=models.CASCADE)
+	technical_labels = models.ArrayModelField(
+		model_container=TechnicalLabel,
+		verbose_name="技术标签",
+	)
 	direction = models.ForeignKey(DirectoryTree, verbose_name="方向", on_delete=models.CASCADE,
 								  limit_choices_to={'category': "direction"})
 
@@ -30,6 +33,8 @@ class Article(BaseModelMixin):
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
 	release = models.BooleanField(verbose_name="是否发布", default=True, help_text="文章是否发布")
 	hot = models.BooleanField(verbose_name="热门文章", default=False, help_text="是够首页显示为热门")
+
+	objects = models.DjongoManager()
 
 	def __str__(self):
 		return self.title
@@ -63,13 +68,17 @@ class Faq(BaseModelMixin):
 	video = models.ForeignKey(Video, verbose_name="视频", related_name="faqs", on_delete=models.CASCADE, blank=True)
 	user = models.ForeignKey(User, verbose_name="提问用户", related_name="faq_users", on_delete=models.CASCADE)
 	problem = models.TextField(verbose_name='问题', blank=True)
-	technology = models.ForeignKey(Technology, verbose_name="技术标签", on_delete=models.CASCADE)
-
+	technical_labels = models.ArrayModelField(
+		model_container=TechnicalLabel,
+		verbose_name="技术标签",
+	)
 	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)
 	comment_number = models.PositiveIntegerField(verbose_name='评论数', default=0)
 	answer_number = models.PositiveIntegerField(verbose_name="回答数", default=0)
 	is_show = models.BooleanField(verbose_name="是否显示", default=True, help_text="举报核实后隐藏")
 	hot = models.BooleanField(verbose_name="热门问题", default=False, help_text="是够首页显示为热门问题")
+
+	objects = models.DjongoManager()
 
 	def __str__(self):
 		return self.problem

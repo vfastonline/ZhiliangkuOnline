@@ -4,7 +4,7 @@ from djongo import models
 from utils.model import BaseModelMixin
 
 
-class Technology(BaseModelMixin):
+class TechnicalLabel(BaseModelMixin):
 	"""
 	技术标签
 	"""

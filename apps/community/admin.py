@@ -7,7 +7,7 @@ from .models import *
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
 	list_display = (
-		"user", 'title', "content", "technology", "direction", "approve", "oppose", "browse_number", "comment",
+		"user", 'title', "content", "direction", "approve", "oppose", "browse_number", "comment",
 		"release", "hot")
 
 
@@ -18,9 +18,10 @@ class ArticleCommentsAdmin(admin.ModelAdmin):
 	def user(self, obj):
 		return obj.user.username
 
+
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-	list_display = ("user", "video", 'problem', "technology", "browse_number", "comment_number", "answer_number", "hot")
+	list_display = ("user", "video", 'problem', "browse_number", "comment_number", "answer_number", "hot")
 
 
 @admin.register(FaqAnswer)

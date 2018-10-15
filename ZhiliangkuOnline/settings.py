@@ -79,7 +79,7 @@ INSTALLED_APPS = [
 	'live_streaming',  # 直播
 	'medal',  # 勋章
 	'notification',  # 消息管理
-	'technology',  # 技术标签
+	'technical_label',  # 技术标签
 
 	# 企业宣传
 	'wechat_promotion',

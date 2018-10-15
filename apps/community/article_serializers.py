@@ -1,6 +1,7 @@
 #!encoding:utf-8
 
 from community.serializers import *
+from .models import *
 
 
 class DirectoryTreeSerializers(serializers.ModelSerializer):
@@ -14,14 +15,13 @@ class ArticleListSerializers(serializers.ModelSerializer):
 	user = serializers.CharField(
 		default=serializers.CurrentUserDefault()
 	)
-	technology = TechnologySerializers()
 	direction = DirectoryTreeSerializers()
 	updated_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H-%M")
 
 	class Meta:
 		model = Article
 		fields = (
-			"_id", "user", "title", "content", "technology", "direction", "approve", "oppose", "browse_number",
+			"_id", "user", "title", "content", "direction", "approve", "oppose", "browse_number",
 			"comment",
 			"is_show", "release", "hot", "updated_at")
 
@@ -31,15 +31,14 @@ class ArticleCreateSerializers(serializers.ModelSerializer):
 		default=serializers.CurrentUserDefault()
 	)
 
-	technology = serializers.CharField(label="技术标签", required=True)
 	direction = serializers.CharField(label="方向", required=True)
 
-	def validate_technology(self, technology):
-		technology = Technology.objects.filter(_id=technology)
-		if not technology.exists():
-			raise serializers.ValidationError("技术标签不存在")
-		technology = technology[0]
-		return technology
+	# def validate_technology(self, technology):
+	# 	technology = TechnicalLabel.objects.filter(_id=technology)
+	# 	if not technology.exists():
+	# 		raise serializers.ValidationError("技术标签不存在")
+	# 	technology = technology[0]
+	# 	return technology
 
 	def validate_direction(self, direction):
 		direction = DirectoryTree.objects.filter(_id=direction)
@@ -54,4 +53,4 @@ class ArticleCreateSerializers(serializers.ModelSerializer):
 
 	class Meta:
 		model = Article
-		fields = ("user", "title", "content", "technology", "direction", "release",)
+		fields = ("user", "title", "content", "direction", "release",)

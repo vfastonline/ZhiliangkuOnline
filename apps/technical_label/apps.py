@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TechnologyConfig(AppConfig):
-	name = 'technology'
+class TechnicalLabelConfig(AppConfig):
+	name = 'technical_label'
 	verbose_name = "技术标签"
