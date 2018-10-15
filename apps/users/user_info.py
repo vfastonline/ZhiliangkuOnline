@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
+from rest_framework import serializers, authentication
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -23,7 +23,7 @@ class RoleSerializers(serializers.ModelSerializer):
 		fields = ("name",)
 
 
-class UserCreateSerializers(serializers.ModelSerializer):
+class UserSerializers(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = (
@@ -31,7 +31,7 @@ class UserCreateSerializers(serializers.ModelSerializer):
 			"signature", "mobile")
 
 
-class UserSerializers(serializers.ModelSerializer):
+class UserListSerializers(serializers.ModelSerializer):
 	_id = serializers.CharField(max_length=24)
 	team = TeamSerializers(many=True, read_only=True)
 	role = RoleSerializers(many=True, read_only=True)
@@ -44,12 +44,8 @@ class UserSerializers(serializers.ModelSerializer):
 			"signature", "mobile")
 
 
-# def get_team(self,obj):
-# 	obj.team.filter(code=)
-
-
-class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
-					  viewsets.GenericViewSet):
+class UserProfileViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+						 viewsets.GenericViewSet):
 	"""
 	list:
 		获取用户信息
@@ -61,7 +57,7 @@ class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.Des
 		删除用户信息
 
 	"""
-	authentication_classes = (JSONWebTokenAuthentication,)
+	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
 	permission_classes = (IsAuthenticated,)
 
 	def get_queryset(self):
@@ -69,6 +65,6 @@ class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.Des
 
 	def get_serializer_class(self):
 		if self.action == 'list':
-			return UserSerializers
+			return UserListSerializers
 		elif self.action != "list":
-			return UserCreateSerializers
+			return UserSerializers

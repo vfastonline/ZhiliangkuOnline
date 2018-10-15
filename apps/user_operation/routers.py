@@ -1,9 +1,9 @@
 #!encoding:utf-8
-from user_operation.follow import *
-from user_operation.report import *
-from user_operation.user_info import *
-from user_operation.user_notes import *
 from utils.tools import router
+from .follow import *
+from .report import *
+from .user_info import *
+from .user_notes import *
 
 router.register(r'user_info', UserInfoViewSet, base_name="user_info")
 

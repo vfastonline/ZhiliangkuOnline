@@ -10,9 +10,9 @@ class Project(BaseModelMixin):
 	项目
 	"""
 	direction = models.ForeignKey(DirectoryTree, verbose_name="方向", on_delete=models.CASCADE,
-								  limit_choices_to={'CATEGORY_TYPE': "direction"})
+								  limit_choices_to={'category': "direction"})
 	project = models.ForeignKey(DirectoryTree, verbose_name='项目', related_name='projects', blank=True, null=True,
-								on_delete=models.SET_NULL, limit_choices_to={'category_type': "project"})
+								on_delete=models.SET_NULL, limit_choices_to={'category': "project"})
 	desc = models.TextField(max_length=1000, verbose_name='简介', )
 	technical_labels = models.ArrayModelField(
 		model_container=TechnicalLabel,
@@ -49,5 +49,5 @@ class CommonQuestion(models.Model):
 		return self.question
 
 	class Meta:
-		verbose_name = "视频常见问题"
+		verbose_name = "项目常见问题"
 		verbose_name_plural = verbose_name
