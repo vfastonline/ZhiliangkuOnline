@@ -11,4 +11,4 @@ router.register(r'notes', NotesViewSet, base_name="notes")
 router.register(r'specify_notes', SpecifyNotesViewSet, base_name="specify_notes")
 
 router.register(r'report', ReportViewSet, base_name="report")
-router.register(r'follow-user', FollowUserViewSet, base_name="follow-user")
+router.register(r'follow_user', FollowUserViewSet, base_name="follow_user")
