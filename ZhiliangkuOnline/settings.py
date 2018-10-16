@@ -84,6 +84,7 @@ INSTALLED_APPS = [
 	# 企业宣传
 	'wechat_promotion',
 	"questionnaire",
+	"user_score",
 ]
 
 MIDDLEWARE = [
