@@ -7,7 +7,7 @@ from django.db.models.signals import post_migrate
 
 def init_score_item(sender, verbosity, **kwargs):
 	"""
-	初始化-得分项
+	初始化，用户评分，得分项
 	:param sender:
 	:param kwargs:
 	:return:
@@ -21,13 +21,12 @@ def init_score_item(sender, verbosity, **kwargs):
 			{"name": "知识引导", "desc": "xx", "rule": "2"},
 			{"name": "理解程度", "desc": "xx", "rule": "1"},
 			{"name": "操作程度", "desc": "xx", "rule": "1"},
-
 		]
 
 		[ScoreItem.objects.get_or_create(**score_item) for score_item in score_items]
 
 		if verbosity == 1:
-			print(" 初始化-得分项 OK")
+			print(" 初始化-用户评分-得分项 OK")
 	except:
 		traceback.print_exc()
 

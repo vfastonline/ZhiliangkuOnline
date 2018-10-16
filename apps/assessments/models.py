@@ -40,8 +40,8 @@ class Assessment(BaseModelMixin):
 	"""
 	考核
 	"""
-	assessment = models.ForeignKey(DirectoryTree, verbose_name='考核', related_name='assessments', blank=True, null=True,
-								   on_delete=models.SET_NULL, limit_choices_to={'category_type': "assessments"})
+	assessment = models.ForeignKey(DirectoryTree, verbose_name='考核', related_name='Assessments', blank=True, null=True,
+								   on_delete=models.SET_NULL, limit_choices_to={'category': "assessments"})
 	topic = models.TextField('考核题目', default='', null=True, blank=True)
 	docker = models.ForeignKey(DockerType, verbose_name='Docker类型', null=True, blank=True, on_delete=models.CASCADE)
 	assess_time = models.PositiveIntegerField('考核时长(分)', default=5, help_text="考核时长，默认5分钟；单位：分")
