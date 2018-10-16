@@ -215,6 +215,9 @@ REST_FRAMEWORK = {
 	# 	'user': '1000/day',
 	# }
 
+	# 过滤
+	'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 
 # corsheaders

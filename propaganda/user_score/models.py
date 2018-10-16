@@ -27,7 +27,7 @@ class ScoreItem(BaseModelMixin):
 		verbose_name_plural = verbose_name
 
 
-class ScoreRecord(BaseModelMixin):
+class ScoreRecord(models.Model):
 	"""
 	得分记录
 	"""
@@ -45,7 +45,7 @@ class UserScore(BaseModelMixin):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
 	score_records = models.ArrayModelField(
 		model_container=ScoreRecord,
-		verbose_name="等分记录",
+		verbose_name="得分记录",
 	)
 	feedback = models.TextField(verbose_name="意见反馈", blank=True)
 

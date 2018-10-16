@@ -1,3 +1,6 @@
 # encoding: utf-8
 
-# router.register(r'user_register', EQViewSet, base_name="user_register")
+from utils.tools import router
+from .user_score_record import UserScoreRecordViewSet
+
+router.register(r'user_score_record', UserScoreRecordViewSet, base_name="user_score_record")
