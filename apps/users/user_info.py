@@ -44,8 +44,7 @@ class UserListSerializers(serializers.ModelSerializer):
 			"signature", "mobile")
 
 
-class UserProfileViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin,
-						 viewsets.GenericViewSet):
+class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
 		获取用户信息
@@ -53,8 +52,6 @@ class UserProfileViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.
 		更改用户信息
 	partial_update:
 		更改用户信息(允许只更新部分字段)
-	delete:
-		删除用户信息
 
 	"""
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
@@ -66,5 +63,4 @@ class UserProfileViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.
 	def get_serializer_class(self):
 		if self.action == 'list':
 			return UserListSerializers
-		elif self.action != "list":
-			return UserSerializers
+		return UserSerializers

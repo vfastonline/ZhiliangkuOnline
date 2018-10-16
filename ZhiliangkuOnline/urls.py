@@ -29,6 +29,7 @@ from project.routers import *
 from questionnaire.routers import *
 from user_operation.routers import *
 from user_resumes.routers import *
+from user_score.routers import *
 from users.routers import *
 
 schema_view = get_swagger_view(title="智量酷docs")
