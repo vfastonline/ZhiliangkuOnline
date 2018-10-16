@@ -17,7 +17,7 @@ class UserScoreSerializers(serializers.ModelSerializer):
 		fields = ["_id", ]
 
 
-class UserScoreRecordViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class TodayHasUserScoreRecordViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
 		查看用户时间段内评分记录

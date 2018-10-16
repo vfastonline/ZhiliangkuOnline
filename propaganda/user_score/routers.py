@@ -1,6 +1,6 @@
 # encoding: utf-8
 
 from utils.tools import router
-from .user_score_record import UserScoreRecordViewSet
+from .today_has_user_score_record import TodayHasUserScoreRecordViewSet
 
-router.register(r'user_score_record', UserScoreRecordViewSet, base_name="user_score_record")
+router.register(r'today_has_user_score_record', TodayHasUserScoreRecordViewSet, base_name="today_has_user_score_record")
