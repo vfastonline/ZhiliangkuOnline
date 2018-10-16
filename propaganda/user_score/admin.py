@@ -7,7 +7,7 @@ from .models import *
 
 @admin.register(ScoreItem)
 class ScoreItemAdmin(admin.ModelAdmin):
-	list_display = ["rule", "name", "desc"]
+	list_display = ["role", "name", "desc"]
 
 
 @admin.register(UserScore)

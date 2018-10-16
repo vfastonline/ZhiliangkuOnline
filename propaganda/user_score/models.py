@@ -11,13 +11,13 @@ class ScoreItem(BaseModelMixin):
 	"""
 	得分项
 	"""
-	RULE = (
+	ROLE = (
 		("1", "学生"),
 		("2", "老师"),
 	)
 	name = models.CharField(verbose_name="评分项", max_length=255, blank=True)
 	desc = models.TextField(verbose_name="评分项描述", blank=True)
-	rule = models.CharField(verbose_name="角色", max_length=1, choices=RULE)
+	role = models.CharField(verbose_name="角色", max_length=1, choices=ROLE)
 
 	def __str__(self):
 		return self.name

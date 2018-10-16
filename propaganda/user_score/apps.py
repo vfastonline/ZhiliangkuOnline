@@ -16,11 +16,11 @@ def init_score_item(sender, verbosity, **kwargs):
 		from .models import ScoreItem
 
 		score_items = [
-			{"name": "精神面貌", "desc": "xx", "rule": "2"},
-			{"name": "课堂气氛", "desc": "xx", "rule": "2"},
-			{"name": "知识引导", "desc": "xx", "rule": "2"},
-			{"name": "理解程度", "desc": "xx", "rule": "1"},
-			{"name": "操作程度", "desc": "xx", "rule": "1"},
+			{"name": "精神面貌", "desc": "xx", "role": "2"},
+			{"name": "课堂气氛", "desc": "xx", "role": "2"},
+			{"name": "知识引导", "desc": "xx", "role": "2"},
+			{"name": "理解程度", "desc": "xx", "role": "1"},
+			{"name": "操作程度", "desc": "xx", "role": "1"},
 		]
 
 		[ScoreItem.objects.get_or_create(**score_item) for score_item in score_items]
