@@ -67,6 +67,9 @@ urlpatterns = [
 	# 首页
 	path('index/', TemplateView.as_view(template_name='index.html'), name='index'),
 
+	# 保利威视
+	path('polyv/', include('video.urls')),
+
 ]
 
 # debug模式，开启django调试工具

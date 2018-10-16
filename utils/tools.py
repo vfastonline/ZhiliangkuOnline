@@ -1,5 +1,6 @@
 # encoding: utf-8
 import json
+import traceback
 
 from bson import ObjectId
 from django.apps import apps
@@ -55,3 +56,16 @@ def index_decorator(func):
 		return templateresponse
 
 	return inner
+
+
+def time_str_to_second(t):
+	"""字符串时间转秒
+	:param t:时间字符串
+	:return:秒数
+	"""
+	try:
+		h, m, s = t.strip().split(":")
+	except:
+		traceback.print_exc()
+		h, m, s = 0, 0, 0
+	return int(h) * 3600 + int(m) * 60 + int(s)
