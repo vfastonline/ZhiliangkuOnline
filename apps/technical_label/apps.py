@@ -30,6 +30,7 @@ def init_technical_label(sender, verbosity, **kwargs):
 class TechnicalLabelConfig(AppConfig):
 	name = 'technical_label'
 	verbose_name = "技术标签"
+	main_menu_index = 14
 
 	def ready(self):
 		post_migrate.connect(init_technical_label, sender=self)

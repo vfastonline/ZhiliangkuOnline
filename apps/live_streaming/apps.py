@@ -7,3 +7,4 @@ from django.apps import AppConfig
 class LiveStreamingConfig(AppConfig):
 	name = 'live_streaming'
 	verbose_name = "直播"
+	main_menu_index = 11

@@ -32,6 +32,7 @@ def init_direction(sender, verbosity, **kwargs):
 class DataStructureConfig(AppConfig):
 	name = 'directory_tree'
 	verbose_name = "目录树"
+	main_menu_index = 4
 
 	def ready(self):
 		post_migrate.connect(init_direction, sender=self)

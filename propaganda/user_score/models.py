@@ -40,7 +40,7 @@ class ScoreRecord(BaseModelMixin):
 
 class UserScore(BaseModelMixin):
 	"""
-	用户得分
+	用户得分记录
 	"""
 	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
 	score_records = models.ArrayModelField(
@@ -55,5 +55,5 @@ class UserScore(BaseModelMixin):
 		return self.user.username
 
 	class Meta:
-		verbose_name = "用户得分"
+		verbose_name = "用户得分记录"
 		verbose_name_plural = verbose_name

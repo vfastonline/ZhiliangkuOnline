@@ -1,3 +1,15 @@
+# encoding: utf-8
+
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+@admin.register(ScoreItem)
+class ScoreItemAdmin(admin.ModelAdmin):
+	list_display = ["rule", "name", "desc"]
+
+
+@admin.register(UserScore)
+class UserScoreAdmin(admin.ModelAdmin):
+	list_display = ["user", "feedback"]

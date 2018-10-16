@@ -7,3 +7,4 @@ from django.apps import AppConfig
 class ExerciseConfig(AppConfig):
 	name = 'exercise'
 	verbose_name = "练习题"
+	main_menu_index = 8

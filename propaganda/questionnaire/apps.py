@@ -105,6 +105,7 @@ def question_nairescore_post_save(sender, instance=None, created=False, **kwargs
 class QuestionnaireConfig(AppConfig):
 	name = 'questionnaire'
 	verbose_name = "问卷调查"
+	main_menu_index = 22
 
 	def ready(self):
 		post_migrate.connect(init_iq, sender=self)

@@ -7,3 +7,4 @@ from django.apps import AppConfig
 class AssessmentConfig(AppConfig):
 	name = 'assessments'
 	verbose_name = "考核"
+	main_menu_index = 9
