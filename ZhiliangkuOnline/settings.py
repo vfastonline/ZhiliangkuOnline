@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 	'corsheaders',
 	'rest_framework',
 	'rest_framework.authtoken',
-	'social_django_mongoengine',  # 第三方登录
+	'social_django',  # 第三方登录
 	'django_filters',
 	'debug_toolbar',
 	'rest_framework_swagger',
@@ -305,7 +305,6 @@ CONFIG_DEFAULTS = {
 }
 
 # 第三方认证
-SOCIAL_AUTH_STORAGE = 'social_django_mongoengine.models.DjangoStorage'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 SOCIAL_AUTH_WEIBO_KEY = ''
