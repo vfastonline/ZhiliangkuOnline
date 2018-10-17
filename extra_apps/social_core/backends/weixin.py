@@ -3,7 +3,7 @@
 """
 Weixin OAuth2 backend
 """
-import urllib
+import urllib.parse as urllib
 from requests import HTTPError
 
 from .oauth import BaseOAuth2
