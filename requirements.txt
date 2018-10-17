@@ -11,6 +11,7 @@ django_redis==4.9.0
 requests==2.19.1
 ujson
 social-auth-app-django==2.1.0
+social-auth-app-django-mongoengine
 unittest2==1.1.0
 httpretty==0.9.5
 django-filter==2.0.0
