@@ -28,7 +28,7 @@ class VerifyCodeAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-	list_display = ('_id', 'username', 'name', 'roles', 'is_staff')
+	list_display = ('_id', 'username', 'name', 'roles', "teams", 'is_staff')
 	filter_horizontal = ('groups', 'user_permissions', 'role', 'team',)
 	search_fields = ('name', 'mobile')
 	list_filter = ('role', "gender")
@@ -53,6 +53,12 @@ class UserAdmin(UserAdmin):
 
 	roles.short_description = "角色"
 
+	def teams(self, obj):
+		teams = obj.team.all().values_list('name', flat=True)
+		teams = ",".join(teams)
+		return teams
+
+	teams.short_description = "班级"
 
 # 后台页面设置，写在settings.py'INSTALLED_APPS首个的admin.py中
 admin.site.site_header = "智量酷-数据后台管理系统"
