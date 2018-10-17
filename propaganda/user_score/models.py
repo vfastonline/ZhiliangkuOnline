@@ -42,12 +42,15 @@ class UserScore(BaseModelMixin):
 	"""
 	用户得分记录
 	"""
-	user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="用户", help_text="用户")
+	user = models.ForeignKey(User, related_name="score_user", on_delete=models.CASCADE, verbose_name="用户",
+							 help_text="用户")
 	score_records = models.ArrayModelField(
 		model_container=ScoreRecord,
 		verbose_name="得分记录",
 	)
 	feedback = models.TextField(verbose_name="意见反馈", blank=True)
+	owner = models.ForeignKey(User, related_name="score_owner", on_delete=models.CASCADE, verbose_name="评分人",
+							  help_text="评分人")
 
 	objects = models.DjongoManager()
 

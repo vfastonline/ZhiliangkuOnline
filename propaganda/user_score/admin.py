@@ -12,4 +12,4 @@ class ScoreItemAdmin(admin.ModelAdmin):
 
 @admin.register(UserScore)
 class UserScoreAdmin(admin.ModelAdmin):
-	list_display = ["user", "feedback"]
+	list_display = ["user_id", "owner_id", "feedback"]
