@@ -117,7 +117,6 @@ class WeixinOAuth2APP(WeixinOAuth2):
 	AUTHORIZATION_URL = 'https://open.weixin.qq.com/connect/oauth2/authorize'
 	ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/sns/oauth2/access_token'
 	ACCESS_TOKEN_METHOD = 'POST'
-	# DEFAULT_SCOPE = ['snsapi_userinfo']
 	REDIRECT_STATE = False
 
 	def auth_url(self):
