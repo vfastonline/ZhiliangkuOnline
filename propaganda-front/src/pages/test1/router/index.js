@@ -35,6 +35,13 @@ var router = new Router({
       redirect: '/app/questionnaire'
     }
   ]
+  // routes: [
+  //   {
+  //     path: '/',
+  //     name: 'questionnaire',
+  //     component: questionnaire
+  //   }
+  // ]
 });
 
 
