@@ -31,10 +31,11 @@ class UserSerializers(serializers.ModelSerializer):
 class UserScoreSerializers(serializers.ModelSerializer):
 	owner = UserSerializers()
 	feedback = serializers.CharField()
+	created_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M")
 
 	class Meta:
 		model = UserScore
-		fields = ["feedback", "owner", ]
+		fields = ["feedback", "owner", "created_at"]
 
 
 class DateRangeUserScoreViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
