@@ -12,9 +12,11 @@ User = get_user_model()
 
 
 class TeamSerializers(serializers.ModelSerializer):
+	_id = serializers.CharField(max_length=24)
+
 	class Meta:
 		model = Team
-		fields = ("name",)
+		fields = ("_id", "name")
 
 
 class RoleSerializers(serializers.ModelSerializer):
@@ -24,6 +26,16 @@ class RoleSerializers(serializers.ModelSerializer):
 
 
 class UserSerializers(serializers.ModelSerializer):
+	team = TeamSerializers(many=True, read_only=True)
+
+	class Meta:
+		model = User
+		fields = (
+			"name", "gender", "birthday", "icon", "institution", "computer_major", "graduate", "education",
+			"signature", "mobile", 'team')
+
+
+class UserUpdateSerializers(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = (
@@ -44,10 +56,13 @@ class UserListSerializers(serializers.ModelSerializer):
 			"signature", "mobile")
 
 
-class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin,
+					  viewsets.GenericViewSet):
 	"""
 	list:
 		获取用户信息
+	read:
+		获取指定用户信息
 	update:
 		更改用户信息
 	partial_update:
@@ -63,4 +78,6 @@ class UserInfoViewSet(mixins.ListModelMixin, mixins.UpdateModelMixin, viewsets.G
 	def get_serializer_class(self):
 		if self.action == 'list':
 			return UserListSerializers
-		return UserSerializers
+		if self.action == "retrieve":
+			return UserSerializers
+		return UserUpdateSerializers
