@@ -26,7 +26,7 @@ def init_score_item(sender, verbosity, **kwargs):
 		[ScoreItem.objects.get_or_create(**score_item) for score_item in score_items]
 
 		if verbosity == 1:
-			print(" 初始化-用户评分-得分项 OK")
+			print("  - init 用户评分得分项... OK")
 	except:
 		traceback.print_exc()
 

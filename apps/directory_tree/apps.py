@@ -24,7 +24,7 @@ def init_direction(sender, verbosity, **kwargs):
 
 		[DirectoryTree.objects.get_or_create(**direction) for direction in directions]
 		if verbosity == 1:
-			print("初始化-项目方向 OK")
+			print("  - init 项目方向... OK")
 	except:
 		traceback.print_exc()
 

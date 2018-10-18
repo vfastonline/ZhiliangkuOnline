@@ -22,7 +22,7 @@ def init_technical_label(sender, verbosity, **kwargs):
 		]
 		[TechnicalLabel.objects.get_or_create(**technical) for technical in technical_label]
 		if verbosity == 1:
-			print("初始化-技术标签 OK")
+			print("  - init 技术标签... OK")
 	except:
 		traceback.print_exc()
 
