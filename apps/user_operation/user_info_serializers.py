@@ -26,7 +26,7 @@ class UserMedalSerializers(serializers.ModelSerializer):
 		fields = ("medal",)
 
 
-class UserProfileSerializers(serializers.ModelSerializer):
+class UserInfoSerializers(serializers.ModelSerializer):
 	UserMedals = UserMedalSerializers(many=True, read_only=True)
 	follow_user_users = FollowUserSerializers(many=True, read_only=True)
 	to_follow_user = serializers.SerializerMethodField()
