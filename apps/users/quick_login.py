@@ -64,7 +64,7 @@ class UserQuickLoginSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ("mobile", "code")
+		fields = ("mobile", "code", "name")
 
 
 class UserQuickLoginViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
