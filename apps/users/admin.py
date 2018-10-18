@@ -28,7 +28,7 @@ class VerifyCodeAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-	list_display = ('_id', 'username', 'name', 'roles', "teams", 'is_staff')
+	list_display = ('_id', 'username', 'name', 'roles', "teams", 'is_staff', "is_superuser")
 	filter_horizontal = ('groups', 'user_permissions', 'role', 'team',)
 	search_fields = ('name', 'mobile')
 	list_filter = ('role', "gender")

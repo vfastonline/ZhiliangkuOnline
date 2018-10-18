@@ -66,33 +66,36 @@ class GetScoreItemSerializers(serializers.Serializer):
 		return user_scores.exists()
 
 	def get_teacher(self, obj):
-		user_scores = self.get_today_user_scores(obj).exclude(user=obj)
-		if user_scores.exists():
-			user_scores_list = ScoreRecordSerializers(user_scores.first().score_records, many=True,
+		return_json = dict()
+		teacher_scores = self.get_today_user_scores(obj).exclude(user=obj)
+		if teacher_scores.exists():
+			user_scores_list = ScoreRecordSerializers(teacher_scores.first().score_records, many=True,
 													  context={'request': self.context['request']}).data
 		else:
 			score_items = ScoreItem.objects.filter(role='2')
 			user_scores_list = ScoreItemSerializers(score_items, many=True).data
-		user = obj.team.first().team_users.filter(role__index=1)
-		teacher_info = UserSerializers(user.first(), context={'request': self.context['request']}).data
-		teacher_json = {"user_info": teacher_info}
-		if user_scores_list:
-			teacher_json.update({"score_records": user_scores_list})
-		return teacher_json
+
+		teacher_user = obj.team.first().team_users.filter(role__index=1)
+		teacher_info = UserSerializers(teacher_user.first(), context={'request': self.context['request']}).data
+
+		return_json["user_info"] = teacher_info
+		return_json["score_records"] = user_scores_list
+		return return_json
 
 	def get_student(self, obj):
-		user_scores = self.get_today_user_scores(obj).filter(user=obj)
-		if user_scores.exists():
-			user_scores_list = ScoreRecordSerializers(user_scores.first().score_records, many=True,
+		return_json = dict()
+		student_scores = self.get_today_user_scores(obj).filter(user=obj)
+		if student_scores.exists():
+			user_scores_list = ScoreRecordSerializers(student_scores.first().score_records, many=True,
 													  context={'request': self.context['request']}).data
 		else:
 			score_items = ScoreItem.objects.filter(role='1')
 			user_scores_list = ScoreItemSerializers(score_items, many=True).data
 		teacher_info = UserSerializers(obj, context={'request': self.context['request']}).data
-		teacher_json = {"user_info": teacher_info}
-		if user_scores_list:
-			teacher_json.update({"score_records": user_scores_list})
-		return teacher_json
+
+		return_json["user_info"] = teacher_info
+		return_json["score_records"] = user_scores_list
+		return return_json
 
 	def get_feedback(self, obj):
 		user_scores = self.get_today_user_scores(obj)

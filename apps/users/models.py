@@ -92,3 +92,6 @@ class UserProfile(AbstractUser):
 	class Meta:
 		verbose_name = "用户"
 		verbose_name_plural = verbose_name
+		permissions = (
+			("browse_score_report", u"浏览 班主任评分汇总信息"),
+		)

@@ -16,8 +16,15 @@ def init_role(sender, verbosity, **kwargs):
 		from .models import Role
 		roles = {0: '学生', 1: "老师", 2: "HR", 3: "其他", 4: "咨询师"}
 		[Role.objects.get_or_create(**{"index": index, "name": name}) for index, name in roles.items()]
+
+		from django.contrib.auth.models import Permission
+		from django.contrib.contenttypes.models import ContentType
+		content_type_id = ContentType.objects.filter(model="userprofile").first().id
+		Permission.objects.get_or_create(name='浏览 班主任评分汇总信息', content_type_id=content_type_id,
+										 codename='browse_score_report')
 		if verbosity == 1:
 			print("  - init 用户角色... OK")
+			print("  - init 用户权限... OK")
 	except:
 		traceback.print_exc()
 
