@@ -10,7 +10,7 @@ from .user_is_has_class import UserIsHasClassViewSet
 from .user_views import UserViewSet
 
 router.register(r'users', UserViewSet, base_name="users")
-router.register(r'quick-login', UserQuickLoginViewSet, base_name="quick-login")
+router.register(r'quick_login', UserQuickLoginViewSet, base_name="quick_login")
 router.register(r'sms_code', SmsCodeViewSet, base_name="sms_code")
 router.register(r'user_exists', UserExistsViewSet, base_name="user_exists")
 router.register(r'password_retrieve', PassWordRetrieveViewSet, base_name="password_retrieve")

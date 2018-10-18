@@ -15,6 +15,7 @@ User = get_user_model()
 
 
 class UserQuickLoginSerializer(serializers.ModelSerializer):
+	name = serializers.CharField(max_length=30, required=True)
 	mobile = serializers.CharField(label="手机号", help_text="手机号", required=True, allow_blank=False)
 
 	code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label="验证码",
