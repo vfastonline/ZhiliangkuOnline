@@ -17,6 +17,7 @@ class TeamUserSerializers(serializers.ModelSerializer):
 
 
 class TeamSerializers(serializers.ModelSerializer):
+	_id = serializers.CharField(max_length=24)
 	teachers = serializers.SerializerMethodField()
 
 	def get_teachers(self, team_obj):
@@ -26,7 +27,7 @@ class TeamSerializers(serializers.ModelSerializer):
 
 	class Meta:
 		model = Team
-		fields = ["name", "teachers"]
+		fields = ["_id", "name", "teachers"]
 
 
 class GetTeamViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
