@@ -71,6 +71,10 @@ urlpatterns = [
 	# 保利威视
 	path('polyv/', include('video.urls')),
 
+
+	# 班主任评分
+	path('score/', include('user_score.urls')),
+
 ]
 
 # debug模式，开启django调试工具
