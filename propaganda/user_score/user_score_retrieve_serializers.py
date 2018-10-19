@@ -45,7 +45,6 @@ class GetUserScoreRecordSerializers(serializers.Serializer):
 
 	@staticmethod
 	def get_today_user_scores(obj):
-		print(222)
 		today = datetime.datetime.today()
 		start_time = datetime.datetime(today.year, today.month, today.day, 0, 0, 0)
 		end_time = datetime.datetime(today.year, today.month, today.day, 23, 59, 59)
@@ -65,7 +64,7 @@ class GetUserScoreRecordSerializers(serializers.Serializer):
 
 	def get_teacher(self, obj):
 		return_json = dict()
-		teacher_scores = self.get_today_user_scores(obj).exclude(user=obj)
+		teacher_scores = self.get_today_user_scores(obj).filter(self_evaluation=False)
 		if teacher_scores.exists():
 			user_scores_list = ScoreRecordSerializers(teacher_scores.first().score_records, many=True,
 													  context={'request': self.context['request']}).data
@@ -82,7 +81,7 @@ class GetUserScoreRecordSerializers(serializers.Serializer):
 
 	def get_student(self, obj):
 		return_json = dict()
-		student_scores = self.get_today_user_scores(obj).filter(user=obj)
+		student_scores = self.get_today_user_scores(obj).filter(self_evaluation=True)
 		if student_scores.exists():
 			user_scores_list = ScoreRecordSerializers(student_scores.first().score_records, many=True,
 													  context={'request': self.context['request']}).data
@@ -96,7 +95,7 @@ class GetUserScoreRecordSerializers(serializers.Serializer):
 		return return_json
 
 	def get_feedback(self, obj):
-		user_scores = self.get_today_user_scores(obj)
-		if user_scores.exclude(user=obj).exists():
+		user_scores = self.get_today_user_scores(obj).filter(self_evaluation=False)
+		if user_scores.exists():
 			return user_scores.first().feedback
 		return ""

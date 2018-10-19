@@ -33,7 +33,7 @@ def init_score_item(sender, verbosity, **kwargs):
 
 class UserScoreConfig(AppConfig):
 	name = 'user_score'
-	verbose_name = "用户评分"
+	verbose_name = "班主任评分"
 	main_menu_index = 23
 
 	def ready(self):

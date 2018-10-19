@@ -31,3 +31,7 @@ class AddUserScoreSerializers(serializers.Serializer):
 		if not owner.team.exists():
 			raise NoneTeamUnavailable
 		return owner
+
+	def validate(self, attrs):
+		attrs["self_evaluation"] = attrs["user"] == attrs["owner"]
+		return attrs
