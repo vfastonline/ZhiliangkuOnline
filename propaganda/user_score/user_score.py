@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 from django.contrib.auth import get_user_model
-from rest_framework import authentication
 from rest_framework import mixins, viewsets
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
@@ -20,7 +20,7 @@ class UserScoreViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin, views
 	read:
 		获取登录用户的评分记录
 	"""
-	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+	authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 	permission_classes = (IsAuthenticated,)
 
 	def get_serializer_class(self):
