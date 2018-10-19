@@ -1,4 +1,4 @@
-import cookie from "../static/js/cookie";
+import cookie from "../statics/js/cookie";
 
 const userInfo = {
   name: cookie.getCookie('name') || '',

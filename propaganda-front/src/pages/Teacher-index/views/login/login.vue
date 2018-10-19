@@ -1,5 +1,6 @@
 <template>
   <div class="LoginPage">
+
     <div class="content">
       <div class="username">
         <label>姓名:</label>
@@ -43,11 +44,12 @@
   .LoginPage {
     width: 10rem;
     .px2px(font-size, 20px);
+    background: #777777;
   }
   .LoginPage .content {
     width: 20rem;
     height: 20rem;
-    background: #fff;
+    background: #c0c0c0;
     position: fixed;
     top: 50%;
     left: 50%;

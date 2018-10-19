@@ -1,5 +1,5 @@
 import * as types from './mutation-types';
-import cookie from '../static/js/cookie';
+import cookie from '../statics/js/cookie';
 import Vue from 'vue';
 import Axios from 'axios';
 
