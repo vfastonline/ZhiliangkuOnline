@@ -26,10 +26,10 @@ class UserScoreSerializers(serializers.ModelSerializer):
 class UserScoreFeedbackViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
-		获取用户评分反馈，支持时间过滤
+		获取用户评分反馈，支持时间段过滤
 	"""
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
 	permission_classes = (IsAuthenticated, BrowseScoreReportPermission)
-	queryset = UserScore.objects.all()
+	queryset = UserScore.objects.filter(self_evaluation=False)
 	serializer_class = UserScoreSerializers
 	filter_class = UserScoreDateFilter
