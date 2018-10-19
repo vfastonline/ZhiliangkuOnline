@@ -1,9 +1,6 @@
 # encoding: utf-8
 
-from rest_framework import authentication, serializers
-from rest_framework import mixins, viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework import serializers
 
 from user_score.exception import NoneTeamUnavailable
 from .models import *
@@ -34,13 +31,3 @@ class AddUserScoreSerializers(serializers.Serializer):
 		if not owner.team.exists():
 			raise NoneTeamUnavailable
 		return owner
-
-
-class AddUserScoreViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
-	"""
-	create:
-		添加用户评分记录
-	"""
-	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
-	permission_classes = (IsAuthenticated,)
-	serializer_class = AddUserScoreSerializers

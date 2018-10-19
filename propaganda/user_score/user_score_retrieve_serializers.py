@@ -1,14 +1,10 @@
 # encoding: utf-8
+
 import datetime
 
 from django.contrib.auth import get_user_model
-from rest_framework import mixins, viewsets
 from rest_framework import serializers
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from user_score.exception import NoneTeamUnavailable
 from .models import ScoreItem
 from .models import UserScore
 
@@ -104,19 +100,3 @@ class GetUserScoreRecordSerializers(serializers.Serializer):
 		if user_scores.exclude(user=obj).exists():
 			return user_scores.first().feedback
 		return ""
-
-
-class GetUserScoreRecordViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-	"""
-	list:
-		获取评分项、班主任评分记录
-	"""
-
-	authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-	permission_classes = (IsAuthenticated,)
-	serializer_class = GetUserScoreRecordSerializers
-
-	def get_queryset(self):
-		if not self.request.user.team.exists():
-			raise NoneTeamUnavailable
-		return User.objects.all()
