@@ -5,6 +5,7 @@ from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+from user_score.exception import NoneTeamUnavailable
 from .models import *
 
 
@@ -23,10 +24,16 @@ class AddUserScoreSerializers(serializers.Serializer):
 
 	def create(self, validated_data):
 		score_records = validated_data["score_records"]
+
 		validated_data["score_records"] = [ScoreRecord(score_item=one_score["score_item"], score=one_score["score"]) for
 										   one_score in score_records]
 		user_score_obj = UserScore.objects.create(**validated_data)
 		return user_score_obj
+
+	def validate_owner(self, owner):
+		if not owner.team.exists():
+			raise NoneTeamUnavailable
+		return owner
 
 
 class AddUserScoreViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -36,5 +43,4 @@ class AddUserScoreViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
 	permission_classes = (IsAuthenticated,)
-	queryset = UserScore.objects.all()
 	serializer_class = AddUserScoreSerializers

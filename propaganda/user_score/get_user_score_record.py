@@ -8,6 +8,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+from user_score.exception import NoneTeamUnavailable
 from .models import ScoreItem
 from .models import UserScore
 
@@ -40,7 +41,7 @@ class ScoreRecordSerializers(serializers.Serializer):
 		return obj.score_item.name
 
 
-class GetScoreItemSerializers(serializers.Serializer):
+class GetUserScoreRecordSerializers(serializers.Serializer):
 	is_history = serializers.SerializerMethodField()
 	teacher = serializers.SerializerMethodField()
 	student = serializers.SerializerMethodField()
@@ -48,6 +49,7 @@ class GetScoreItemSerializers(serializers.Serializer):
 
 	@staticmethod
 	def get_today_user_scores(obj):
+		print(222)
 		today = datetime.datetime.today()
 		start_time = datetime.datetime(today.year, today.month, today.day, 0, 0, 0)
 		end_time = datetime.datetime(today.year, today.month, today.day, 23, 59, 59)
@@ -107,10 +109,14 @@ class GetScoreItemSerializers(serializers.Serializer):
 class GetUserScoreRecordViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
 	"""
 	list:
-		获取评分项、班主任
+		获取评分项、班主任评分记录
 	"""
 
 	authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 	permission_classes = (IsAuthenticated,)
-	queryset = User.objects.all()
-	serializer_class = GetScoreItemSerializers
+	serializer_class = GetUserScoreRecordSerializers
+
+	def get_queryset(self):
+		if not self.request.user.team.exists():
+			raise NoneTeamUnavailable
+		return User.objects.all()
