@@ -6,6 +6,12 @@ from django.utils.six import BytesIO
 
 
 def generate_qrcode(request, data):
+	params_dict = request.GET
+	params = list()
+	for key, val in params_dict.items():
+		params.append("=".join([key, val]))
+	if params:
+		data += "?" + "&".join(params)
 	img = qrcode.make(data)
 
 	buf = BytesIO()
