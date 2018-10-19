@@ -22,3 +22,6 @@ class UserScoreAdmin(admin.ModelAdmin):
 
 	users.short_description = "用户"
 	owners.short_description = "评分人"
+
+	class Media:
+		js = ['qr_code.js']

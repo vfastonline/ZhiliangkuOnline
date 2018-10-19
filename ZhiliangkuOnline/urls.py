@@ -31,6 +31,7 @@ from user_operation.routers import *
 from user_resumes.routers import *
 from user_score.routers import *
 from users.routers import *
+from utils.qrcode import generate_qrcode
 
 schema_view = get_swagger_view(title="智量酷docs")
 
@@ -40,6 +41,7 @@ urlpatterns = [
 	# 处理图片显示的url,使用Django自带serve,传入参数告诉它去哪个路径找，我们有配置好的路径MEDIAROOT
 	re_path('media/(?P<path>.*)', serve, {"document_root": MEDIA_ROOT}),
 	re_path('static/(?P<path>.*)', serve, {"document_root": STATIC_ROOT}),
+	re_path('qrcode/(.+)', generate_qrcode, name='qrcode'),
 
 	# 富文本相关url
 	path('ueditor/', include('DjangoUeditor.urls')),
@@ -71,9 +73,8 @@ urlpatterns = [
 	# 保利威视
 	path('polyv/', include('video.urls')),
 
-
 	# 班主任评分
-	path('score/', include('user_score.urls')),
+	path('score/', include('user_score.urls', namespace='user_score', )),
 
 ]
 
