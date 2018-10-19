@@ -6,6 +6,7 @@ from django.utils.six import BytesIO
 
 
 def generate_qrcode(request, data):
+	data = request.scheme + "://" + data
 	params_dict = request.GET
 	params = list()
 	for key, val in params_dict.items():
