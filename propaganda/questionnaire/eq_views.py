@@ -5,8 +5,6 @@ from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.throttling import *
-from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from .models import *
@@ -35,12 +33,7 @@ class EQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Generic
 	"""
 	queryset = EQ.objects.all()
 	pagination_class = EQPagination
-	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
-
-	def get_authenticators(self):
-		if self.request.method == "POST":
-			return [JSONWebTokenAuthentication(), authentication.SessionAuthentication()]
-		return []
+	authentication_classes = [JSONWebTokenAuthentication, authentication.SessionAuthentication]
 
 	def get_permissions(self):
 		if self.action == "create":

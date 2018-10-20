@@ -55,7 +55,8 @@ class IQQuestionnaireScoreSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = QuestionnaireScore
-		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value", "consultant_email")
+		fields = ("user", "category", "option_1", "option_2", "option_3", "option_4", "option_5", "option_6", "value",
+				  "consultant_email")
 
 
 class IQSerializer(serializers.ModelSerializer):
@@ -80,12 +81,7 @@ class IQViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.Generic
 	"""
 	queryset = IQ.objects.all()
 	pagination_class = IQPagination
-	# throttle_classes = (UserRateThrottle, AnonRateThrottle)
-
-	def get_authenticators(self):
-		if self.request.method == "POST":
-			return [JSONWebTokenAuthentication(), authentication.SessionAuthentication()]
-		return []
+	authentication_classes = [JSONWebTokenAuthentication, authentication.SessionAuthentication]
 
 	def get_permissions(self):
 		if self.action == "create":

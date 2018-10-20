@@ -4,7 +4,7 @@
       <el-form-item label="手机号" prop="mobile">
         <el-input type="tel" v-model.number="loginForm.mobile" :disabled="disabled"></el-input>
       </el-form-item>
-      <el-form-item label="用户名" prop="user">
+      <el-form-item label="姓名" prop="user">
         <el-input type="text" v-model="loginForm.user"></el-input>
       </el-form-item>
       <el-form-item label="验证码" prop="code">
@@ -16,7 +16,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="hidenLoginDialog">取消</el-button>
-      <el-button type="primary" @click="login" >登录</el-button>
+      <el-button type="primary" @click="login">登录</el-button>
     </div>
   </el-dialog>
 </template>
