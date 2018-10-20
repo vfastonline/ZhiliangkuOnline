@@ -54,6 +54,7 @@ if (cursor && cursor.hasNext()) {
 }
 
 /**
+ * mongodb 命令行查询
  db.getCollection('questionnaire_questionnairescore').aggregate([
  {
         "$match": {
@@ -90,5 +91,7 @@ if (cursor && cursor.hasNext()) {
   }}
  ])
 
- mongo 127.0.0.1/zhiliangku export.js >> comprasResults.csv --quiet
+ * linux命令行执行导出查询结果到csv文件
+ mongo 127.0.0.1/zhiliangku export.js > aaa.csv --quiet
+ /usr/local/mongodb/bin/mongo -u root -p 111111 --authenticationDatabase admin 127.0.0.1/zhiliangku  export.js > aaa.csv --quiet
  **/
