@@ -24,22 +24,22 @@ DAYS=7
 TAR_BAK="mongod_bak_$DATE.tar.gz"
 
 if [ ! -d "$OUT_DIR" ]; then
-  mkdir $OUT_DIR
+  mkdir -p $OUT_DIR
 fi
 
 if [ ! -d "$TAR_DIR" ]; then
-  mkdir $TAR_DIR
+  mkdir -p $TAR_DIR
 fi
 
 cd $OUT_DIR
 rm -rf $OUT_DIR/*
 mkdir -p $OUT_DIR/$DATE
-$DUMP -h 127.0.0.1:27017 -u $DB_USER -p $DB_PASS -d zhiliangku -o $OUT_DIR/$DATE
+$DUMP -h 127.0.0.1:27017 -u $DB_USER -p $DB_PASS --authenticationDatabase admin -d zhiliangku -o $OUT_DIR/$DATE
 # 压缩格式为 .tar.gz 格式
 tar -zcvf $TAR_DIR/$TAR_BAK $OUT_DIR/$DATE
 # 删除 15 天前的备份文件
 find $TAR_DIR/ -mtime +$DAYS -delete
 
-/usr/local/bpcs_uploader.php upload $TAR_DIR/$TAR_BAK zhiliangku_mongod_dump/$TAR_BAK
+/usr/local/bpcs_uploader/bpcs_uploader.php upload $TAR_DIR/$TAR_BAK zhiliangku_mongod_dump/$TAR_BAK
 
 exit
