@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-let host = 'http://www.zhiliangku.com';
+let host = 'https://www.zhiliangku.com';
 // let host = 'http://localhost:8080';
 
 //发验证码短信
