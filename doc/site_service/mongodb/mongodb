@@ -81,7 +81,8 @@ yum install php
 yum install  curl
 git clone https://github.com/oott123/bpcs_uploader.git
 chmod +x bpcs_uploader.php
-./bpcs_uploader.php init
+./bpcs_uploader.php quickinit
+./bpcs_uploader.php upload 本地文件 百度云文件夹/文件名
 
 数据库备份
 脚本：mongod_bak.sh
