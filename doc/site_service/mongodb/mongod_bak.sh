@@ -39,6 +39,7 @@ $DUMP -h 127.0.0.1:27017 -u $DB_USER -p $DB_PASS --authenticationDatabase admin 
 tar -zcvf $TAR_DIR/$TAR_BAK $OUT_DIR/$DATE
 # 删除 15 天前的备份文件
 find $TAR_DIR/ -mtime +$DAYS -delete
+find $OUT_DIR/ -mtime +$DAYS -delete
 
 /usr/local/bpcs_uploader/bpcs_uploader.php upload $TAR_DIR/$TAR_BAK zhiliangku_mongod_dump/$TAR_BAK
 
