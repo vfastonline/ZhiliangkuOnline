@@ -2,9 +2,21 @@
 
 from rest_framework import serializers
 
-from user_operation.user_notes_serializers import VideoSerializers
 from .models import *
 
+
+class DirectoryTreeSerializers(serializers.ModelSerializer):
+	class Meta:
+		model = DirectoryTree
+		fields = ("name",)
+
+
+class VideoSerializers(serializers.ModelSerializer):
+	video = DirectoryTreeSerializers()
+
+	class Meta:
+		model = Video
+		fields = ("video",)
 
 class FaqSerializers(serializers.ModelSerializer):
 	_id = serializers.CharField(max_length=24)
