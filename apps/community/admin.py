@@ -7,7 +7,7 @@ from .models import *
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
 	list_display = (
-		"user", 'title', "content", "direction", "approve", "oppose", "browse_number", "comment",
+		"user", 'title', "content", "technical_labels", "direction", "approve", "oppose", "browse_number", "comment",
 		"release", "hot")
 
 
