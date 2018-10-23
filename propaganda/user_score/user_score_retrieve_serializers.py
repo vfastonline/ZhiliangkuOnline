@@ -24,9 +24,11 @@ class ScoreItemSerializers(serializers.ModelSerializer):
 
 
 class UserSerializers(serializers.ModelSerializer):
+	_id = serializers.CharField(max_length=24)
+
 	class Meta:
 		model = User
-		fields = ["username", "name", "icon"]
+		fields = ["_id", "username", "icon", ]
 
 
 class ScoreRecordSerializers(serializers.Serializer):
