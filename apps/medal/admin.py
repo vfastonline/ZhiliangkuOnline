@@ -11,4 +11,4 @@ class MedalAdmin(admin.ModelAdmin):
 
 @admin.register(UserMedal)
 class UserMedalAdmin(admin.ModelAdmin):
-	list_display = ('user', "medal",)
+	list_display = ('user', 'medals')

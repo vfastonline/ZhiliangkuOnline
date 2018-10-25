@@ -26,14 +26,30 @@ class Medal(BaseModelMixin):
 		verbose_name_plural = verbose_name
 
 
+class GETMedal(models.Model):
+	"""
+	用户获取的勋章
+	"""
+	medal = models.ForeignKey(Medal, verbose_name="勋章", related_name='medals', on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.medal.name
+
+	class Meta:
+		abstract = True
+
+
 class UserMedal(BaseModelMixin):
 	"""用户勋章 """
 
 	user = models.ForeignKey(User, verbose_name="用户", related_name='UserMedals', on_delete=models.CASCADE)
-	medal = models.ForeignKey(Medal, verbose_name="获得的勋章", on_delete=models.CASCADE, blank=True)
+	medals = models.ArrayModelField(
+		model_container=GETMedal,
+		verbose_name="用户勋章"
+	)
 
 	def __str__(self):
-		return self.user.name
+		return self.user.username
 
 	class Meta:
 		verbose_name = "用户勋章"
