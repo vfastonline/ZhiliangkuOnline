@@ -9,7 +9,7 @@ class ArticleSerializers(serializers.ModelSerializer):
 
 	class Meta:
 		model = Article
-		fields = ("_id",)
+		fields = ("_id", "title")
 
 
 class ArticleCommentsSerializers(serializers.ModelSerializer):
