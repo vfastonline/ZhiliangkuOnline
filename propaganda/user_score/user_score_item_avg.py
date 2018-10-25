@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+from user_score.permissions import BrowseScoreReportPermission
 from users.models import Team
 from .filter import *
 
@@ -40,7 +41,7 @@ class UserScoreItemAvgViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 		查询班级评分项平均值
 	"""
 	authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
-	permission_classes = (IsAuthenticated,)
+	permission_classes = (IsAuthenticated, BrowseScoreReportPermission)
 	serializer_class = UserScoreItemAvgSerializers
 	filter_class = UserScoreDateFilter
 	queryset = UserScore.objects.all()
