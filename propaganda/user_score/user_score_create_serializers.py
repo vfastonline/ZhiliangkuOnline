@@ -15,8 +15,9 @@ class AddUserScoreSerializers(serializers.Serializer):
 	owner = serializers.HiddenField(
 		default=serializers.CurrentUserDefault()
 	)
-	user = serializers.PrimaryKeyRelatedField(label="用户", required=True, queryset=User.objects.all(), help_text="老师或学生")
-	score_records = ScoreRecordSerializers(many=True, required=True)
+	user = serializers.PrimaryKeyRelatedField(label="用户", required=True, queryset=User.objects.all(), help_text="老师或学生",
+											  write_only=True)
+	score_records = ScoreRecordSerializers(many=True, required=True, write_only=True)
 	feedback = serializers.CharField(label="反馈", help_text="用户反馈")
 
 	def create(self, validated_data):
