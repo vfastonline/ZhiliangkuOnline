@@ -1,186 +1,32 @@
 import axios from 'axios';
-
-
-let host = 'http://www.zhiliangku.com';
+// let host = 'http://www.zhiliangku.com';
 // let host = 'http://localhost:8080';
+let host = '/api'
 
-//发验证码短信
-export const smsCode = parmas => {
-  return axios.post(`${host}/sms_code/`, parmas)
+// 登录接口
+export const login = parmas => {
+  return axios.post(`${host}/login/`,parmas)
+};
+//班级接口
+export const sendClass = parmas => {
+  return axios.get(`${host}/get_team/`)
+};
+// 提交接口
+export const userClass = parmas => {
+// 
+  // return axios.patch(`${host}/set_user_class/5bb1c6071c6233406b01b3fe/`, parmas)
+  return axios.patch(`${host}/set_user_class/5bb1c6071c6233406b01b3fe/`, parmas)
+};
+// 评价页面老师与学生详细信息接口
+export const information = parmas => {
+  return axios.get(`${host}/user_score/`)
+};
+// 提交老师评价数据
+export const submit_data = parmas => {
+  return axios.post(`${host}/user_score/`, parmas)
+};
+// 提交学生
+export const class_data = parmas => {
+  return axios.post(`${host}/user_score/`, parmas)
 };
 
-//登录
-export const quickLogin = params => {
-  return axios.post(`${host}/quick-login/`, params)
-};
-
-
-export const getEq = params => {
-  return axios.get(`${host}/eq/`)
-};
-
-export const submitEq = params => {
-  return axios.post(`${host}/eq/`, params)
-};
-
-
-export const getIq = params => {
-  return axios.get(`${host}/iq/`)
-};
-
-export const submitIq = params => {
-  return axios.post(`${host}/iq/`, params)
-};
-
-
-export const getConsultation = params => {
-  return axios.get(`${host}/consultant/`)
-};
-
-// //获取商品类别信息
-// export const queryCategorygoods = params => {
-//   return axios.get(`${host}/indexgoods/`)
-// };
-//
-// //获取首页中的新品
-// export const newGoods = params => {
-//   return axios.get(`${host}/newgoods/`)
-// };
-//
-// //获取轮播图
-// export const bannerGoods = params => {
-//   return axios.get(`${host}/banners/`)
-// };
-//
-// //获取商品类别信息
-// export const getCategory = params => {
-//   if ('id' in params) {
-//     return axios.get(`${host}/categorys/` + params.id + '/');
-//   }
-//   else {
-//     return axios.get(`${host}/categorys/`, params);
-//   }
-// };
-//
-//
-// //获取热门搜索关键词
-// export const getHotSearch = params => {
-//   return axios.get(`${host}/hotsearchs/`)
-// };
-//
-// //获取商品列表
-// export const getGoods = params => {
-//   return axios.get(`${host}/goods/`, {params: params})
-// };
-//
-// //商品详情
-// export const getGoodsDetail = goodId => {
-//   return axios.get(`${host}/goods/${goodId}` + '/')
-// };
-//
-// //获取购物车商品
-// export const getShopCarts = params => {
-//   return axios.get(`${host}/shopcarts/`)
-// };
-// // 添加商品到购物车
-// export const addShopCart = params => {
-//   return axios.post(`${host}/shopcarts/`, params)
-// };
-// //更新购物车商品信息
-// export const updateShopCart = (goodsId, params) => {
-//   return axios.patch(`${host}/shopcarts/` + goodsId + '/', params)
-// };
-// //删除某个商品的购物记录
-// export const deleteShopCart = goodsId => {
-//   return axios.delete(`${host}/shopcarts/` + goodsId + '/')
-// };
-//
-// //收藏
-// export const addFav = params => {
-//   return axios.post(`${host}/userfavs/`, params)
-// };
-//
-// //取消收藏
-// export const delFav = goodsId => {
-//   return axios.delete(`${host}/userfavs/` + goodsId + '/')
-// };
-//
-// export const getAllFavs = () => {
-//   return axios.get(`${host}/userfavs/`)
-// };
-//
-// //判断是否收藏
-// export const getFav = goodsId => {
-//   return axios.get(`${host}/userfavs/` + goodsId + '/')
-// };
-//
-//
-// //注册
-// export const register = parmas => {
-//   return axios.post(`${host}/users/`, parmas)
-// };
-//
-//
-// //获取用户信息
-// export const getUserDetail = () => {
-//   return axios.get(`${host}/users/1/`)
-// };
-//
-// //修改用户信息
-// export const updateUserInfo = params => {
-//   return axios.patch(`${host}/users/1/`, params)
-// };
-//
-//
-// //获取订单
-// export const getOrders = () => {
-//   return axios.get(`${host}/orders/`)
-// };
-// //删除订单
-// export const delOrder = orderId => {
-//   return axios.delete(`${host}/orders/` + orderId + '/')
-// };
-// //添加订单
-// export const createOrder = params => {
-//   return axios.post(`${host}/orders/`, params)
-// };
-// //获取订单详情
-// export const getOrderDetail = orderId => {
-//   return axios.get(`${host}/orders/` + orderId + '/')
-// };
-//
-//
-// //获取留言
-// export const getMessages = () => {
-//   return axios.get(`${host}/messages/`)
-// };
-//
-// //添加留言
-// export const addMessage = params => {
-//   return axios.post(`${host}/messages/`, params, {headers: {'Content-Type': 'multipart/form-data'}})
-// };
-//
-// //删除留言
-// export const delMessages = messageId => {
-//   return axios.delete(`${host}/messages/` + messageId + '/')
-// };
-//
-// //添加收货地址
-// export const addAddress = params => {
-//   return axios.post(`${host}/address/`, params)
-// };
-//
-// //删除收货地址
-// export const delAddress = addressId => {
-//   return axios.delete(`${host}/address/` + addressId + '/')
-// };
-//
-// //修改收货地址
-// export const updateAddress = (addressId, params) => {
-//   return axios.patch(`${host}/address/` + addressId + '/', params)
-// };
-//
-// //获取收货地址
-// export const getAddress = () => {
-//   return axios.get(`${host}/address/`)
-// };

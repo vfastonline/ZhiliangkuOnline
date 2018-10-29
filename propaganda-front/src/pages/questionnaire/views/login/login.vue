@@ -16,7 +16,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="hidenLoginDialog">取消</el-button>
-      <el-button type="primary" @click="login" :disabled="disabled">登录</el-button>
+      <el-button type="primary" @click="login">登录</el-button>
     </div>
   </el-dialog>
 </template>

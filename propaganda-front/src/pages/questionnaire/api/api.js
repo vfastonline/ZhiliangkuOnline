@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-
-let host = 'http://www.zhiliangku.com';
+// let host = 'http://www.zhiliangku.com';
 // let host = 'http://localhost:8080';
+// let host ='/api';
+let host = '/api';
 
 //发验证码短信
 export const smsCode = parmas => {
@@ -17,6 +18,7 @@ export const quickLogin = params => {
 
 export const getEq = params => {
   return axios.get(`${host}/eq/`)
+  // return axios.get('/api/eq/')
 };
 
 export const submitEq = params => {
@@ -26,6 +28,7 @@ export const submitEq = params => {
 
 export const getIq = params => {
   return axios.get(`${host}/iq/`)
+  // return axios.get('/api/iq/')
 };
 
 export const submitIq = params => {

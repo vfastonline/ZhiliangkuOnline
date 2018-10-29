@@ -1,0 +1,60 @@
+.px2px(@name, @px) {
+  @{name}: round(@px / 2) * 1px;
+  [data-dpr="2"] & {
+    @{name}: @px * 1px;
+  } // for mx3
+  [data-dpr="2.5"] & {
+    @{name}: round(@px * 2.5 / 2) * 1px;
+  } // for 小米note
+  [data-dpr="2.75"] & {
+    @{name}: round(@px * 2.75 / 2) * 1px;
+  }
+  [data-dpr="3"] & {
+    @{name}: round(@px / 2 * 3) * 1px
+  } // for 三星note4
+  [data-dpr="4"] & {
+    @{name}: @px * 2px;
+  }
+}
+
+html {
+  background: pink;
+}
+
+.content {
+  width: 10rem;
+  margin: 0 auto;
+}
+
+.content .title {
+  width: 10rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  background: #007aff;
+  .px2px(font-size, 33px);
+  color: #FFF;
+  text-align: center;
+}
+
+.content .list {
+  padding: .866667rem;
+}
+
+.content .list .class_list {
+  height: 1.226667rem;
+  line-height: 1.226667rem;
+  background: #fff;
+  margin-bottom: .266667rem;
+  .px2px(font-size, 28px);
+  box-sizing: border-box;
+  color: #333333;
+  border-radius: .133333rem;
+}
+
+.content .list .class_list .username {
+  margin-left: .666667rem;
+}
+
+.content .list .class_list .class_table {
+  margin-left: 1.866667rem;
+}
