@@ -10,8 +10,6 @@
   </div>
 </template>
 <style type="text/css" lang="less" scoped>
-
-
 </style>
 <script>
 // 引入吐司
