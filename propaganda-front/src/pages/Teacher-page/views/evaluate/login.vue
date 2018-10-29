@@ -11,7 +11,8 @@
 </template>
 <style type="text/css" lang="less" scoped>
 </style>
-<script>
+
+<script type="text/javascript">
 // 引入吐司
 import { Toast, Button, Field, Header } from 'mint-ui';
 import cookie from '../../statics/js/cookie.js';
