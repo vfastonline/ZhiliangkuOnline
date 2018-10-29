@@ -21,7 +21,8 @@ class ArticleCommentsAdmin(admin.ModelAdmin):
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-	list_display = ("user", "video", 'problem', "browse_number", "comment_number", "answer_number", "hot")
+	list_display = (
+	"user", "video", 'problem', "technical_labels", "browse_number", "comment_number", "answer_number", "hot")
 
 
 @admin.register(FaqAnswer)
