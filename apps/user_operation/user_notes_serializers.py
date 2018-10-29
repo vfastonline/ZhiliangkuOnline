@@ -1,37 +1,24 @@
 # encoding: utf-8
 from rest_framework import serializers
 
-from directory_tree.models import DirectoryTree
 from user_operation.models import Notes
 from video.models import Video
 
 
-class DirectoryTreeSerializers(serializers.ModelSerializer):
-	class Meta:
-		model = DirectoryTree
-		fields = ("name",)
-
-
-class VideoSerializers(serializers.ModelSerializer):
-	video = DirectoryTreeSerializers()
-
-	class Meta:
-		model = Video
-		fields = ("video",)
-
-
 class NotesListSerializers(serializers.ModelSerializer):
-	_id = serializers.CharField(max_length=24)
 	user = serializers.CharField(
 		default=serializers.CurrentUserDefault()
 	)
-	video = VideoSerializers()
+	video = serializers.SerializerMethodField()
 	updated_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H-%M")
+
+	def get_video(self, obj):
+		return obj.video.video.name
 
 	class Meta:
 		model = Notes
 		fields = (
-			"_id", "user", "video", "title", "notes", "approve", "oppose", "is_show", "reprint_count", "updated_at")
+			"user", "video", "title", "notes", "approve", "oppose", "is_show", "reprint_count", "updated_at")
 
 
 class NotesSerializers(serializers.ModelSerializer):

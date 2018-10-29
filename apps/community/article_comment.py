@@ -25,7 +25,7 @@ class ArticleCommentViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixi
 	queryset = ArticleComments.objects.all()
 
 	filter_backends = (DjangoFilterBackend,)
-	filter_fields = ("user_id", "article_id")
+	filter_fields = ("user_id",)
 
 	def get_serializer_class(self):
 		if self.action == "create":

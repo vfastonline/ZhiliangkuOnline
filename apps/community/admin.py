@@ -7,7 +7,7 @@ from .models import *
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
 	list_display = (
-		"user", 'title', "content", "direction", "approve", "oppose", "browse_number", "comment",
+		"user", 'title', "content", "technical_labels", "direction", "approve", "oppose", "browse_number", "comment",
 		"release", "hot")
 
 
@@ -21,7 +21,8 @@ class ArticleCommentsAdmin(admin.ModelAdmin):
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-	list_display = ("user", "video", 'problem', "browse_number", "comment_number", "answer_number", "hot")
+	list_display = (
+	"user", "video", 'problem', "technical_labels", "browse_number", "comment_number", "answer_number", "hot")
 
 
 @admin.register(FaqAnswer)

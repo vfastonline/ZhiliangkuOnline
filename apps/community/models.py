@@ -61,6 +61,20 @@ class ArticleComments(BaseModelMixin):
 		verbose_name_plural = verbose_name
 
 
+class FaqTechnicalLabels(models.Model):
+	"""
+	问题标签
+	"""
+	technical_label = models.ForeignKey(TechnicalLabel, verbose_name="技术标签", related_name='technical_labels',
+										on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.technical_label.name
+
+	class Meta:
+		abstract = True
+
+
 class Faq(BaseModelMixin):
 	"""
 	问题
@@ -69,7 +83,7 @@ class Faq(BaseModelMixin):
 	user = models.ForeignKey(User, verbose_name="提问用户", related_name="faq_users", on_delete=models.CASCADE)
 	problem = models.TextField(verbose_name='问题', blank=True)
 	technical_labels = models.ArrayModelField(
-		model_container=TechnicalLabel,
+		model_container=FaqTechnicalLabels,
 		verbose_name="技术标签",
 	)
 	browse_number = models.PositiveIntegerField(verbose_name='浏览数', default=0)

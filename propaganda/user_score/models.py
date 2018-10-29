@@ -48,7 +48,7 @@ class UserScore(BaseModelMixin):
 		model_container=ScoreRecord,
 		verbose_name="得分记录",
 	)
-	feedback = models.TextField(verbose_name="吐槽", blank=True)
+	feedback = models.TextField(verbose_name="吐槽", blank=True, null=True)
 	owner = models.ForeignKey(User, related_name="score_owner", on_delete=models.CASCADE, verbose_name="评分人",
 							  help_text="评分人")
 	self_evaluation = models.BooleanField(default=False, verbose_name="自评")

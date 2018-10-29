@@ -13,6 +13,7 @@ router.register(r'article', ArticleViewSet, base_name="article")
 router.register(r'specify_article', SpecifyArticleViewSet, base_name="specify_article")
 # 文章草稿箱
 router.register(r'article_drafts', ArticleDraftsViewSet, base_name="article_drafts")
+
 router.register(r'article_comment', ArticleCommentViewSet, base_name="article_comment")
 router.register(r'specify_article_comment', SpecifyArticleCommentViewSet, base_name="specify_article_comment")
 

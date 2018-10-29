@@ -75,3 +75,15 @@ Max open files            64000                64000                files
 ulimit -a
 open files                      (-n) 64000
 max user processes              (-u) 64000
+
+bpcs_uploader：
+yum install php
+yum install  curl
+git clone https://github.com/oott123/bpcs_uploader.git
+chmod +x bpcs_uploader.php
+./bpcs_uploader.php quickinit
+./bpcs_uploader.php upload 本地文件 百度云文件夹/文件名
+
+数据库备份
+脚本：mongod_bak.sh
+crontab：0 3 * * * /usr/local/ZhiliangkuOnline/doc/site_service/mongodb/mongod_bak.sh

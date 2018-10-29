@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 from django.contrib.auth import get_user_model
 from rest_framework import authentication, serializers
 from rest_framework import mixins, viewsets
@@ -16,9 +17,23 @@ class TeamUserSerializers(serializers.ModelSerializer):
 		fields = ["name", "username"]
 
 
+class UserSerializers(serializers.ModelSerializer):
+	_id = serializers.CharField(max_length=24)
+
+	class Meta:
+		model = User
+		fields = ("_id",)
+
+
 class TeamSerializers(serializers.ModelSerializer):
 	_id = serializers.CharField(max_length=24)
 	teachers = serializers.SerializerMethodField()
+	user_id = serializers.SerializerMethodField()
+
+	def get_user_id(self, obj):
+		user = User.objects.filter(username=self.context['request'].user)
+		user_json = UserSerializers(user, many=True, context={'request': self.context['request']}).data
+		return user_json
 
 	def get_teachers(self, team_obj):
 		users = team_obj.team_users.all().filter(role__index=1)
@@ -27,7 +42,7 @@ class TeamSerializers(serializers.ModelSerializer):
 
 	class Meta:
 		model = Team
-		fields = ["_id", "name", "teachers"]
+		fields = ["_id", "name", "teachers", "user_id"]
 
 
 class GetTeamViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

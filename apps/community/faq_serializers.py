@@ -2,8 +2,25 @@
 
 from rest_framework import serializers
 
-from user_operation.user_notes_serializers import VideoSerializers
 from .models import *
+
+
+class VideoSerializers(serializers.ModelSerializer):
+	_id = serializers.CharField(max_length=24)
+	video = serializers.SerializerMethodField()
+
+	def get_video(self, obj):
+		return obj.video.name
+
+	class Meta:
+		model = Video
+		fields = ("_id", "video",)
+
+
+class TechnicalLabelSerializers(serializers.ModelSerializer):
+	class Meta:
+		model = TechnicalLabel
+		fields = ("name",)
 
 
 class FaqSerializers(serializers.ModelSerializer):
@@ -13,40 +30,45 @@ class FaqSerializers(serializers.ModelSerializer):
 	)
 	video = VideoSerializers()
 	updated_at = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M")
+	technical_labels = serializers.SerializerMethodField()
+
+	def get_technical_labels(self, obj):
+		technical_label = [technical_label.technical_label for technical_label in obj.technical_labels]
+		technical_label_json = TechnicalLabelSerializers(technical_label, many=True,
+														 context={'request': self.context['request']}).data
+		return technical_label_json
 
 	class Meta:
 		model = Faq
 		fields = (
-			"_id", "video", "user", "problem", "browse_number", "comment_number", "answer_number",
+			"_id", "video", "user", "problem", "technical_labels", "browse_number", "comment_number", "answer_number",
 			"hot", "updated_at")
 
 
-class FaqCreateSerializers(serializers.ModelSerializer):
+class FaqCreateSerializers(serializers.Serializer):
 	user = serializers.HiddenField(
 		default=serializers.CurrentUserDefault()
 	)
-	video = serializers.CharField(label="视频_id", min_length=24, max_length=24, required=True, write_only=True)
+	problem = serializers.CharField(label="问题", required=True)
+	# video = serializers.CharField(label="视频_id", write_only=True, required=True)
+	video = serializers.PrimaryKeyRelatedField(label="视频", required=True, queryset=Video.objects.all(), write_only=True)
 
-	# technology = serializers.CharField(label="技术标签", min_length=24, max_length=24, required=True)
-
-	def validate_video(self, video):
-		videos = Video.objects.filter(_id=video)
-		if not videos.exists():
-			raise serializers.ValidationError("视频不存在")
-		video = videos[0]
-		return video
-
-	# def validate_technology(self, technology):
-	# 	technology = TechnicalLabel.objects.filter(_id=technology)
-	# 	if not technology.exists():
-	# 		raise serializers.ValidationError("技术标签不存在")
-	# 	technology = technology[0]
-	# 	return technology
+	technical = serializers.PrimaryKeyRelatedField(
+		label="技术标签", required=True,
+		queryset=TechnicalLabel.objects.all(),
+		write_only=True, )
 
 	def create(self, validated_data):
-		faq = super(FaqCreateSerializers, self).create(validated_data=validated_data)
-		return faq
+		user = validated_data["user"]
+		video = validated_data["video"]
+		problem = validated_data["problem"]
+		technical = validated_data["technical"]
 
-	class Meta:
-		model = Faq
-		fields = ("video", "user", "problem")
+		param = {
+			"user": user,
+			"video": video,
+			"problem": problem,
+			"technical_labels": [FaqTechnicalLabels(technical_label=technical)]
+		}
+		faq_obj = Faq.objects.create(**param)
+		return faq_obj

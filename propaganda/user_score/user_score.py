@@ -13,7 +13,7 @@ from user_score.user_score_retrieve_serializers import GetUserScoreRecordSeriali
 User = get_user_model()
 
 
-class UserScoreViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+class UserScoreViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
 	"""
 	create:
 		添加登录用户的评分记录
@@ -31,4 +31,4 @@ class UserScoreViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin, views
 	def get_queryset(self):
 		if not self.request.user.team.exists():
 			raise NoneTeamUnavailable
-		return User.objects.all()
+		return User.objects.filter(username=self.request.user)

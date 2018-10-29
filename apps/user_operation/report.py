@@ -9,14 +9,17 @@ from user_operation.models import Report
 
 
 class ReportSerializers(serializers.ModelSerializer):
-	_id = serializers.CharField(max_length=24)
 	user = serializers.CharField(
 		default=serializers.CurrentUserDefault()
 	)
+	types = serializers.SerializerMethodField()
+
+	def get_types(self, obj):
+		return obj.get_types_display()
 
 	class Meta:
 		model = Report
-		fields = ("_id", "user", "reason", "source", "types")
+		fields = ("user", "reason", "source", "types")
 
 
 class ReportCreateSerializers(serializers.ModelSerializer):
