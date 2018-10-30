@@ -1,7 +1,7 @@
 import axios from 'axios';
-// let host = 'http://www.zhiliangku.com';
+let host = 'https://www.zhiliangku.com';
 // let host = 'http://localhost:8080';
-let host = '/api'
+// let host = '/api'
 
 // 登录接口
 export const login = parmas => {

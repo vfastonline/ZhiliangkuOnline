@@ -69,7 +69,8 @@ export default {
     submits() {
       var self = this;
       var user_id = JSON.parse(localStorage.getItem('user_id'));
-      self.$http.patch(`/api/set_user_class/${user_id}/`, {
+      // self.$http.patch(`/api/set_user_class/${user_id}/`
+      self.$http.patch(`https://www.zhiliangku.com/set_user_class/${user_id}/`, {
         name: self.username,
        team_id: self.classDatas
       }).then((response) => {

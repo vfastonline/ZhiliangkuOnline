@@ -69,7 +69,7 @@ export default {
 
     } else {
       // 先注册 上线在开启
-      this.$router.push('/login');
+      this.$router.push('/Invitation');
     }
   }
 }

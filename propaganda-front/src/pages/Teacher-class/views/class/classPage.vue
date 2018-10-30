@@ -107,7 +107,8 @@ export default {
         Toast('搜索时间不能为空');
       } else {
         // 开始搜索数据
-        self.$http.get('/api/user_score_item_avg/?', {
+        // self.$http.get('/api/user_score_item_avg/?', 
+        self.$http.get('https://www.zhiliangku.com/user_score_item_avg/?', {
             params: {
               team: self.class_id,
               created_at_before: self.Endtoday,
@@ -165,7 +166,7 @@ export default {
           })
       };
       // 取出后台吐槽数据
-      self.$http.get('/api/user_score_feedback/?', {
+      self.$http.get('https://www.zhiliangku.com/user_score_feedback/?', {
           params: {
             team: self.class_id,
             created_at_before: self.Endtoday,
@@ -320,7 +321,7 @@ export default {
     self.Today = JSON.parse(localStorage.getItem('Today'));
     self.Inverted = JSON.parse(localStorage.getItem('Inverted'));
     // 取出后台可视化数据
-    self.$http.get('/api/user_score_item_avg/?', {
+    self.$http.get('https://www.zhiliangku.com/user_score_item_avg/?', {
         params: {
           team: self.class_id,
           created_at_before: self.Today,
@@ -376,7 +377,7 @@ export default {
       })
 
     // 取出后台吐槽数据
-    self.$http.get('/api/user_score_feedback/?', {
+    self.$http.get('https://www.zhiliangku.com/user_score_feedback/?', {
         params: {
           team: self.class_id,
           created_at_before: self.Today,

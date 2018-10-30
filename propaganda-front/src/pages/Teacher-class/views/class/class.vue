@@ -35,7 +35,8 @@ export default {
       var class_id = item._id;
       var Today = self.GetDateStr(0);
       var Inverted = self.GetDateStr(-6);
-      self.$http.get('/api/user_score_item_avg/?', {
+      // self.$http.get('/api/user_score_item_avg/?',
+      self.$http.get('https://www.zhiliangku.com/user_score_item_avg/?', {
           params: {
             team: class_id,
             created_at_before: Today,

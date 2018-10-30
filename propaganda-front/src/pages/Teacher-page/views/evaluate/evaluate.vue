@@ -246,7 +246,7 @@ export default {
 
     } else {
       // 先注册 上线在开启
-      this.$router.push('/login');
+      this.$router.push('/Invitation');
     }
     // 发送接口数据进行学生与老师赋值;
     information().then((response) => {
