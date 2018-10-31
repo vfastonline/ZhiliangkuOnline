@@ -129,19 +129,46 @@ export default {
       });
     },
     star1(val) {
-      this.Stars_one = val + 1;
+      if(this.lock == true) {
+        Toast('你今天已经评价');
+      } else {
+      
+         this.Stars_one = val + 1;
+      }
+      
+     
     },
     star2(val) {
+      if(this.lock == true) {
+        Toast('你今天已经评价');
+      } else {
+      
       this.Stars_two = val + 1;
+      }
     },
     star3(val) {
+      if(this.lock == true) {
+        Toast('你今天已经评价');
+      } else {
+      
       this.Stars_three = val + 1;
+      }
     },
     star4(val) {
+      if(this.lock == true) {
+        Toast('你今天已经评价');
+      } else {
+      
       this.Stars_four = val + 1;
+      }
     },
     star5(val) {
+      if(this.lock == true) {
+        Toast('你今天已经评价');
+      } else {
+      
       this.Stars_five = val + 1;
+      }
     },
     // 老师数据
     Teacher_data() {
@@ -168,6 +195,7 @@ export default {
           // 请求成功把按钮变成灰色
           if (response.status == 201) {
             self.isDisable = true;
+            self.$router.push('/Success');
           } else {
             Toast('请求失败')
           }
@@ -202,6 +230,7 @@ export default {
           // 请求成功把按钮变成灰色
           if (response.status == 201) {
             self.isDisable = true;
+            self.$router.push('/Success');
           } else {
             Toast('请求失败')
           }
@@ -258,6 +287,7 @@ export default {
             localStorage.setItem('classname', JSON.stringify(response.data.results[i].student.user_info.username));
             // 老师头像
             self.Teacher_picture = response.data.results[i].teacher.user_info.icon;
+            console.log(self.Teacher_picture);
             // 学生头像
             self.classname_picture = response.data.results[i].student.user_info.icon;
             self.score_records = response.data.results[i].teacher.score_records;

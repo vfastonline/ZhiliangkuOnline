@@ -59,6 +59,10 @@
         <p class="Text_description">{{item.feedback}}</p>
       </div>
     </div>
+    <!-- 添加返回顶部按钮 -->
+    <div class="Tops">
+      <button type="button" class="back-top small" @click="backTop()" v-show="backTopShow"><span>返回</span><span>顶部</span></button>
+    </div>
   </div>
 </template>
 <style type="text/css" lang="less" scoped>
@@ -76,6 +80,8 @@ export default {
   },
   data() {
     return {
+      // 默认按钮时不显示的
+      backTopShow: false,
       class_id: '',
       Today: '',
       Inverted: '',
@@ -94,10 +100,31 @@ export default {
       articless2: [],
       articless3: [],
       articless4: [],
-      articless5: [],
+      articless5: []
     }
+
+
   },
   methods: {
+    // 点击按钮事件
+    backTop() {
+      let back = setInterval(() => {
+        if (document.body.scrollTop || document.documentElement.scrollTop) {
+          document.body.scrollTop -= 100;
+          document.documentElement.scrollTop -= 100;
+        } else {
+          clearInterval(back)
+        }
+      });
+    },
+    handleScroll() {
+      if (document.documentElement.scrollTop + document.body.scrollTop > 300) {
+        this.backTopShow = true;
+      } else {
+        this.backTopShow = false;
+      }
+    },
+
     search_event() {
       var self = this;
       self.class_id = JSON.parse(localStorage.getItem('class_id'));
@@ -186,8 +213,10 @@ export default {
     class_list() {
       this.$router.push('/list');
     },
+    
     openPicker() {
       this.$refs.picker.open();
+  
     },
     Endtime() {
       this.$refs.pickers.open();
@@ -400,6 +429,8 @@ export default {
     // 渲染折线图
     this.drawLine();
     this.init();
+    // 返回顶部事件
+    window.addEventListener('scroll', this.handleScroll);
   }
 }
 
